@@ -1,0 +1,10 @@
+streamlit
+redis
+pandas
+plotly
+qrcode
+Pillow
+dashscope
+requests
+streamlit-lottie
+python-dotenv  # 用于管理敏感信息，如 API Key

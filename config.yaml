@@ -1,0 +1,76 @@
+DISEASE_TAGS:
+  HTN:
+    name: 高血压
+    subtypes:
+      WCHT:
+        name: 白大衣高血压
+        sodium_limit: 1500
+        rules: 避免加工食品
+      MHT:
+        name: 隐匿性高血压
+        sodium_limit: 1500
+        rules: 减少饱和脂肪
+  CAD:
+    name: 冠心病
+    subtypes:
+      CAD:
+        name: 冠心病
+        sodium_limit: 1500
+        rules: 低脂饮食，控制胆固醇
+  HF:
+    name: 心力衰竭
+    subtypes:
+      HFrEF:
+        name: 射血分数降低型心衰
+        sodium_limit: 1200
+        rules: 严格限制钠和液体摄入
+  AF:
+    name: 心房颤动
+    subtypes:
+      AF:
+        name: 心房颤动
+        sodium_limit: 1500
+        rules: 避免刺激性食物饮料
+  CVD:
+    name: 脑血管病
+    subtypes:
+      CVD:
+        name: 脑血管病
+        sodium_limit: 1500
+        rules: 控制血压血脂
+  PAD:
+    name: 外周动脉疾病
+    subtypes:
+      PAD:
+        name: 外周动脉疾病
+        sodium_limit: 1500
+        rules: 戒烟，控制血糖
+RECIPE_DB:
+  - name: 燕麦粥
+    sodium: 50
+    protein: 6
+    calories: 150
+    fat: 3
+    carbs: 27
+    type: breakfast
+  - name: 清蒸鲈鱼
+    sodium: 100
+    protein: 20
+    calories: 200
+    fat: 5
+    carbs: 0
+    type: lunch
+  - name: 低钠鸡汤
+    sodium: 80
+    protein: 10
+    calories: 120
+    fat: 2
+    carbs: 15
+    type: dinner
+  - name: 低脂酸奶
+    sodium: 80
+    protein: 8
+    calories: 100
+    fat: 2
+    carbs: 12
+    type: snack
