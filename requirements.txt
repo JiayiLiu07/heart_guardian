@@ -1,0 +1,10 @@
+streamlit
+xgboost
+shap
+pandas
+pyarrow
+dashscope
+cryptography
+joblib
+optuna
+scikit-learn
