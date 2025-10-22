@@ -1,51 +1,12 @@
+# components/loader.py
 import streamlit as st
-import time
 
-def render(message="🩺 正在分析…", duration=1.2):
-    html = f"""
-    <div class="pulse-loader-container">
-        <div class="pulse-bar"></div>
-        <div class="loader-message">{message}</div>
-    </div>
-    <style>
-        .pulse-loader-container {{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 20px 0;
-        }}
-        .pulse-bar {{
-            width: 60px;
-            height: 5px;
-            background-color: #E94560;
-            border-radius: 3px;
-            animation: pulse {duration}s infinite ease-in-out;
-            transform-origin: center;
-        }}
-        .loader-message {{
-            margin-top: 10px;
-            font-size: 14px;
-            color: #1F2937;
-            font-weight: 500;
-        }}
-        @keyframes pulse {{
-            0% {{
-                transform: scaleX(0.8);
-                opacity: 0.8;
-            }}
-            50% {{
-                transform: scaleX(1.2);
-                opacity: 1;
-            }}
-            100% {{
-                transform: scaleX(0.8);
-                opacity: 0.8;
-            }}
-        }}
-    </style>
-    """
-    st.markdown(html, unsafe_allow_html=True)
-
-if __name__ == "__main__":
-    render()
+def render_loader(text="正在分析..."):
+    st.markdown(f"<div style='text-align:center; color:#E94560;'>{text}</div>", unsafe_allow_html=True)
+    st.markdown("""
+    <svg style='display:block;margin:0 auto;width:50px;height:50px;'>
+        <circle cx='25' cy='25' r='20' stroke='#E94560' stroke-width='5' fill='none'>
+            <animate attributeName='stroke-dasharray' from='0 100' to='100 0' dur='1.5s' repeatCount='indefinite'/>
+        </circle>
+    </svg>
+    """, unsafe_allow_html=True)

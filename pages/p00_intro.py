@@ -459,10 +459,10 @@ def render():
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         if st.button("🎯 立即开始免费分析", use_container_width=True, type="primary"):
-            if st.session_state.get('is_logged_in', False):
-                st.switch_page("pages/p01_dashboard.py")
-            else:
-                st.switch_page("pages/00_auth.py")
+            # 直接跳转到登录页面
+            st.switch_page("pages/p00_auth.py")
+
+
 
     # 统计数据 - 移动到按钮下面
     st.markdown('<div class="centered">', unsafe_allow_html=True)

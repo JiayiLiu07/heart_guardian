@@ -1,86 +1,137 @@
+# pages/p05_me.py
 import streamlit as st
 import pandas as pd
-import os
-from datetime import datetime
+import base64
+from io import BytesIO
+import logging
 
-# --- Helper Functions ---
-def load_user_base_info(user_id):
-    user_data_path = os.path.join('users', f"{user_id}.parquet")
-    if os.path.exists(user_data_path):
-        try:
-            df = pd.read_parquet(user_data_path)
-            return df.iloc[0].to_dict()
-        except Exception as e:
-            st.error(f"加载基础用户信息失败: {e}")
-            return {}
-    return {}
+# Import utility functions
+# Ensure the path to api.py is correct in your project structure
+try:
+    from utils.api import initialize_client, get_image_and_explanation_from_vllm
+    # Assume p01_profile.py is in the same 'pages' directory
+    from pages.p01_profile import load_profile_data
+except ImportError:
+    st.error("Error importing modules. Make sure 'utils' and 'pages' directories are structured correctly.")
+    st.stop()
 
-def save_user_base_info(user_id, data_dict):
-    user_data_path = os.path.join('users', f"{user_id}.parquet")
+# Initialize logger for this module
+logger = logging.getLogger(__name__)
+
+# Ensure API client is initialized
+def ensure_client_initialized():
+    if "client" not in st.session_state or st.session_state.client is None:
+        if "api_key" in st.session_state and st.session_state.api_key:
+            st.session_state.client = initialize_client(st.session_state.api_key)
+            if not st.session_state.client:
+                st.warning("AI client not initialized. Please set up your API key on the main page.")
+                return False
+        else:
+            st.warning("Please set up your API key on the main page to use AI features.")
+            return False
+    return True
+
+# --- Styling for this page ---
+st.markdown("""
+<style>
+    .main-content-area { padding: 2rem; background-color: #ffffff; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .section-title { color: #1f2937; font-size: 1.8rem; margin-bottom: 1rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem;}
+    .insight-card { background-color: #f3f4f6; border-radius: 0.5rem; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
+    .insight-title { color: #3b82f6; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.8rem; }
+    .explanation-text { color: #4b5563; line-height: 1.6; font-size: 1.05rem; }
+    .emoji { font-size: 1.1rem; margin-left: 0.3rem; }
+    .profile-info { margin-bottom: 1rem; font-size: 1.05rem; }
+    .profile-info strong { color: #1f2937; }
+</style>
+""", unsafe_allow_html=True)
+
+
+def render_p05_me():
+    if not ensure_client_initialized():
+        st.stop()
+
+    st.markdown("<div class='main-content-area'>", unsafe_allow_html=True)
+    st.markdown("<h1 class='section-title'>👤 My Profile & AI Insights</h1>", unsafe_allow_html=True)
+
+    user_id = st.session_state.get("user_id")
+
+    if not user_id:
+        st.warning("Please log in or create an account to view your profile and insights.")
+        # Adjust path if your login/auth page is elsewhere
+        st.markdown("[Go to Login/Signup](/pages/p00_auth.py)")
+        st.markdown("</div>", unsafe_allow_html=True)
+        return
+
+    # --- Load User Profile Data ---
     try:
-        existing_data = load_user_base_info(user_id)
-        existing_data.update(data_dict)
-        df_to_save = pd.DataFrame([existing_data])
-        df_to_save.to_parquet(user_data_path, index=False)
-        st.success("个人信息已更新。")
-        return True
+        profile_data = load_profile_data(user_id)
+        if not profile_data:
+            st.error("Could not load your profile data. Please try again.")
+            st.markdown("</div>", unsafe_allow_html=True)
+            return
+
+        st.subheader("Your Personal Information Summary")
+        st.markdown(f"<div class='profile-info'><strong>Name:</strong> {profile_data.get('name', 'N/A')}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='profile-info'><strong>Age:</strong> {profile_data.get('age', 'N/A')}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='profile-info'><strong>Health Goals:</strong> {profile_data.get('health_goals', 'N/A')}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='profile-info'><strong>Dietary Preferences:</strong> {profile_data.get('dietary_preferences', 'N/A')}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='profile-info'><strong>Activity Level:</strong> {profile_data.get('activity_level', 'N/A')}</div>", unsafe_allow_html=True)
+
     except Exception as e:
-        st.error(f"保存基础用户信息失败: {e}")
-        return False
+        logger.error(f"Error loading profile data: {e}", exc_info=True)
+        st.error(f"Error loading profile: {e}")
+        st.markdown("</div>", unsafe_allow_html=True)
+        return
 
-def render():
-    st.markdown("<div style='height: 80px;'></div>", unsafe_allow_html=True)
+    st.markdown("<hr style='margin-top: 2rem; margin-bottom: 2rem;'>", unsafe_allow_html=True)
 
-    if "user_id" not in st.session_state or not st.session_state.user_id:
-        st.warning("请先登录以访问个人中心。")
-        user_id = 'default_user'
-        user_info = {}  # Dummy
-    else:
-        user_id = st.session_state.user_id
-        user_info = load_user_base_info(user_id)
+    # --- AI Generated Insight Section ---
+    st.subheader("🤖 AI Analysis of Your Profile")
 
-    st.title("个人中心")
+    profile_summary_text = f"""
+    Based on my profile:
+    Name: {profile_data.get('name', 'N/A')}
+    Age: {profile_data.get('age', 'N/A')}
+    Health Goals: {profile_data.get('health_goals', 'N/A')}
+    Dietary Preferences: {profile_data.get('dietary_preferences', 'N/A')}
+    Activity Level: {profile_data.get('activity_level', 'N/A')}
 
-    tab_personal, tab_notes, tab_export, tab_account = st.tabs([
-        "个人信息", "我的笔记", "导出数据", "账号安全"
-    ])
+    Please provide a visual summary and actionable insights about my health status and goals.
+    Include relevant emojis in your explanation.
+    """
 
-    with tab_personal:
-        st.image("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/350/red-heart_2764.png", width=100)
-        current_nickname = user_info.get('nickname', '未知')
-        new_nickname = st.text_input("昵称", value=current_nickname)
-        if st.button("保存昵称"):
-            save_user_base_info(user_id, {'nickname': new_nickname})
-            st.rerun()
+    if st.button("Generate AI Health Insights ✨", key="ai_insight_button"):
+        with st.spinner("AI is analyzing your profile... 🧠"):
+            image_base64, explanation = get_image_and_explanation_from_vllm(
+                st.session_state.client,
+                profile_summary_text,
+                st.session_state.image_model,
+                [] # Profile data is not structured like a CSV, pass empty or specific keys
+            )
 
-    with tab_notes:
-        st.subheader("健康笔记")
-        notes_content = user_info.get('health_notes', "")
-        edited_notes = st.text_area("您的健康笔记", value=notes_content, height=300)
-        if st.button("保存笔记"):
-            save_user_base_info(user_id, {'health_notes': edited_notes})
-            st.rerun()
+            if image_base64 and explanation:
+                try:
+                    image_bytes = base64.b64decode(image_base64)
+                    image_stream = BytesIO(image_bytes)
 
-    with tab_export:
-        st.subheader("导出您的健康数据")
-        export_format = st.selectbox("选择导出格式", ["CSV", "PDF"])
-        if st.button(f"导出为 {export_format}"):
-            st.info(f"导出 {export_format} 功能开发中...")
+                    st.markdown("<div class='insight-card'>", unsafe_allow_html=True)
+                    st.markdown("<div class='insight-title'>AI Health Visualization</div>", unsafe_allow_html=True)
+                    st.image(image_stream, caption="Your Personalized Health Insights", use_column_width=True)
+                    
+                    st.markdown("<div class='explanation-text'>", unsafe_allow_html=True)
+                    st.markdown(explanation, unsafe_allow_html=True)
+                    st.markdown("</div>", unsafe_allow_html=True)
+                    st.markdown("</div>", unsafe_allow_html=True)
+                    st.success("AI insights generated successfully! ✅")
 
-    with tab_account:
-        st.subheader("账号安全")
-        st.info("关联账号功能开发中...")
-        if st.button("退出登录"):
-            st.session_state.user_id = None
-            st.rerun()
-        st.warning("注销账号将永久删除数据。")
-        if st.button("注销账号"):
-            user_data_path = os.path.join('users', f"{user_id}.parquet")
-            if os.path.exists(user_data_path):
-                os.remove(user_data_path)
-            st.session_state.user_id = None
-            st.success("账号已注销。")
-            st.rerun()
+                except Exception as e:
+                    logger.error(f"Error displaying AI image for profile: {e}", exc_info=True)
+                    st.error(f"Could not display your AI health insights. Error: {e}")
+            else:
+                st.error("Failed to generate AI health insights. Please try again. 😔")
 
+    st.markdown("</div>", unsafe_allow_html=True) # Close main-content-area
+
+# This function is called when the script is run directly
 if __name__ == "__main__":
-    render()
+    render_p05_me()

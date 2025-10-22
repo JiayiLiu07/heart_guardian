@@ -1,206 +1,164 @@
+# pages/01_overview.py
 import streamlit as st
 import pandas as pd
-import numpy as np
+from pages.p01_profile import load_profile_data
+from utils.disease_dict import DISEASE_ENUM
+from utils.api import client
+from io import BytesIO
 import matplotlib.pyplot as plt
 import seaborn as sns
-import os
-try:
-    import shap
-    import xgboost as xgb
-    import joblib
-except ImportError:
-    st.warning("SHAP、xgboost 或 joblib 库未安装，使用 dummy 数据。")
-    shap = None
-    xgb = None
-    joblib = None
+import base64
 
-# --- Helper function to load model ---
-def load_model(model_path='assets/xgb_risk.pkl'):
-    if joblib and os.path.exists(model_path):
-        try:
-            model = joblib.load(model_path)
-            return shap.TreeExplainer(model) if shap else None
-        except Exception as e:
-            st.error(f"加载模型 {model_path} 失败: {e}")
-            return None
-    else:
-        st.warning(f"模型文件 {model_path} 不存在或 joblib 未安装，使用 dummy 数据。")
-        return None
+# 统一风格，与p00_intro.py匹配
+st.markdown("""
+<style>
+:root {{ --primary: #1a237e; --accent: #00e5ff; --danger: #ff5252; --bg: #0f1629; --text: #e1f5fe; --shadow: rgba(0,229,255,.3); }}
+body {{ background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; }}
+.hero-section {{
+    background: linear-gradient(135deg, var(--primary) 0%, #283593 50%, #3949ab 100%);
+    padding: 4rem 2rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px var(--shadow);
+    backdrop-filter: blur(10px);
+}}
+.hero-section::before {{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+}}
+.hero-title {{
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #00e5ff, #2979ff, #00e5ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    animation: gradientAnimation 5s ease infinite;
+    background-size: 200% 200%;
+    text-shadow: 0 0 10px var(--shadow);
+}}
+.hero-subtitle {{
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    font-weight: 300;
+    text-shadow: 0 0 5px var(--shadow);
+}}
+@keyframes gradientAnimation {{
+    0% {{ background-position: 0% 50%; }}
+    50% {{ background-position: 100% 50%; }}
+    100% {{ background-position: 0% 50%; }}
+}}
+.feature-card {{
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    margin: 1rem 0;
+    border: 1px solid var(--shadow);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}}
+.feature-card:hover {{
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px var(--shadow);
+}}
+.skeleton {{height:300px;background:linear-gradient(90deg, #333 25%, #444 50%, #333 75%);background-size:200% 100%;animation:skeleton-pulse 1.5s infinite;border-radius:12px;}}
+@keyframes skeleton-pulse {{0%{background-position:200% 0}100%{background-position:-200% 0}}}
+.desc-card {{background: rgba(41,121,255,.1); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px var(--shadow); margin-top: 1rem;}}
+</style>
+""", unsafe_allow_html=True)
 
-# --- Helper function to get user's feature data ---
-def load_profile_data(user_id):
-    filename = os.path.join('users', f"{user_id}_profile.csv")
-    if os.path.exists(filename):
-        try:
-            df = pd.read_csv(filename)
-            return df.iloc[0].to_dict()
-        except Exception as e:
-            st.error(f"加载用户数据失败: {e}")
-            return {}
-    return {}
+df = pd.read_csv("data/cardio_train.csv", sep=";")
 
-def get_user_features(user_id):
-    user_data = load_profile_data(user_id)
-    if user_data:
-        features = {}
-        features['gender'] = 1 if user_data.get('gender', '') == '男' else 0
-        features['age_years'] = user_data.get('age', 40)  # Assuming age in years
-        height_cm = user_data.get('height', 0)
-        weight_kg = user_data.get('weight', 0)
-        if height_cm > 0 and weight_kg > 0:
-            height_m = height_cm / 100
-            features['bmi'] = weight_kg / (height_m ** 2)
-        else:
-            features['bmi'] = 0
-        features['cholesterol'] = 1
-        features['gluc'] = 1
-        features['ap_hi'] = user_data.get('systolic', 120)
-        features['ap_lo'] = user_data.get('diastolic', 80)
-        features['smoke'] = 1 if user_data.get('smoking', '不吸烟') != '不吸烟' else 0
-        features['alco'] = 1 if user_data.get('alcohol', '不饮酒') != '不饮酒' else 0
-        features['active'] = 1 if user_data.get('exercise_frequency', '几乎不运动') != '几乎不运动' else 0
-        return pd.DataFrame([features])
-    else:
-        st.warning("用户数据不存在，使用 dummy 数据。")
-        dummy_features = {
-            'gender': 1, 'age_years': 50, 'bmi': 25, 'cholesterol': 1, 'gluc': 1,
-            'ap_hi': 120, 'ap_lo': 80, 'smoke': 0, 'alco': 0, 'active': 1
-        }
-        return pd.DataFrame([dummy_features])
+def generate_plot_image(prompt, key):
+    place = st.empty()
+    place.markdown('<div class="skeleton"></div>', unsafe_allow_html=True)
+    try:
+        # Use VLLM to get description in Chinese
+        resp = client.chat.completions.create(model="qwen-turbo", messages=[{"role": "user", "content": prompt + " Provide a Chinese description with key data insights. Use markdown for formatting, bold key points. Do not mention access to files or generating visualizations."}], stream=False)
+        desc = resp.choices[0].message.content.strip()
 
-# --- Predict and Get SHAP Values ---
-def predict_and_get_shap(user_features_df, explainer):
-    if explainer and xgb:
-        try:
-            model = explainer.model
-            dmatrix = xgb.DMatrix(user_features_df)
-            risk_prediction_proba = model.predict(dmatrix)  # 移除 output_margin 参数
-            shap_values = explainer.shap_values(user_features_df)
-            expected_value = explainer.expected_value
-            return risk_prediction_proba[0], shap_values, expected_value
-        except Exception as e:
-            st.error(f"预测和 SHAP 计算失败: {e}")
-            return 0.5, None, None
-    else:
-        return 0.5, None, None  # Dummy
-
-# --- Render SHAP Waterfall Plot ---
-def render_shap_waterfall(shap_values, expected_value, model_feature_names, user_features_df):
-    if shap and shap_values is not None:
-        try:
-            fig, ax = plt.subplots(figsize=(6, 4))
-            shap_explanation = shap.Explanation(values=shap_values[0], base_values=expected_value, data=user_features_df.iloc[0], feature_names=model_feature_names)
-            shap.plots.waterfall(shap_explanation, max_display=10, show=False)
-            st.pyplot(fig)
-            plt.close(fig)
-        except Exception as e:
-            st.error(f"渲染 SHAP waterfall 图失败: {e}")
-            fig, ax = plt.subplots()
-            ax.text(0.5, 0.5, 'SHAP Waterfall (Dummy)', ha='center')
-            st.pyplot(fig)
-            plt.close(fig)
-
-# --- Render SHAP Bar Plot for Training Set ---
-def render_shap_bar(explainer, feature_names, user_shap_values, user_features_df):
-    if shap and explainer:
-        try:
-            # 使用用户 SHAP 值计算特征重要性，避免零数据形状问题
-            fig, ax = plt.subplots(figsize=(6, 4))
-            shap.summary_plot(user_shap_values, user_features_df, plot_type="bar", show=False)
-            st.pyplot(fig)
-            plt.close(fig)
-        except Exception as e:
-            st.error(f"渲染 SHAP bar 图失败: {e}")
-            fig, ax = plt.subplots()
-            ax.text(0.5, 0.5, 'SHAP Bar (Dummy)', ha='center')
-            st.pyplot(fig)
-            plt.close(fig)
-
-# --- Global Comparison Text ---
-def get_global_comparison_text():
-    return {
-        "systolic_bp_contribution": "+5.2%",
-        "systolic_bp_rank": "83%",
-        "top_risk_factors_text": "收缩压、年龄、BMI 是影响心血管风险的前三杀手。"
-    }
+        # Generate plot using matplotlib based on type
+        buf = BytesIO()
+        fig, ax = plt.subplots(figsize=(12, 7))
+        fig.patch.set_facecolor('#0f1629')
+        ax.patch.set_facecolor('#0f1629')
+        ax.spines['top'].set_color('#e1f5fe')
+        ax.spines['bottom'].set_color('#e1f5fe')
+        ax.spines['left'].set_color('#e1f5fe')
+        ax.spines['right'].set_color('#e1f5fe')
+        ax.tick_params(colors='#e1f5fe')
+        ax.title.set_color('#e1f5fe')
+        ax.xaxis.label.set_color('#e1f5fe')
+        ax.yaxis.label.set_color('#e1f5fe')
+        
+        if "feature importance" in prompt.lower():
+            importances = df.corr()['cardio'].abs().sort_values(ascending=False)[1:16]
+            sns.barplot(x=importances.values, y=importances.index, ax=ax, palette='Blues_r')
+            ax.set_title('Top 15 Feature Importance', color='#e1f5fe')
+            ax.set_xlabel('Importance', color='#e1f5fe')
+            ax.set_ylabel('Features', color='#e1f5fe')
+            ax.grid(color='rgba(0,229,255,.3)')
+        elif "correlation heatmap" in prompt.lower():
+            corr = df.corr()
+            sns.heatmap(corr, ax=ax, cmap='coolwarm', annot=True, fmt=".2f", annot_kws={"color": "black"})
+            ax.set_title('Correlation Heatmap', color='#e1f5fe')
+        elif "partial dependence" in prompt.lower():
+            ap_hi_range = range(80, 200, 10)
+            risk = [df[(df['ap_hi'] >= v-5) & (df['ap_hi'] < v+5)]['cardio'].mean() for v in ap_hi_range]
+            sns.lineplot(x=ap_hi_range, y=risk, ax=ax, color='#00e5ff', marker='o')
+            ax.set_title('Partial Dependence of ap_hi on Risk', color='#e1f5fe')
+            ax.set_xlabel('ap_hi', color='#e1f5fe')
+            ax.set_ylabel('Risk', color='#e1f5fe')
+            ax.grid(color='rgba(0,229,255,.3)')
+        elif "feature distribution" in prompt.lower():
+            sns.violinplot(data=df, x='cardio', y='age', ax=ax, palette='Blues', inner='quartile')
+            ax.set_title('Feature Distribution (Age by Cardio)', color='#e1f5fe')
+            ax.set_xlabel('Cardio', color='#e1f5fe')
+            ax.set_ylabel('Age', color='#e1f5fe')
+        
+        fig.savefig(buf, format="png")
+        buf.seek(0)
+        img_base64 = base64.b64encode(buf.read()).decode('utf-8')
+        
+        place.empty()
+        st.image(f"data:image/png;base64,{img_base64}", use_container_width=True)
+        st.markdown(f'<div class="desc-card">{desc}</div>', unsafe_allow_html=True)
+    except Exception as e:
+        place.error(f"生成失败: {e}")
+    if st.button("🔁 重新生成", key=key):
+        generate_plot_image(prompt, key)
 
 def render():
-    st.markdown("<div style='height: 80px;'></div>", unsafe_allow_html=True)  # Top padding from app.py
+    st.markdown("<style>section[data-testid='stSidebar'], .stSidebar, [data-testid='collapsedControl'], #MainMenu, footer {display: none !important;}</style>", unsafe_allow_html=True)
 
-    if "user_id" not in st.session_state or not st.session_state.user_id:
-        st.warning("请先登录以查看您的健康概览。")
-        user_id = 'default_user'
-    else:
-        user_id = st.session_state.user_id
+    st.markdown('<div class="hero-section"><h1 class="hero-title">AI 风险总览</h1><p class="hero-subtitle">基于大数据 + 您的档案</p></div>', unsafe_allow_html=True)
 
-    st.title("您的健康概览")
-    st.markdown("<h2 style='font-size: 24px; font-weight: 500; color: #1F2937;'>你的危险因子 vs 大数据</h2>", unsafe_allow_html=True)
-
-    explainer = load_model()
-    user_features_df = get_user_features(user_id)
-
-    risk_prediction_proba, user_shap_values, expected_value = predict_and_get_shap(user_features_df, explainer)
-    model_feature_names = user_features_df.columns.tolist() if user_features_df is not None else []
-
-    # 两列布局：左边个人 SHAP 瀑布图，右边训练集平均 SHAP 条形图
-    col1, col2 = st.columns([6, 6])
-    with col1:
-        st.markdown("<h4 style='font-size: 20px; font-weight: 500; margin-bottom: 20px; color: #1F2937;'>你的风险贡献分析</h4>", unsafe_allow_html=True)
-        render_shap_waterfall(user_shap_values, expected_value, model_feature_names, user_features_df)
-    with col2:
-        st.markdown("<h4 style='font-size: 20px; font-weight: 500; margin-bottom: 20px; color: #1F2937;'>训练集平均风险贡献</h4>", unsafe_allow_html=True)
-        render_shap_bar(explainer, model_feature_names, user_shap_values, user_features_df)
-
-    if user_shap_values is not None and expected_value is not None:
-        st.markdown(f"<p style='font-size: 14px; color: #333; line-height: 1.6;'>你的心血管疾病风险预测概率约为：<strong style='font-size: 18px; color: #E94560;'>{risk_prediction_proba*100:.2f}%</strong>。</p>", unsafe_allow_html=True)
-
-        comparison_text_data = get_global_comparison_text()
-        st.markdown(f"<p style='font-size: 14px; color: #333; line-height: 1.6;'>你的收缩压贡献了约 <strong style='color: #E94560;'>{comparison_text_data['systolic_bp_contribution']}</strong> 的风险，高于 {comparison_text_data['systolic_bp_rank']} 的同龄人。</p>", unsafe_allow_html=True)
-        st.markdown(f"<p style='font-size: 14px; color: #333; line-height: 1.6;'>大数据显示：{comparison_text_data['top_risk_factors_text']}</p>", unsafe_allow_html=True)
-    else:
-        st.warning("未能成功计算并渲染你的 SHAP 贡献分析，使用 dummy 数据。")
-        fig, ax = plt.subplots()
-        ax.text(0.5, 0.5, 'SHAP Waterfall (Dummy)', ha='center')
-        st.pyplot(fig)
-        st.markdown("<p style='font-size: 14px; color: #333; line-height: 1.6;'>你的心血管疾病风险预测概率约为：<strong style='font-size: 18px; color: #E94560;'>50.00%</strong>。</p>", unsafe_allow_html=True)
-
-    # --- Action Buttons ---
-    st.markdown("<div style='margin-top: 40px;'></div>", unsafe_allow_html=True)  # Spacer
-    col_diet, col_doctor = st.columns(2)
-    with col_diet:
-        st.button("去查看饮食建议", key="view_diet_button", on_click=lambda: st.switch_page("pages/02_nutrition.py"), use_container_width=True, help="查看个性化饮食建议")
-        st.markdown("""
-        <style>
-        .stButton > button {
-            border: 2px solid #E94560;
-            border-radius: 30px;
-            background: transparent;
-            color: #E94560;
-            font-weight: bold;
-        }
-        .stButton > button:hover {
-            background: #E94560;
-            color: white;
-        }
-        </style>
-        """, unsafe_allow_html=True)
-    with col_doctor:
-        st.button("去 AI 问医生", key="consult_ai_doctor_button", on_click=lambda: st.switch_page("pages/03_ai_doctor.py"), use_container_width=True, help="咨询 AI 医生")
-        st.markdown("""
-        <style>
-        .stButton > button {
-            border: 2px solid #E94560;
-            border-radius: 30px;
-            background: transparent;
-            color: #E94560;
-            font-weight: bold;
-        }
-        .stButton > button:hover {
-            background: #E94560;
-            color: white;
-        }
-        </style>
-        """, unsafe_allow_html=True)
+    tabs = st.tabs(["特征重要性", "相关性热图", "血压依赖", "特征分布"])
+    prompts = [
+        "基于 cardio_train.csv 数据集，描述前 15 个平均 SHAP 值的水平条形图。图中标签用英文。提供中文关键数据洞察，使用 markdown 加粗重点。",
+        "基于 cardio_train.csv 数据集，描述数值特征的相关性热图。图中标签用英文。提供中文关键数据洞察，使用 markdown 加粗重点。",
+        "基于 cardio_train.csv 数据集，描述 ap_hi 对风险的部分依赖关系。图中标签用英文。提供中文关键数据洞察，使用 markdown 加粗重点。",
+        "基于 cardio_train.csv 数据集，描述前几个特征的 SHAP 蜂群图。图中标签用英文。提供中文关键数据洞察，使用 markdown 加粗重点。"
+    ]
+    titles = ["特征重要性", "相关性热图", "血压依赖", "特征分布"]
+    for tab, prompt, title in zip(tabs, prompts, titles):
+        with tab:
+            generate_plot_image(prompt, title)
 
 if __name__ == "__main__":
     render()

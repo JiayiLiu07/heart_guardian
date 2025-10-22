@@ -1,142 +1,125 @@
+# pages/p04_knowledge.py
 import streamlit as st
-import pandas as pd
-import re
+from utils.disease_dict import DISEASE_ENUM
+from utils.api import client
 from pages.p01_profile import load_profile_data
+from io import BytesIO
+import matplotlib.pyplot as plt
+import seaborn as sns
+import base64
+import pandas as pd
 
-# --- Dummy Data for Knowledge Base ---
-KNOWLEDGE_BASE = {
-    "高血压": {
-        "简介": "高血压是指动脉血压持续升高的一种慢性疾病。",
-        "诊断标准": {
-            "普通高血压": "收缩压 ≥ 140 mmHg 或 舒张压 ≥ 90 mmHg。",
-            "白大衣高血压": "在医疗环境中血压升高，在家中正常。",
-            "隐匿性高血压": "在医疗环境中血压正常，在家中升高。",
-        },
-        "病因与风险因素": {
-            "主要风险因素": "年龄增长、家族史、肥胖、高盐饮食、缺乏运动、吸烟、饮酒、精神压力大等。",
-            "并发症": "可导致心脏病、脑卒中、肾脏损害、眼底病变等。",
-        },
-        "处理流程": "1. 生活方式干预（减盐、减重、戒烟限酒、规律运动）。2. 药物治疗（根据血压水平和合并症选择）。3. 定期监测。",
-        "相关文章": ["如何有效控制血压", "高盐饮食的危害"]
-    },
-    "冠心病": {
-        "简介": "冠心病是指冠状动脉血管发生动脉粥样硬化病变而引起血管腔狭窄或阻塞，造成心肌缺血、缺氧或坏死。",
-        "类型": {
-            "稳定型心绞痛": "由体力活动诱发，休息后缓解。",
-            "急性冠脉综合征 (ACS)": "包括不稳定型心绞痛、心肌梗死，是紧急情况。",
-        },
-        "症状": "主要表现为胸骨后疼痛、压迫感，可放射至左肩、颈部或下颌，常伴有心悸、气短、出冷汗等。",
-        "风险因素": "同高血压，并强调高血脂、糖尿病、吸烟是重要诱因。",
-        "预防与管理": "控制风险因素、健康饮食、规律运动、遵医嘱服药。",
-        "相关文章": ["冠心病的早期识别", "心脏支架手术"]
-    },
-    "心力衰竭": {
-        "简介": "心力衰竭是指心脏泵血功能受损，无法满足身体对血液和氧气的需求。",
-        "病因": "常见于冠心病、高血压、心肌病、瓣膜病等。",
-        "症状": "活动耐力下降、呼吸困难（尤其在夜间或平卧时）、下肢水肿、乏力等。",
-        "管理": "药物治疗、生活方式调整（限盐、适度活动）、监测体重。",
-    },
-    "心律失常": {
-        "简介": "心律失常是指心脏跳动的频率、节律或传导发生异常。",
-        "常见类型": {
-            "房颤 (AFib)": "心房快速而不规则地颤动，增加卒中风险。",
-            "早搏": "心跳提前发生，可为房性或室性。",
-            "心动过速/过缓": "心率过快或过慢。",
-        },
-        "症状": "心悸（感觉心跳不规则、过快或过慢）、头晕、乏力、胸闷等。",
-        "风险": "特别是房颤，显著增加脑卒中风险。",
-        "治疗": "药物、导管消融、起搏器等。",
-    }
-}
+df = pd.read_csv("data/cardio_train.csv", sep=";")
 
-# Helper function to flatten the knowledge base for searching
-def flatten_kb(kb_data, parent_key="", separator=" > "):
-    items = []
-    for key, value in kb_data.items():
-        new_key = f"{parent_key}{separator}{key}" if parent_key else key
-        if isinstance(value, dict):
-            items.extend(flatten_kb(value, new_key, separator))
-        else:
-            items.append({"path": new_key, "content": str(value)})
-    return items
-
-# Convert KB to searchable DataFrame
-FLATTENED_KB = flatten_kb(KNOWLEDGE_BASE)
-KNOWLEDGE_DF = pd.DataFrame(FLATTENED_KB)
-
-# --- Rendering Functions ---
-def render_article_content(title, content, highlight=False):
-    border_style = "border: 2px solid #E94560;" if highlight else ""
-    st.markdown(f"""
-    <div style="background: #ffffff; border-radius: 12px; padding: 15px; margin-bottom: 15px; {border_style}">
-        <h4 style='font-size: 18px;'>{title}</h4>
-        <p>{content}</p>
-    </div>
-    """, unsafe_allow_html=True)
+def generate_viz_image_and_desc(viz_type):
+    buf = BytesIO()
+    fig, ax = plt.subplots(figsize=(10, 6))
     
-    if st.button("⭐ 收藏", key=f"collect_{title}"):
-        st.info("收藏功能开发中...")
-    if st.button("📤 分享", key=f"share_{title}"):
-        st.info("分享功能开发中...")
+    if viz_type == "age_bp_scatter":
+        sns.scatterplot(data=df, x='age', y='ap_hi', hue='cardio', ax=ax)
+        ax.set_title('Age vs Blood Pressure Scatter')
+        prompt = "基于 cardio_train.csv 数据集，描述年龄与血压分布散点图。图中标签用英文。提供中文关键数据洞察，使用 markdown 加粗重点。"
+    elif viz_type == "disease_distribution":
+        sns.countplot(data=df, x='cardio', ax=ax)
+        ax.set_title('Disease Distribution')
+        prompt = "基于 cardio_train.csv 数据集，描述疾病分布柱状图。图中标签用英文。提供中文关键数据洞察，使用 markdown 加粗重点。"
+    elif viz_type == "bmi_chol_heatmap":
+        df['bmi'] = df['weight'] / ((df['height']/100)**2)
+        pivot = df.pivot_table(index='cholesterol', columns='cardio', values='bmi', aggfunc='mean')
+        sns.heatmap(pivot, ax=ax, cmap='coolwarm', annot=True)
+        ax.set_title('BMI vs Cholesterol Heatmap')
+        prompt = "基于 cardio_train.csv 数据集，描述 BMI 与胆固醇热图。图中标签用英文。提供中文关键数据洞察，使用 markdown 加粗重点。"
+    elif viz_type == "feature_correlation":
+        corr = df.corr()
+        sns.heatmap(corr, ax=ax, cmap='coolwarm', annot=True, fmt=".2f")
+        ax.set_title('Feature Correlation')
+        prompt = "基于 cardio_train.csv 数据集，描述特征相关性热图。图中标签用英文。提供中文关键数据洞察，使用 markdown 加粗重点。"
+    
+    fig.savefig(buf, format="png")
+    buf.seek(0)
+    img_base64 = base64.b64encode(buf.read()).decode('utf-8')
+    
+    # Get description from VLLM
+    resp = client.chat.completions.create(model="qwen-turbo", messages=[{"role": "user", "content": prompt}], stream=False)
+    desc = resp.choices[0].message.content.strip()
+    
+    return img_base64, desc
 
-def render_knowledge_tree(data, parent_key="", user_disease=None):
-    for key, value in data.items():
-        current_path = f"{parent_key} > {key}" if parent_key else key
-        highlight = user_disease == key
-        
-        if isinstance(value, dict):
-            with st.expander(current_path, expanded=highlight):
-                render_knowledge_tree(value, current_path, user_disease)
-        else:
-            with st.expander(current_path, expanded=highlight):
-                render_article_content(current_path, value, highlight)
+def ask_vllm(question):
+    try:
+        resp = client.chat.completions.create(model="qwen-turbo", messages=[{"role": "user", "content": f"心脏健康知识问答: {question}"}])
+        return resp.choices[0].message.content
+    except Exception as e:
+        return f"AI 错误: {e}"
+
+def render_knowledge_tree(kb, user_disease):
+    if user_disease:
+        st.markdown(f'<div class="tree-root">{user_disease}</div>', unsafe_allow_html=True)
+    for key, value in kb.items():
+        with st.expander(f"{value['label']} {value.get('icon', '❤️')}", expanded=key == user_disease):
+            st.markdown(value.get('content', '暂无内容'))
 
 def render():
-    st.markdown("<div style='height: 80px;'></div>", unsafe_allow_html=True)
+    st.markdown("<style>section[data-testid='stSidebar'], .stSidebar, [data-testid='collapsedControl'], #MainMenu, footer {display: none !important;}</style>", unsafe_allow_html=True)
+    st.markdown("""
+    <style>
+    :root{--p:#1a237e;--a:#00e5ff;--bg:#0f1629;}
+    body{background:var(--bg);color:#e1f5fe;}
+    .hero{background:linear-gradient(135deg,var(--p),#283593,#3949ab);padding:3rem 1rem;border-radius:15px;text-align:center;color:white;margin:2rem 0;}
+    .tree-root {border:2px solid var(--a);background:rgba(255,255,255,.1);padding:1rem;border-radius:8px;}
+    .viz-card {background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border:1px solid rgba(0,229,255,.2);border-radius:16px;padding:1.5rem;margin:1rem 0;}
+    .source-card {background:rgba(41,121,255,.2);border-radius:12px;padding:1rem;}
+    .hot-chip {background:var(--a);color:var(--p);padding:0.5rem 1rem;border-radius:20px;margin:0.5rem;display:inline-block;cursor:pointer;}
+    .hot-chip:hover {background:#2979ff;}
+    .desc-card {background: #f0f7ff; border-left: 4px solid #00e5ff; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,229,255,0.1);}
+    </style>
+    """, unsafe_allow_html=True)
 
-    if "user_id" not in st.session_state or not st.session_state.user_id:
-        st.warning("请先登录以访问知识库。")
-        user_id = 'default_user'
-        user_disease = None
-    else:
-        user_id = st.session_state.user_id
-        user_data = load_profile_data(user_id)
-        user_disease = user_data.get('cardio_disease', '无心血管疾病') if user_data.get('cardio_disease', '无心血管疾病') != '无心血管疾病' else None
+    st.markdown('<div class="hero"><h1>心脏健康知识库</h1><p>探索专业知识与数据洞察</p></div>', unsafe_allow_html=True)
 
-    st.title("心脏健康知识库")
+    user_id = st.session_state.get('user_id')
+    user_data = load_profile_data(user_id)
+    user_disease = user_data.get('cardio_diseases', ['无'])[0]
 
-    search_term = st.text_input("搜索知识库:")
-    
-    col1, col2 = st.columns([0.3, 0.7])
+    search_term = st.text_input("搜索知识库", placeholder="输入关键词，如'高血压'")
+    if search_term:
+        st.info(f"搜索结果: {search_term}")
 
+    col1, col2 = st.columns([3,7])
     with col1:
-        st.subheader("目录")
-        # 置顶用户已患疾病
-        if user_disease and user_disease in KNOWLEDGE_BASE:
-            st.markdown(f"""
-            <div style='background: #ffffff; border: 2px solid #E94560; border-radius: 8px; padding: 10px; margin-bottom: 10px;'>
-                <h4>{user_disease}</h4>
-                <p>您的已确诊疾病</p>
-            </div>
-            """, unsafe_allow_html=True)
-        render_knowledge_tree(KNOWLEDGE_BASE, user_disease=user_disease)
+        st.subheader("目录树")
+        render_knowledge_tree({k.name: DISEASE_ENUM[k].value for k in DISEASE_ENUM if k.name != 'none'}, user_disease)
 
     with col2:
-        st.subheader("文章详情")
-        if search_term:
-            search_results = KNOWLEDGE_DF[
-                KNOWLEDGE_DF['path'].str.contains(search_term, case=False, na=False) |
-                KNOWLEDGE_DF['content'].str.contains(search_term, case=False, na=False)
-            ]
-            if not search_results.empty:
-                st.markdown(f"### 搜索结果 ({len(search_results)} 项):")
-                for index, row in search_results.iterrows():
-                    highlight = user_disease is not None and user_disease in row['path']
-                    render_article_content(row['path'], row['content'], highlight)
-            else:
-                st.info("未找到相关知识。")
-        else:
-            st.info("请在左侧选择目录，或在上方搜索框输入关键词查看详情。")
+        st.subheader("详情 / 洞察")
+        tab1, tab2 = st.tabs(["文章详情", "数据洞察"])
+        with tab1:
+            st.info("选择左侧目录查看详情")
+        with tab2:
+            viz_funcs = ["age_bp_scatter", "disease_distribution", "bmi_chol_heatmap", "feature_correlation"]
+            captions = ["年龄与血压分布", "疾病分布", "BMI与胆固醇热图", "特征相关性"]
+            for func, caption in zip(viz_funcs, captions):
+                st.markdown('<div class="viz-card">', unsafe_allow_html=True)
+                img_base64, desc = generate_viz_image_and_desc(func)
+                st.image(f"data:image/png;base64,{img_base64}")
+                st.markdown(f'<p>{caption}</p>', unsafe_allow_html=True)
+                st.markdown(f'<div class="desc-card">{desc}</div>', unsafe_allow_html=True)
+                st.markdown('</div>', unsafe_allow_html=True)
+
+    st.subheader("即时问 VLLM")
+    question = st.text_input("提问", placeholder="什么是白大衣高血压？")
+    if st.button("发送"):
+        answer = ask_vllm(question)
+        st.markdown(f'<div class="source-card">{answer}</div>', unsafe_allow_html=True)
+
+    st.markdown('<p>热门提问：</p>', unsafe_allow_html=True)
+    hot_questions = ["什么是白大衣高血压？", "HCM 可以打篮球吗？"]
+    for q in hot_questions:
+        if st.button(q, type="secondary", key=q):
+            st.text_input("提问", value=q, disabled=True)
+            st.button("发送", disabled=True)
+            answer = ask_vllm(q)
+            st.markdown(f'<div class="source-card">{answer}</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
     render()

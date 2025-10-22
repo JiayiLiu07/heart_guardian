@@ -1,0 +1,7813 @@
+{
+  "none": [
+    {
+      "day": 1,
+      "meal_type": "早餐",
+      "name": "泰式香茅三明治",
+      "calories": 465,
+      "na": 1833,
+      "k": 3699,
+      "fiber": 31,
+      "ingredients": [
+        "香茅",
+        "金枪鱼",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "午餐",
+      "name": "泰式米粉料理",
+      "calories": 737,
+      "na": 1908,
+      "k": 4002,
+      "fiber": 28,
+      "ingredients": [
+        "香茅",
+        "鸡胸肉",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 1,
+      "meal_type": "晚餐",
+      "name": "健康鸡蛋炖品",
+      "calories": 608,
+      "na": 1984,
+      "k": 4666,
+      "fiber": 33,
+      "ingredients": [
+        "鸡蛋",
+        "芹菜",
+        "菠菜",
+        "全麦面包"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "蛋类",
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "加餐",
+      "name": "和风泡菜小吃",
+      "calories": 190,
+      "na": 1531,
+      "k": 3781,
+      "fiber": 29,
+      "ingredients": [
+        "鸭肉",
+        "泡菜",
+        "米饭"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": []
+    },
+    {
+      "day": 2,
+      "meal_type": "早餐",
+      "name": "越式椰子三明治",
+      "calories": 511,
+      "na": 1697,
+      "k": 4059,
+      "fiber": 25,
+      "ingredients": [
+        "鱼肉",
+        "米饭",
+        "椰子"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "午餐",
+      "name": "南洋椰子面",
+      "calories": 655,
+      "na": 2114,
+      "k": 3995,
+      "fiber": 32,
+      "ingredients": [
+        "椰子",
+        "鸡胸肉",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 2,
+      "meal_type": "晚餐",
+      "name": "健康豆腐炖品",
+      "calories": 652,
+      "na": 2020,
+      "k": 3587,
+      "fiber": 34,
+      "ingredients": [
+        "豆腐",
+        "西兰花",
+        "黄瓜",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "加餐",
+      "name": "健康蘑菇酸奶",
+      "calories": 219,
+      "na": 1740,
+      "k": 4104,
+      "fiber": 25,
+      "ingredients": [
+        "荞麦",
+        "芹菜",
+        "蘑菇",
+        "金枪鱼"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类",
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "早餐",
+      "name": "烩荞麦三明治",
+      "calories": 454,
+      "na": 1639,
+      "k": 3677,
+      "fiber": 25,
+      "ingredients": [
+        "菠菜",
+        "荞麦",
+        "豆腐",
+        "牛奶"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品",
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "午餐",
+      "name": "泰式鸡蛋料理",
+      "calories": 758,
+      "na": 2149,
+      "k": 4699,
+      "fiber": 26,
+      "ingredients": [
+        "鸡蛋",
+        "米饭",
+        "香茅"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "晚餐",
+      "name": "烤小米炖品",
+      "calories": 613,
+      "na": 1661,
+      "k": 3727,
+      "fiber": 25,
+      "ingredients": [
+        "番茄",
+        "低脂奶酪",
+        "小米",
+        "虾仁"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "加餐",
+      "name": "健康大蒜点心",
+      "calories": 203,
+      "na": 2080,
+      "k": 4165,
+      "fiber": 31,
+      "ingredients": [
+        "薏米",
+        "洋葱",
+        "大蒜",
+        "虾仁"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "早餐",
+      "name": "烩番茄粥",
+      "calories": 476,
+      "na": 2054,
+      "k": 4360,
+      "fiber": 34,
+      "ingredients": [
+        "番茄",
+        "杏仁奶",
+        "荞麦",
+        "虾仁"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "午餐",
+      "name": "越式米粉饭",
+      "calories": 690,
+      "na": 1657,
+      "k": 4511,
+      "fiber": 26,
+      "ingredients": [
+        "三文鱼",
+        "辣椒",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "晚餐",
+      "name": "越式瘦牛肉晚餐",
+      "calories": 636,
+      "na": 1767,
+      "k": 4107,
+      "fiber": 33,
+      "ingredients": [
+        "瘦牛肉",
+        "椰子",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 4,
+      "meal_type": "加餐",
+      "name": "健康玉米水果拼盘",
+      "calories": 204,
+      "na": 2163,
+      "k": 3739,
+      "fiber": 35,
+      "ingredients": [
+        "瘦牛肉",
+        "西兰花",
+        "大蒜",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 5,
+      "meal_type": "早餐",
+      "name": "营养西兰花麦片",
+      "calories": 532,
+      "na": 2041,
+      "k": 4014,
+      "fiber": 33,
+      "ingredients": [
+        "鱼肉",
+        "西兰花",
+        "藜麦",
+        "黄瓜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "午餐",
+      "name": "烤洋葱餐",
+      "calories": 654,
+      "na": 2143,
+      "k": 4441,
+      "fiber": 31,
+      "ingredients": [
+        "三文鱼",
+        "薏米",
+        "牛奶",
+        "洋葱"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "晚餐",
+      "name": "越式米饭主菜",
+      "calories": 639,
+      "na": 2208,
+      "k": 3698,
+      "fiber": 35,
+      "ingredients": [
+        "辣椒",
+        "米饭",
+        "金枪鱼"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "加餐",
+      "name": "烩杏仁奶酸奶",
+      "calories": 185,
+      "na": 1716,
+      "k": 4551,
+      "fiber": 28,
+      "ingredients": [
+        "青椒",
+        "豆腐",
+        "燕麦",
+        "杏仁奶"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "大豆"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "早餐",
+      "name": "清淡玉米三明治",
+      "calories": 497,
+      "na": 1878,
+      "k": 3605,
+      "fiber": 25,
+      "ingredients": [
+        "洋葱",
+        "胡萝卜",
+        "虾仁",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "午餐",
+      "name": "和风紫菜餐",
+      "calories": 681,
+      "na": 1555,
+      "k": 4277,
+      "fiber": 27,
+      "ingredients": [
+        "紫菜",
+        "海带",
+        "鸡胸肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": []
+    },
+    {
+      "day": 6,
+      "meal_type": "晚餐",
+      "name": "南洋米饭汤",
+      "calories": 543,
+      "na": 1729,
+      "k": 4331,
+      "fiber": 29,
+      "ingredients": [
+        "米饭",
+        "椰子",
+        "瘦牛肉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 6,
+      "meal_type": "加餐",
+      "name": "营养番茄小吃",
+      "calories": 190,
+      "na": 1842,
+      "k": 3506,
+      "fiber": 26,
+      "ingredients": [
+        "番茄",
+        "荞麦",
+        "三文鱼",
+        "芹菜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类",
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "早餐",
+      "name": "南洋鸡胸肉三明治",
+      "calories": 473,
+      "na": 1783,
+      "k": 4643,
+      "fiber": 28,
+      "ingredients": [
+        "柠檬草",
+        "鸡胸肉",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 7,
+      "meal_type": "午餐",
+      "name": "日式豆腐面",
+      "calories": 683,
+      "na": 2098,
+      "k": 3848,
+      "fiber": 32,
+      "ingredients": [
+        "豆腐",
+        "面条",
+        "金枪鱼"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "晚餐",
+      "name": "日式紫菜晚餐",
+      "calories": 548,
+      "na": 1712,
+      "k": 3594,
+      "fiber": 26,
+      "ingredients": [
+        "鱼肉",
+        "豆腐",
+        "紫菜"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "加餐",
+      "name": "韩式豆腐水果拼盘",
+      "calories": 209,
+      "na": 1884,
+      "k": 4600,
+      "fiber": 25,
+      "ingredients": [
+        "豆腐",
+        "紫菜",
+        "虾仁"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "甲壳类",
+        "大豆"
+      ]
+    }
+  ],
+  "ischemic": [
+    {
+      "day": 1,
+      "meal_type": "早餐",
+      "name": "清淡蘑菇三明治",
+      "calories": 475,
+      "na": 1967,
+      "k": 3821,
+      "fiber": 32,
+      "ingredients": [
+        "鱼肉",
+        "番茄",
+        "薏米",
+        "蘑菇"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "午餐",
+      "name": "营养三文鱼面",
+      "calories": 606,
+      "na": 1573,
+      "k": 3539,
+      "fiber": 36,
+      "ingredients": [
+        "菠菜",
+        "三文鱼",
+        "燕麦",
+        "胡萝卜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "晚餐",
+      "name": "越式米粉晚餐",
+      "calories": 544,
+      "na": 1537,
+      "k": 4045,
+      "fiber": 39,
+      "ingredients": [
+        "瘦牛肉",
+        "椰子",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 1,
+      "meal_type": "加餐",
+      "name": "健康大蒜点心",
+      "calories": 199,
+      "na": 1670,
+      "k": 3905,
+      "fiber": 39,
+      "ingredients": [
+        "鱼肉",
+        "青椒",
+        "燕麦",
+        "大蒜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "早餐",
+      "name": "韩式紫菜三明治",
+      "calories": 421,
+      "na": 1895,
+      "k": 3622,
+      "fiber": 40,
+      "ingredients": [
+        "豆腐",
+        "紫菜",
+        "瘦牛肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "午餐",
+      "name": "营养胡萝卜面",
+      "calories": 688,
+      "na": 1794,
+      "k": 3713,
+      "fiber": 35,
+      "ingredients": [
+        "鱼肉",
+        "胡萝卜",
+        "黄瓜",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "晚餐",
+      "name": "和风紫菜主菜",
+      "calories": 483,
+      "na": 1559,
+      "k": 4043,
+      "fiber": 34,
+      "ingredients": [
+        "鸡蛋",
+        "紫菜",
+        "海带"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "加餐",
+      "name": "煎豆腐小吃",
+      "calories": 197,
+      "na": 1690,
+      "k": 3833,
+      "fiber": 37,
+      "ingredients": [
+        "番茄",
+        "荞麦",
+        "豆腐",
+        "杏仁奶"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "早餐",
+      "name": "烤番茄麦片",
+      "calories": 419,
+      "na": 1719,
+      "k": 4225,
+      "fiber": 40,
+      "ingredients": [
+        "番茄",
+        "杏仁奶",
+        "糙米",
+        "鸡胸肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 3,
+      "meal_type": "午餐",
+      "name": "清淡菠菜面",
+      "calories": 669,
+      "na": 1976,
+      "k": 4171,
+      "fiber": 40,
+      "ingredients": [
+        "菠菜",
+        "洋葱",
+        "小米",
+        "鸡胸肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 3,
+      "meal_type": "晚餐",
+      "name": "营养胡萝卜炖品",
+      "calories": 573,
+      "na": 1582,
+      "k": 3727,
+      "fiber": 36,
+      "ingredients": [
+        "鸡蛋",
+        "荞麦",
+        "胡萝卜",
+        "黄瓜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "加餐",
+      "name": "日式豆腐酸奶",
+      "calories": 165,
+      "na": 1738,
+      "k": 4460,
+      "fiber": 36,
+      "ingredients": [
+        "豆腐",
+        "泡菜",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "大豆"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "早餐",
+      "name": "健康西兰花粥",
+      "calories": 448,
+      "na": 1714,
+      "k": 3999,
+      "fiber": 38,
+      "ingredients": [
+        "黄瓜",
+        "燕麦",
+        "虾仁",
+        "西兰花"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "午餐",
+      "name": "烩小米餐",
+      "calories": 688,
+      "na": 1658,
+      "k": 3972,
+      "fiber": 35,
+      "ingredients": [
+        "杏仁奶",
+        "洋葱",
+        "小米",
+        "金枪鱼"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "晚餐",
+      "name": "越式虾仁炖品",
+      "calories": 582,
+      "na": 1826,
+      "k": 3766,
+      "fiber": 36,
+      "ingredients": [
+        "椰子",
+        "虾仁",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "加餐",
+      "name": "越式米饭水果拼盘",
+      "calories": 175,
+      "na": 1773,
+      "k": 4496,
+      "fiber": 30,
+      "ingredients": [
+        "辣椒",
+        "米饭",
+        "金枪鱼"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "早餐",
+      "name": "营养黄瓜粥",
+      "calories": 413,
+      "na": 1890,
+      "k": 4177,
+      "fiber": 35,
+      "ingredients": [
+        "菠菜",
+        "荞麦",
+        "黄瓜",
+        "瘦牛肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 5,
+      "meal_type": "午餐",
+      "name": "营养虾仁餐",
+      "calories": 593,
+      "na": 1585,
+      "k": 3899,
+      "fiber": 34,
+      "ingredients": [
+        "燕麦",
+        "胡萝卜",
+        "虾仁",
+        "芹菜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "甲壳类",
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "晚餐",
+      "name": "日式鱼肉晚餐",
+      "calories": 532,
+      "na": 1993,
+      "k": 3614,
+      "fiber": 34,
+      "ingredients": [
+        "鱼肉",
+        "豆腐",
+        "紫菜"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "加餐",
+      "name": "韩式米饭水果拼盘",
+      "calories": 165,
+      "na": 1727,
+      "k": 4367,
+      "fiber": 37,
+      "ingredients": [
+        "豆腐",
+        "米饭",
+        "虾仁"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "甲壳类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "早餐",
+      "name": "韩式紫菜三明治",
+      "calories": 417,
+      "na": 1524,
+      "k": 4332,
+      "fiber": 34,
+      "ingredients": [
+        "鱼肉",
+        "豆腐",
+        "紫菜"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "午餐",
+      "name": "日式面条料理",
+      "calories": 612,
+      "na": 1561,
+      "k": 4170,
+      "fiber": 40,
+      "ingredients": [
+        "鸭肉",
+        "海带",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "晚餐",
+      "name": "越式米粉晚餐",
+      "calories": 549,
+      "na": 1893,
+      "k": 4223,
+      "fiber": 39,
+      "ingredients": [
+        "辣椒",
+        "金枪鱼",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "加餐",
+      "name": "南洋柠檬草酸奶",
+      "calories": 184,
+      "na": 1992,
+      "k": 3926,
+      "fiber": 40,
+      "ingredients": [
+        "柠檬草",
+        "金枪鱼",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "早餐",
+      "name": "营养瘦牛肉蛋饼",
+      "calories": 439,
+      "na": 1810,
+      "k": 4397,
+      "fiber": 37,
+      "ingredients": [
+        "荞麦",
+        "西兰花",
+        "芹菜",
+        "瘦牛肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "午餐",
+      "name": "南洋米粉面",
+      "calories": 628,
+      "na": 1810,
+      "k": 3706,
+      "fiber": 36,
+      "ingredients": [
+        "辣椒",
+        "虾仁",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "晚餐",
+      "name": "烤芹菜汤",
+      "calories": 596,
+      "na": 1554,
+      "k": 3741,
+      "fiber": 36,
+      "ingredients": [
+        "低脂奶酪",
+        "燕麦",
+        "虾仁",
+        "芹菜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "甲壳类",
+        "奶制品",
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "加餐",
+      "name": "营养番茄点心",
+      "calories": 177,
+      "na": 1726,
+      "k": 4322,
+      "fiber": 31,
+      "ingredients": [
+        "番茄",
+        "小米",
+        "鸡胸肉",
+        "芹菜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "芹菜/香菜"
+      ]
+    }
+  ],
+  "hypertensive": [
+    {
+      "day": 1,
+      "meal_type": "早餐",
+      "name": "煎低脂奶酪蛋饼",
+      "calories": 468,
+      "na": 1370,
+      "k": 4809,
+      "fiber": 29,
+      "ingredients": [
+        "低脂奶酪",
+        "薏米",
+        "芹菜",
+        "鸡胸肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品",
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "午餐",
+      "name": "健康菠菜料理",
+      "calories": 562,
+      "na": 1195,
+      "k": 4414,
+      "fiber": 26,
+      "ingredients": [
+        "鱼肉",
+        "薏米",
+        "西兰花",
+        "菠菜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "晚餐",
+      "name": "和风豆腐晚餐",
+      "calories": 539,
+      "na": 1211,
+      "k": 4162,
+      "fiber": 29,
+      "ingredients": [
+        "豆腐",
+        "紫菜",
+        "瘦牛肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "加餐",
+      "name": "日式豆腐水果拼盘",
+      "calories": 156,
+      "na": 1392,
+      "k": 4282,
+      "fiber": 27,
+      "ingredients": [
+        "豆腐",
+        "紫菜",
+        "瘦牛肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "早餐",
+      "name": "煎青椒三明治",
+      "calories": 380,
+      "na": 1417,
+      "k": 4901,
+      "fiber": 34,
+      "ingredients": [
+        "鱼肉",
+        "青椒",
+        "牛奶",
+        "玉米"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "午餐",
+      "name": "烩牛奶料理",
+      "calories": 628,
+      "na": 1124,
+      "k": 4584,
+      "fiber": 31,
+      "ingredients": [
+        "荞麦",
+        "洋葱",
+        "牛奶",
+        "金枪鱼"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "晚餐",
+      "name": "和风面条汤",
+      "calories": 509,
+      "na": 1390,
+      "k": 4036,
+      "fiber": 35,
+      "ingredients": [
+        "三文鱼",
+        "海带",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "加餐",
+      "name": "日式紫菜水果拼盘",
+      "calories": 179,
+      "na": 1223,
+      "k": 4570,
+      "fiber": 25,
+      "ingredients": [
+        "鱼肉",
+        "豆腐",
+        "紫菜"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "早餐",
+      "name": "泰式金枪鱼蛋饼",
+      "calories": 442,
+      "na": 1279,
+      "k": 4304,
+      "fiber": 28,
+      "ingredients": [
+        "香茅",
+        "金枪鱼",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "午餐",
+      "name": "和风紫菜餐",
+      "calories": 655,
+      "na": 1394,
+      "k": 4435,
+      "fiber": 31,
+      "ingredients": [
+        "紫菜",
+        "泡菜",
+        "金枪鱼"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "晚餐",
+      "name": "烤瘦牛肉汤",
+      "calories": 499,
+      "na": 1280,
+      "k": 4349,
+      "fiber": 27,
+      "ingredients": [
+        "低脂奶酪",
+        "小米",
+        "蘑菇",
+        "瘦牛肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "加餐",
+      "name": "烤荞麦小吃",
+      "calories": 184,
+      "na": 1470,
+      "k": 4423,
+      "fiber": 28,
+      "ingredients": [
+        "荞麦",
+        "豆腐",
+        "胡萝卜",
+        "杏仁奶"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "早餐",
+      "name": "和风米饭蛋饼",
+      "calories": 422,
+      "na": 1096,
+      "k": 4253,
+      "fiber": 34,
+      "ingredients": [
+        "三文鱼",
+        "豆腐",
+        "米饭"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "午餐",
+      "name": "烤牛奶料理",
+      "calories": 554,
+      "na": 1467,
+      "k": 4219,
+      "fiber": 33,
+      "ingredients": [
+        "洋葱",
+        "牛奶",
+        "金枪鱼",
+        "玉米"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "晚餐",
+      "name": "煎蘑菇主菜",
+      "calories": 567,
+      "na": 1018,
+      "k": 4944,
+      "fiber": 27,
+      "ingredients": [
+        "鸭肉",
+        "低脂奶酪",
+        "薏米",
+        "蘑菇"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "加餐",
+      "name": "越式鱼肉水果拼盘",
+      "calories": 163,
+      "na": 1270,
+      "k": 4991,
+      "fiber": 31,
+      "ingredients": [
+        "鱼肉",
+        "柠檬草",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "早餐",
+      "name": "健康番茄麦片",
+      "calories": 471,
+      "na": 1488,
+      "k": 4081,
+      "fiber": 30,
+      "ingredients": [
+        "番茄",
+        "三文鱼",
+        "燕麦",
+        "胡萝卜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "午餐",
+      "name": "健康蘑菇餐",
+      "calories": 542,
+      "na": 1399,
+      "k": 4372,
+      "fiber": 26,
+      "ingredients": [
+        "蘑菇",
+        "大蒜",
+        "全麦面包",
+        "瘦牛肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "晚餐",
+      "name": "营养薏米主菜",
+      "calories": 495,
+      "na": 1410,
+      "k": 4843,
+      "fiber": 32,
+      "ingredients": [
+        "菠菜",
+        "青椒",
+        "三文鱼",
+        "薏米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "加餐",
+      "name": "越式柠檬草水果拼盘",
+      "calories": 185,
+      "na": 1201,
+      "k": 4934,
+      "fiber": 31,
+      "ingredients": [
+        "柠檬草",
+        "米饭",
+        "虾仁"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "早餐",
+      "name": "和风泡菜粥",
+      "calories": 430,
+      "na": 1177,
+      "k": 4372,
+      "fiber": 30,
+      "ingredients": [
+        "泡菜",
+        "米饭",
+        "瘦牛肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": []
+    },
+    {
+      "day": 6,
+      "meal_type": "午餐",
+      "name": "烤牛奶面",
+      "calories": 582,
+      "na": 1163,
+      "k": 4568,
+      "fiber": 34,
+      "ingredients": [
+        "瘦牛肉",
+        "牛奶",
+        "大蒜",
+        "玉米"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "晚餐",
+      "name": "烩全麦面包炖品",
+      "calories": 484,
+      "na": 1132,
+      "k": 4886,
+      "fiber": 27,
+      "ingredients": [
+        "三文鱼",
+        "洋葱",
+        "牛奶",
+        "全麦面包"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "加餐",
+      "name": "南洋米饭水果拼盘",
+      "calories": 189,
+      "na": 1148,
+      "k": 4721,
+      "fiber": 26,
+      "ingredients": [
+        "三文鱼",
+        "辣椒",
+        "米饭"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "早餐",
+      "name": "越式米饭粥",
+      "calories": 405,
+      "na": 1481,
+      "k": 4047,
+      "fiber": 31,
+      "ingredients": [
+        "辣椒",
+        "米饭",
+        "虾仁"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "午餐",
+      "name": "日式面条面",
+      "calories": 637,
+      "na": 1336,
+      "k": 4456,
+      "fiber": 35,
+      "ingredients": [
+        "鱼肉",
+        "海带",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "晚餐",
+      "name": "和风面条炖品",
+      "calories": 466,
+      "na": 1300,
+      "k": 4775,
+      "fiber": 25,
+      "ingredients": [
+        "豆腐",
+        "面条",
+        "瘦牛肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "大豆"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "加餐",
+      "name": "韩式海带酸奶",
+      "calories": 176,
+      "na": 1312,
+      "k": 4671,
+      "fiber": 35,
+      "ingredients": [
+        "紫菜",
+        "海带",
+        "虾仁"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    }
+  ],
+  "arrhythmia": [
+    {
+      "day": 1,
+      "meal_type": "早餐",
+      "name": "健康燕麦麦片",
+      "calories": 455,
+      "na": 2494,
+      "k": 4483,
+      "fiber": 27,
+      "ingredients": [
+        "鱼肉",
+        "番茄",
+        "燕麦",
+        "大蒜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "午餐",
+      "name": "烤玉米料理",
+      "calories": 617,
+      "na": 2250,
+      "k": 3823,
+      "fiber": 26,
+      "ingredients": [
+        "鱼肉",
+        "酸奶",
+        "番茄",
+        "玉米"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "晚餐",
+      "name": "健康洋葱炖品",
+      "calories": 587,
+      "na": 2133,
+      "k": 3873,
+      "fiber": 21,
+      "ingredients": [
+        "荞麦",
+        "豆腐",
+        "胡萝卜",
+        "洋葱"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "加餐",
+      "name": "烤青椒点心",
+      "calories": 183,
+      "na": 2107,
+      "k": 4071,
+      "fiber": 23,
+      "ingredients": [
+        "鸭肉",
+        "糙米",
+        "酸奶",
+        "青椒"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "早餐",
+      "name": "日式米饭麦片",
+      "calories": 435,
+      "na": 2089,
+      "k": 4367,
+      "fiber": 24,
+      "ingredients": [
+        "泡菜",
+        "米饭",
+        "鸡胸肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": []
+    },
+    {
+      "day": 2,
+      "meal_type": "午餐",
+      "name": "日式金枪鱼料理",
+      "calories": 666,
+      "na": 2492,
+      "k": 4403,
+      "fiber": 27,
+      "ingredients": [
+        "紫菜",
+        "海带",
+        "金枪鱼"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "晚餐",
+      "name": "煎菠菜晚餐",
+      "calories": 544,
+      "na": 2065,
+      "k": 3699,
+      "fiber": 28,
+      "ingredients": [
+        "菠菜",
+        "鸭肉",
+        "薏米",
+        "豆浆"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "加餐",
+      "name": "日式豆腐点心",
+      "calories": 207,
+      "na": 2330,
+      "k": 4283,
+      "fiber": 24,
+      "ingredients": [
+        "鸡蛋",
+        "豆腐",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "蛋类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "早餐",
+      "name": "泰式米饭蛋饼",
+      "calories": 460,
+      "na": 2332,
+      "k": 4499,
+      "fiber": 21,
+      "ingredients": [
+        "辣椒",
+        "米饭",
+        "金枪鱼"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "午餐",
+      "name": "营养鸡蛋饭",
+      "calories": 652,
+      "na": 2493,
+      "k": 3629,
+      "fiber": 25,
+      "ingredients": [
+        "鸡蛋",
+        "青椒",
+        "燕麦",
+        "黄瓜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "蛋类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "晚餐",
+      "name": "南洋金枪鱼晚餐",
+      "calories": 602,
+      "na": 2485,
+      "k": 3764,
+      "fiber": 27,
+      "ingredients": [
+        "香茅",
+        "金枪鱼",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "加餐",
+      "name": "南洋柠檬草点心",
+      "calories": 187,
+      "na": 2441,
+      "k": 4438,
+      "fiber": 24,
+      "ingredients": [
+        "柠檬草",
+        "鸡胸肉",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 4,
+      "meal_type": "早餐",
+      "name": "烩鸭肉蛋饼",
+      "calories": 504,
+      "na": 2010,
+      "k": 3992,
+      "fiber": 30,
+      "ingredients": [
+        "鸭肉",
+        "荞麦",
+        "酸奶",
+        "蘑菇"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "午餐",
+      "name": "南洋金枪鱼餐",
+      "calories": 715,
+      "na": 2447,
+      "k": 3895,
+      "fiber": 26,
+      "ingredients": [
+        "柠檬草",
+        "金枪鱼",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "晚餐",
+      "name": "烩金枪鱼主菜",
+      "calories": 535,
+      "na": 2236,
+      "k": 4129,
+      "fiber": 29,
+      "ingredients": [
+        "酸奶",
+        "薏米",
+        "芹菜",
+        "金枪鱼"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品",
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "加餐",
+      "name": "营养西兰花酸奶",
+      "calories": 173,
+      "na": 2247,
+      "k": 3691,
+      "fiber": 22,
+      "ingredients": [
+        "鸭肉",
+        "蘑菇",
+        "藜麦",
+        "西兰花"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 5,
+      "meal_type": "早餐",
+      "name": "和风泡菜三明治",
+      "calories": 491,
+      "na": 2001,
+      "k": 3960,
+      "fiber": 25,
+      "ingredients": [
+        "紫菜",
+        "泡菜",
+        "虾仁"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "午餐",
+      "name": "清淡青椒面",
+      "calories": 629,
+      "na": 2309,
+      "k": 3981,
+      "fiber": 24,
+      "ingredients": [
+        "青椒",
+        "小米",
+        "大蒜",
+        "瘦牛肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 5,
+      "meal_type": "晚餐",
+      "name": "烩番茄晚餐",
+      "calories": 625,
+      "na": 2417,
+      "k": 3800,
+      "fiber": 27,
+      "ingredients": [
+        "鸡蛋",
+        "番茄",
+        "低脂奶酪",
+        "藜麦"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "蛋类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "加餐",
+      "name": "煎瘦牛肉点心",
+      "calories": 208,
+      "na": 2420,
+      "k": 4058,
+      "fiber": 30,
+      "ingredients": [
+        "番茄",
+        "薏米",
+        "杏仁奶",
+        "瘦牛肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 6,
+      "meal_type": "早餐",
+      "name": "营养番茄麦片",
+      "calories": 435,
+      "na": 2305,
+      "k": 4300,
+      "fiber": 21,
+      "ingredients": [
+        "番茄",
+        "胡萝卜",
+        "金枪鱼",
+        "全麦面包"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "午餐",
+      "name": "营养洋葱餐",
+      "calories": 671,
+      "na": 2121,
+      "k": 4405,
+      "fiber": 23,
+      "ingredients": [
+        "鸭肉",
+        "糙米",
+        "洋葱",
+        "大蒜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 6,
+      "meal_type": "晚餐",
+      "name": "清淡薏米主菜",
+      "calories": 599,
+      "na": 2311,
+      "k": 4240,
+      "fiber": 30,
+      "ingredients": [
+        "薏米",
+        "西兰花",
+        "蘑菇",
+        "金枪鱼"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "加餐",
+      "name": "煎鱼肉小吃",
+      "calories": 186,
+      "na": 2482,
+      "k": 4043,
+      "fiber": 25,
+      "ingredients": [
+        "鱼肉",
+        "燕麦",
+        "蘑菇",
+        "杏仁奶"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "早餐",
+      "name": "烤胡萝卜三明治",
+      "calories": 484,
+      "na": 2403,
+      "k": 3700,
+      "fiber": 29,
+      "ingredients": [
+        "豆浆",
+        "三文鱼",
+        "薏米",
+        "胡萝卜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "午餐",
+      "name": "煎薏米饭",
+      "calories": 688,
+      "na": 2000,
+      "k": 3655,
+      "fiber": 30,
+      "ingredients": [
+        "菠菜",
+        "鸭肉",
+        "薏米",
+        "杏仁奶"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 7,
+      "meal_type": "晚餐",
+      "name": "烩杏仁奶晚餐",
+      "calories": 606,
+      "na": 2057,
+      "k": 4458,
+      "fiber": 23,
+      "ingredients": [
+        "杏仁奶",
+        "薏米",
+        "黄瓜",
+        "虾仁"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "加餐",
+      "name": "烩胡萝卜酸奶",
+      "calories": 196,
+      "na": 2050,
+      "k": 4373,
+      "fiber": 29,
+      "ingredients": [
+        "小米",
+        "胡萝卜",
+        "杏仁奶",
+        "瘦牛肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": []
+    }
+  ],
+  "heart_failure": [
+    {
+      "day": 1,
+      "meal_type": "早餐",
+      "name": "和风泡菜麦片",
+      "calories": 354,
+      "na": 981,
+      "k": 2831,
+      "fiber": 25,
+      "ingredients": [
+        "泡菜",
+        "米饭",
+        "金枪鱼"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "午餐",
+      "name": "日式面条餐",
+      "calories": 615,
+      "na": 1186,
+      "k": 2992,
+      "fiber": 24,
+      "ingredients": [
+        "鸡蛋",
+        "泡菜",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "蛋类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "晚餐",
+      "name": "和风米饭晚餐",
+      "calories": 489,
+      "na": 1162,
+      "k": 2760,
+      "fiber": 30,
+      "ingredients": [
+        "豆腐",
+        "米饭",
+        "瘦牛肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "加餐",
+      "name": "南洋辣椒点心",
+      "calories": 158,
+      "na": 899,
+      "k": 2228,
+      "fiber": 24,
+      "ingredients": [
+        "辣椒",
+        "米饭",
+        "虾仁"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "早餐",
+      "name": "煎杏仁奶粥",
+      "calories": 436,
+      "na": 1036,
+      "k": 2486,
+      "fiber": 28,
+      "ingredients": [
+        "鸭肉",
+        "小米",
+        "蘑菇",
+        "杏仁奶"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 2,
+      "meal_type": "午餐",
+      "name": "日式鱼肉餐",
+      "calories": 595,
+      "na": 1105,
+      "k": 2122,
+      "fiber": 26,
+      "ingredients": [
+        "鱼肉",
+        "海带",
+        "米饭"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "晚餐",
+      "name": "营养菠菜晚餐",
+      "calories": 487,
+      "na": 833,
+      "k": 2316,
+      "fiber": 24,
+      "ingredients": [
+        "鱼肉",
+        "荞麦",
+        "洋葱",
+        "菠菜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "加餐",
+      "name": "营养全麦面包酸奶",
+      "calories": 143,
+      "na": 1188,
+      "k": 2873,
+      "fiber": 20,
+      "ingredients": [
+        "菠菜",
+        "豆腐",
+        "黄瓜",
+        "全麦面包"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "早餐",
+      "name": "泰式辣椒蛋饼",
+      "calories": 353,
+      "na": 1100,
+      "k": 2557,
+      "fiber": 24,
+      "ingredients": [
+        "豆腐",
+        "辣椒",
+        "米饭"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "午餐",
+      "name": "日式鸡胸肉面",
+      "calories": 581,
+      "na": 1157,
+      "k": 2973,
+      "fiber": 23,
+      "ingredients": [
+        "泡菜",
+        "面条",
+        "鸡胸肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "晚餐",
+      "name": "烤鱼肉汤",
+      "calories": 496,
+      "na": 964,
+      "k": 2891,
+      "fiber": 22,
+      "ingredients": [
+        "鱼肉",
+        "酸奶",
+        "洋葱",
+        "全麦面包"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "加餐",
+      "name": "南洋米粉水果拼盘",
+      "calories": 160,
+      "na": 884,
+      "k": 2548,
+      "fiber": 29,
+      "ingredients": [
+        "辣椒",
+        "鸡胸肉",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 4,
+      "meal_type": "早餐",
+      "name": "和风海带麦片",
+      "calories": 351,
+      "na": 1196,
+      "k": 2860,
+      "fiber": 29,
+      "ingredients": [
+        "三文鱼",
+        "海带",
+        "米饭"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "午餐",
+      "name": "煎酸奶料理",
+      "calories": 621,
+      "na": 951,
+      "k": 2241,
+      "fiber": 22,
+      "ingredients": [
+        "酸奶",
+        "荞麦",
+        "大蒜",
+        "瘦牛肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "晚餐",
+      "name": "泰式米饭汤",
+      "calories": 532,
+      "na": 801,
+      "k": 2232,
+      "fiber": 21,
+      "ingredients": [
+        "柠檬草",
+        "米饭",
+        "虾仁"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "加餐",
+      "name": "泰式柠檬草酸奶",
+      "calories": 153,
+      "na": 890,
+      "k": 2468,
+      "fiber": 30,
+      "ingredients": [
+        "鸭肉",
+        "柠檬草",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 5,
+      "meal_type": "早餐",
+      "name": "烩鱼肉三明治",
+      "calories": 424,
+      "na": 1009,
+      "k": 2777,
+      "fiber": 23,
+      "ingredients": [
+        "鱼肉",
+        "糙米",
+        "低脂奶酪",
+        "蘑菇"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "午餐",
+      "name": "烩低脂奶酪料理",
+      "calories": 497,
+      "na": 959,
+      "k": 2210,
+      "fiber": 30,
+      "ingredients": [
+        "鸡蛋",
+        "荞麦",
+        "低脂奶酪",
+        "西兰花"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "蛋类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "晚餐",
+      "name": "烩瘦牛肉主菜",
+      "calories": 531,
+      "na": 878,
+      "k": 2041,
+      "fiber": 23,
+      "ingredients": [
+        "豆浆",
+        "洋葱",
+        "藜麦",
+        "瘦牛肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "加餐",
+      "name": "越式金枪鱼点心",
+      "calories": 176,
+      "na": 861,
+      "k": 2292,
+      "fiber": 20,
+      "ingredients": [
+        "辣椒",
+        "金枪鱼",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "早餐",
+      "name": "烤鸭肉粥",
+      "calories": 399,
+      "na": 975,
+      "k": 2810,
+      "fiber": 25,
+      "ingredients": [
+        "鸭肉",
+        "糙米",
+        "洋葱",
+        "酸奶"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "午餐",
+      "name": "日式鱼肉餐",
+      "calories": 563,
+      "na": 874,
+      "k": 2726,
+      "fiber": 25,
+      "ingredients": [
+        "鱼肉",
+        "紫菜",
+        "泡菜"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "晚餐",
+      "name": "泰式椰子汤",
+      "calories": 499,
+      "na": 1149,
+      "k": 2482,
+      "fiber": 27,
+      "ingredients": [
+        "鸡蛋",
+        "米饭",
+        "椰子"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "加餐",
+      "name": "和风米饭水果拼盘",
+      "calories": 162,
+      "na": 868,
+      "k": 2428,
+      "fiber": 21,
+      "ingredients": [
+        "海带",
+        "米饭",
+        "虾仁"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "早餐",
+      "name": "越式香茅粥",
+      "calories": 396,
+      "na": 856,
+      "k": 2964,
+      "fiber": 27,
+      "ingredients": [
+        "香茅",
+        "虾仁",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "午餐",
+      "name": "日式泡菜面",
+      "calories": 561,
+      "na": 820,
+      "k": 2615,
+      "fiber": 26,
+      "ingredients": [
+        "紫菜",
+        "泡菜",
+        "金枪鱼"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "晚餐",
+      "name": "烤玉米晚餐",
+      "calories": 476,
+      "na": 1192,
+      "k": 2982,
+      "fiber": 27,
+      "ingredients": [
+        "鱼肉",
+        "牛奶",
+        "菠菜",
+        "玉米"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "加餐",
+      "name": "泰式豆腐点心",
+      "calories": 160,
+      "na": 1015,
+      "k": 2370,
+      "fiber": 28,
+      "ingredients": [
+        "豆腐",
+        "椰子",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "大豆"
+      ]
+    }
+  ],
+  "cardiomyopathy": [
+    {
+      "day": 1,
+      "meal_type": "早餐",
+      "name": "日式豆腐三明治",
+      "calories": 430,
+      "na": 1516,
+      "k": 3568,
+      "fiber": 33,
+      "ingredients": [
+        "豆腐",
+        "紫菜"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "午餐",
+      "name": "韩式泡菜面",
+      "calories": 689,
+      "na": 1776,
+      "k": 3360,
+      "fiber": 31,
+      "ingredients": [
+        "泡菜",
+        "米饭",
+        "鸡胸肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": []
+    },
+    {
+      "day": 1,
+      "meal_type": "晚餐",
+      "name": "韩式鸡蛋炖品",
+      "calories": 491,
+      "na": 1926,
+      "k": 3807,
+      "fiber": 35,
+      "ingredients": [
+        "鸡蛋",
+        "紫菜",
+        "海带"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "加餐",
+      "name": "健康荞麦水果拼盘",
+      "calories": 164,
+      "na": 1990,
+      "k": 3983,
+      "fiber": 26,
+      "ingredients": [
+        "鸡蛋",
+        "青椒",
+        "荞麦",
+        "大蒜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "早餐",
+      "name": "煎豆浆蛋饼",
+      "calories": 447,
+      "na": 1589,
+      "k": 3527,
+      "fiber": 26,
+      "ingredients": [
+        "鱼肉",
+        "豆浆",
+        "小米",
+        "菠菜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "午餐",
+      "name": "清淡菠菜料理",
+      "calories": 665,
+      "na": 1744,
+      "k": 3460,
+      "fiber": 34,
+      "ingredients": [
+        "菠菜",
+        "豆腐",
+        "胡萝卜",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "晚餐",
+      "name": "营养鸡胸肉汤",
+      "calories": 528,
+      "na": 1501,
+      "k": 3345,
+      "fiber": 34,
+      "ingredients": [
+        "菠菜",
+        "西兰花",
+        "鸡胸肉",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 2,
+      "meal_type": "加餐",
+      "name": "煎虾仁小吃",
+      "calories": 170,
+      "na": 1518,
+      "k": 3097,
+      "fiber": 31,
+      "ingredients": [
+        "酸奶",
+        "荞麦",
+        "蘑菇",
+        "虾仁"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "早餐",
+      "name": "越式柠檬草粥",
+      "calories": 495,
+      "na": 1796,
+      "k": 3144,
+      "fiber": 29,
+      "ingredients": [
+        "柠檬草",
+        "米饭",
+        "虾仁"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "午餐",
+      "name": "泰式米粉料理",
+      "calories": 684,
+      "na": 1755,
+      "k": 3385,
+      "fiber": 32,
+      "ingredients": [
+        "鸡蛋",
+        "椰子",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "晚餐",
+      "name": "南洋米饭主菜",
+      "calories": 495,
+      "na": 1827,
+      "k": 3101,
+      "fiber": 31,
+      "ingredients": [
+        "椰子",
+        "米饭",
+        "鸡胸肉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 3,
+      "meal_type": "加餐",
+      "name": "和风豆腐酸奶",
+      "calories": 174,
+      "na": 1669,
+      "k": 3263,
+      "fiber": 29,
+      "ingredients": [
+        "豆腐",
+        "米饭",
+        "瘦牛肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "早餐",
+      "name": "韩式面条麦片",
+      "calories": 420,
+      "na": 1876,
+      "k": 3192,
+      "fiber": 29,
+      "ingredients": [
+        "海带",
+        "面条",
+        "虾仁"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "午餐",
+      "name": "韩式鱼肉餐",
+      "calories": 699,
+      "na": 1970,
+      "k": 3858,
+      "fiber": 34,
+      "ingredients": [
+        "鱼肉",
+        "豆腐",
+        "紫菜"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "晚餐",
+      "name": "泰式米饭炖品",
+      "calories": 483,
+      "na": 1842,
+      "k": 3926,
+      "fiber": 28,
+      "ingredients": [
+        "鱼肉",
+        "辣椒",
+        "米饭"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "加餐",
+      "name": "泰式香茅水果拼盘",
+      "calories": 179,
+      "na": 1696,
+      "k": 3712,
+      "fiber": 29,
+      "ingredients": [
+        "三文鱼",
+        "米饭",
+        "香茅"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "早餐",
+      "name": "清淡鸭肉麦片",
+      "calories": 402,
+      "na": 1823,
+      "k": 3731,
+      "fiber": 28,
+      "ingredients": [
+        "番茄",
+        "鸭肉",
+        "藜麦",
+        "黄瓜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 5,
+      "meal_type": "午餐",
+      "name": "泰式鸡胸肉饭",
+      "calories": 567,
+      "na": 1562,
+      "k": 3108,
+      "fiber": 30,
+      "ingredients": [
+        "椰子",
+        "鸡胸肉",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 5,
+      "meal_type": "晚餐",
+      "name": "健康蘑菇汤",
+      "calories": 599,
+      "na": 1739,
+      "k": 3208,
+      "fiber": 35,
+      "ingredients": [
+        "番茄",
+        "鸭肉",
+        "蘑菇",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 5,
+      "meal_type": "加餐",
+      "name": "南洋瘦牛肉小吃",
+      "calories": 174,
+      "na": 1735,
+      "k": 3978,
+      "fiber": 30,
+      "ingredients": [
+        "瘦牛肉",
+        "柠檬草",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 6,
+      "meal_type": "早餐",
+      "name": "烩藜麦粥",
+      "calories": 449,
+      "na": 1947,
+      "k": 3357,
+      "fiber": 26,
+      "ingredients": [
+        "鸡蛋",
+        "牛奶",
+        "藜麦",
+        "大蒜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "蛋类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "午餐",
+      "name": "健康全麦面包餐",
+      "calories": 574,
+      "na": 1607,
+      "k": 3786,
+      "fiber": 32,
+      "ingredients": [
+        "菠菜",
+        "鸭肉",
+        "青椒",
+        "全麦面包"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "晚餐",
+      "name": "南洋米粉炖品",
+      "calories": 538,
+      "na": 1599,
+      "k": 3425,
+      "fiber": 29,
+      "ingredients": [
+        "豆腐",
+        "柠檬草",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "加餐",
+      "name": "烤糙米小吃",
+      "calories": 185,
+      "na": 1808,
+      "k": 3533,
+      "fiber": 35,
+      "ingredients": [
+        "鸭肉",
+        "糙米",
+        "低脂奶酪",
+        "黄瓜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "早餐",
+      "name": "烤虾仁蛋饼",
+      "calories": 422,
+      "na": 1648,
+      "k": 3904,
+      "fiber": 30,
+      "ingredients": [
+        "低脂奶酪",
+        "薏米",
+        "黄瓜",
+        "虾仁"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "午餐",
+      "name": "日式米饭面",
+      "calories": 638,
+      "na": 1835,
+      "k": 3378,
+      "fiber": 30,
+      "ingredients": [
+        "豆腐",
+        "米饭",
+        "鸡胸肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "晚餐",
+      "name": "日式面条炖品",
+      "calories": 585,
+      "na": 1554,
+      "k": 3276,
+      "fiber": 33,
+      "ingredients": [
+        "豆腐",
+        "面条",
+        "虾仁"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "甲壳类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "加餐",
+      "name": "南洋三文鱼水果拼盘",
+      "calories": 199,
+      "na": 1642,
+      "k": 3947,
+      "fiber": 29,
+      "ingredients": [
+        "三文鱼",
+        "柠檬草",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    }
+  ],
+  "valvular": [
+    {
+      "day": 1,
+      "meal_type": "早餐",
+      "name": "日式豆腐蛋饼",
+      "calories": 442,
+      "na": 1570,
+      "k": 3826,
+      "fiber": 27,
+      "ingredients": [
+        "豆腐",
+        "紫菜",
+        "瘦牛肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "午餐",
+      "name": "烩牛奶餐",
+      "calories": 698,
+      "na": 1891,
+      "k": 3649,
+      "fiber": 26,
+      "ingredients": [
+        "番茄",
+        "鸭肉",
+        "牛奶",
+        "燕麦"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "晚餐",
+      "name": "泰式米粉主菜",
+      "calories": 518,
+      "na": 1989,
+      "k": 3576,
+      "fiber": 30,
+      "ingredients": [
+        "柠檬草",
+        "鸡胸肉",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 1,
+      "meal_type": "加餐",
+      "name": "煎西兰花点心",
+      "calories": 186,
+      "na": 1585,
+      "k": 3720,
+      "fiber": 32,
+      "ingredients": [
+        "牛奶",
+        "西兰花",
+        "虾仁",
+        "玉米"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "早餐",
+      "name": "南洋米粉麦片",
+      "calories": 440,
+      "na": 1948,
+      "k": 3713,
+      "fiber": 35,
+      "ingredients": [
+        "鱼肉",
+        "香茅",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "午餐",
+      "name": "烩牛奶料理",
+      "calories": 681,
+      "na": 1753,
+      "k": 4043,
+      "fiber": 30,
+      "ingredients": [
+        "豆腐",
+        "洋葱",
+        "牛奶",
+        "玉米"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品",
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "晚餐",
+      "name": "泰式金枪鱼主菜",
+      "calories": 619,
+      "na": 1551,
+      "k": 4352,
+      "fiber": 34,
+      "ingredients": [
+        "柠檬草",
+        "金枪鱼",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "加餐",
+      "name": "越式香茅小吃",
+      "calories": 196,
+      "na": 1920,
+      "k": 4184,
+      "fiber": 30,
+      "ingredients": [
+        "香茅",
+        "金枪鱼",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "早餐",
+      "name": "日式米饭粥",
+      "calories": 480,
+      "na": 1779,
+      "k": 3527,
+      "fiber": 27,
+      "ingredients": [
+        "三文鱼",
+        "海带",
+        "米饭"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "午餐",
+      "name": "日式三文鱼面",
+      "calories": 647,
+      "na": 1542,
+      "k": 4463,
+      "fiber": 34,
+      "ingredients": [
+        "三文鱼",
+        "紫菜",
+        "海带"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "晚餐",
+      "name": "营养鸡胸肉晚餐",
+      "calories": 574,
+      "na": 2000,
+      "k": 4277,
+      "fiber": 32,
+      "ingredients": [
+        "菠菜",
+        "西兰花",
+        "鸡胸肉",
+        "全麦面包"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "加餐",
+      "name": "清淡洋葱小吃",
+      "calories": 173,
+      "na": 1573,
+      "k": 3943,
+      "fiber": 28,
+      "ingredients": [
+        "三文鱼",
+        "洋葱",
+        "小米",
+        "大蒜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "早餐",
+      "name": "和风鸭肉麦片",
+      "calories": 453,
+      "na": 1764,
+      "k": 4319,
+      "fiber": 28,
+      "ingredients": [
+        "鸭肉",
+        "海带",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "午餐",
+      "name": "日式紫菜料理",
+      "calories": 675,
+      "na": 1970,
+      "k": 4066,
+      "fiber": 35,
+      "ingredients": [
+        "豆腐",
+        "紫菜",
+        "金枪鱼"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "晚餐",
+      "name": "泰式柠檬草汤",
+      "calories": 581,
+      "na": 1584,
+      "k": 3524,
+      "fiber": 32,
+      "ingredients": [
+        "柠檬草",
+        "金枪鱼",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "加餐",
+      "name": "煎荞麦水果拼盘",
+      "calories": 206,
+      "na": 1874,
+      "k": 3500,
+      "fiber": 25,
+      "ingredients": [
+        "荞麦",
+        "牛奶",
+        "西兰花",
+        "虾仁"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "早餐",
+      "name": "日式三文鱼三明治",
+      "calories": 505,
+      "na": 1509,
+      "k": 4144,
+      "fiber": 30,
+      "ingredients": [
+        "三文鱼",
+        "紫菜",
+        "海带"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "午餐",
+      "name": "烤玉米料理",
+      "calories": 710,
+      "na": 1854,
+      "k": 3666,
+      "fiber": 28,
+      "ingredients": [
+        "菠菜",
+        "低脂奶酪",
+        "虾仁",
+        "玉米"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "晚餐",
+      "name": "健康薏米炖品",
+      "calories": 550,
+      "na": 1825,
+      "k": 4011,
+      "fiber": 30,
+      "ingredients": [
+        "鸭肉",
+        "薏米",
+        "大蒜",
+        "洋葱"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 5,
+      "meal_type": "加餐",
+      "name": "煎低脂奶酪酸奶",
+      "calories": 182,
+      "na": 1503,
+      "k": 3918,
+      "fiber": 35,
+      "ingredients": [
+        "荞麦",
+        "低脂奶酪",
+        "胡萝卜",
+        "金枪鱼"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "早餐",
+      "name": "健康芹菜粥",
+      "calories": 472,
+      "na": 1513,
+      "k": 4115,
+      "fiber": 33,
+      "ingredients": [
+        "鸭肉",
+        "芹菜",
+        "黄瓜",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "午餐",
+      "name": "和风面条面",
+      "calories": 631,
+      "na": 1500,
+      "k": 4064,
+      "fiber": 28,
+      "ingredients": [
+        "海带",
+        "面条",
+        "虾仁"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "晚餐",
+      "name": "健康三文鱼晚餐",
+      "calories": 526,
+      "na": 1782,
+      "k": 3622,
+      "fiber": 35,
+      "ingredients": [
+        "大蒜",
+        "三文鱼",
+        "藜麦",
+        "胡萝卜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "加餐",
+      "name": "健康蘑菇酸奶",
+      "calories": 199,
+      "na": 1742,
+      "k": 4165,
+      "fiber": 30,
+      "ingredients": [
+        "番茄",
+        "三文鱼",
+        "蘑菇",
+        "藜麦"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "早餐",
+      "name": "营养番茄粥",
+      "calories": 481,
+      "na": 1799,
+      "k": 3915,
+      "fiber": 35,
+      "ingredients": [
+        "番茄",
+        "豆腐",
+        "藜麦",
+        "黄瓜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "午餐",
+      "name": "越式香茅餐",
+      "calories": 673,
+      "na": 1872,
+      "k": 3843,
+      "fiber": 25,
+      "ingredients": [
+        "鱼肉",
+        "米饭",
+        "香茅"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "晚餐",
+      "name": "越式豆腐晚餐",
+      "calories": 533,
+      "na": 1987,
+      "k": 4242,
+      "fiber": 34,
+      "ingredients": [
+        "豆腐",
+        "柠檬草",
+        "米饭"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "加餐",
+      "name": "烤藜麦水果拼盘",
+      "calories": 200,
+      "na": 1843,
+      "k": 4453,
+      "fiber": 34,
+      "ingredients": [
+        "大蒜",
+        "酸奶",
+        "藜麦",
+        "虾仁"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类",
+        "奶制品"
+      ]
+    }
+  ],
+  "congenital": [
+    {
+      "day": 1,
+      "meal_type": "早餐",
+      "name": "营养黄瓜粥",
+      "calories": 500,
+      "na": 2224,
+      "k": 3221,
+      "fiber": 30,
+      "ingredients": [
+        "青椒",
+        "三文鱼",
+        "小米",
+        "黄瓜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "午餐",
+      "name": "泰式瘦牛肉饭",
+      "calories": 688,
+      "na": 2061,
+      "k": 3129,
+      "fiber": 20,
+      "ingredients": [
+        "米饭",
+        "椰子",
+        "瘦牛肉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 1,
+      "meal_type": "晚餐",
+      "name": "和风海带晚餐",
+      "calories": 621,
+      "na": 2305,
+      "k": 3767,
+      "fiber": 28,
+      "ingredients": [
+        "鸭肉",
+        "海带",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "加餐",
+      "name": "南洋鱼肉酸奶",
+      "calories": 181,
+      "na": 2036,
+      "k": 3279,
+      "fiber": 22,
+      "ingredients": [
+        "鱼肉",
+        "香茅",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "早餐",
+      "name": "韩式鸡胸肉麦片",
+      "calories": 507,
+      "na": 2383,
+      "k": 3053,
+      "fiber": 27,
+      "ingredients": [
+        "豆腐",
+        "面条",
+        "鸡胸肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "午餐",
+      "name": "健康全麦面包料理",
+      "calories": 755,
+      "na": 2234,
+      "k": 3914,
+      "fiber": 20,
+      "ingredients": [
+        "豆腐",
+        "洋葱",
+        "胡萝卜",
+        "全麦面包"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "晚餐",
+      "name": "烩鱼肉汤",
+      "calories": 561,
+      "na": 2016,
+      "k": 3092,
+      "fiber": 26,
+      "ingredients": [
+        "鱼肉",
+        "豆浆",
+        "小米",
+        "蘑菇"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "加餐",
+      "name": "健康芹菜水果拼盘",
+      "calories": 210,
+      "na": 2008,
+      "k": 3210,
+      "fiber": 27,
+      "ingredients": [
+        "菠菜",
+        "鸭肉",
+        "糙米",
+        "芹菜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "早餐",
+      "name": "南洋米粉粥",
+      "calories": 512,
+      "na": 2382,
+      "k": 3835,
+      "fiber": 22,
+      "ingredients": [
+        "瘦牛肉",
+        "椰子",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 3,
+      "meal_type": "午餐",
+      "name": "和风面条面",
+      "calories": 746,
+      "na": 2063,
+      "k": 3498,
+      "fiber": 20,
+      "ingredients": [
+        "豆腐",
+        "面条",
+        "鸡胸肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "晚餐",
+      "name": "烩鸭肉炖品",
+      "calories": 594,
+      "na": 2125,
+      "k": 3010,
+      "fiber": 29,
+      "ingredients": [
+        "鸭肉",
+        "糙米",
+        "洋葱",
+        "杏仁奶"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 3,
+      "meal_type": "加餐",
+      "name": "煎西兰花点心",
+      "calories": 185,
+      "na": 2495,
+      "k": 3855,
+      "fiber": 21,
+      "ingredients": [
+        "豆浆",
+        "豆腐",
+        "西兰花",
+        "玉米"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "早餐",
+      "name": "韩式瘦牛肉麦片",
+      "calories": 516,
+      "na": 2379,
+      "k": 3059,
+      "fiber": 24,
+      "ingredients": [
+        "海带",
+        "米饭",
+        "瘦牛肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": []
+    },
+    {
+      "day": 4,
+      "meal_type": "午餐",
+      "name": "南洋米饭餐",
+      "calories": 677,
+      "na": 2454,
+      "k": 3701,
+      "fiber": 23,
+      "ingredients": [
+        "椰子",
+        "米饭",
+        "鸡胸肉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 4,
+      "meal_type": "晚餐",
+      "name": "健康荞麦晚餐",
+      "calories": 599,
+      "na": 2208,
+      "k": 3047,
+      "fiber": 27,
+      "ingredients": [
+        "菠菜",
+        "荞麦",
+        "大蒜",
+        "金枪鱼"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "加餐",
+      "name": "泰式香茅水果拼盘",
+      "calories": 185,
+      "na": 2266,
+      "k": 3418,
+      "fiber": 27,
+      "ingredients": [
+        "鸭肉",
+        "香茅",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 5,
+      "meal_type": "早餐",
+      "name": "健康玉米麦片",
+      "calories": 479,
+      "na": 2155,
+      "k": 3706,
+      "fiber": 20,
+      "ingredients": [
+        "番茄",
+        "胡萝卜",
+        "鸡胸肉",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 5,
+      "meal_type": "午餐",
+      "name": "烩豆腐面",
+      "calories": 740,
+      "na": 2158,
+      "k": 3150,
+      "fiber": 26,
+      "ingredients": [
+        "酸奶",
+        "豆腐",
+        "胡萝卜",
+        "全麦面包"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "奶制品",
+        "大豆"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "晚餐",
+      "name": "烤牛奶炖品",
+      "calories": 608,
+      "na": 2422,
+      "k": 3001,
+      "fiber": 24,
+      "ingredients": [
+        "荞麦",
+        "牛奶",
+        "蘑菇",
+        "鸡胸肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "加餐",
+      "name": "日式紫菜小吃",
+      "calories": 191,
+      "na": 2106,
+      "k": 3162,
+      "fiber": 21,
+      "ingredients": [
+        "紫菜",
+        "泡菜",
+        "鸡胸肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": []
+    },
+    {
+      "day": 6,
+      "meal_type": "早餐",
+      "name": "日式虾仁粥",
+      "calories": 529,
+      "na": 2121,
+      "k": 3682,
+      "fiber": 23,
+      "ingredients": [
+        "泡菜",
+        "米饭",
+        "虾仁"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "午餐",
+      "name": "健康全麦面包面",
+      "calories": 707,
+      "na": 2190,
+      "k": 3508,
+      "fiber": 24,
+      "ingredients": [
+        "鱼肉",
+        "黄瓜",
+        "大蒜",
+        "全麦面包"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "晚餐",
+      "name": "韩式米饭汤",
+      "calories": 543,
+      "na": 2040,
+      "k": 3487,
+      "fiber": 25,
+      "ingredients": [
+        "海带",
+        "米饭",
+        "鸡胸肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": []
+    },
+    {
+      "day": 6,
+      "meal_type": "加餐",
+      "name": "烩鸡胸肉水果拼盘",
+      "calories": 208,
+      "na": 2431,
+      "k": 3196,
+      "fiber": 20,
+      "ingredients": [
+        "菠菜",
+        "酸奶",
+        "荞麦",
+        "鸡胸肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "早餐",
+      "name": "煎三文鱼蛋饼",
+      "calories": 493,
+      "na": 2047,
+      "k": 3981,
+      "fiber": 30,
+      "ingredients": [
+        "荞麦",
+        "洋葱",
+        "三文鱼",
+        "杏仁奶"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "午餐",
+      "name": "南洋柠檬草餐",
+      "calories": 728,
+      "na": 2048,
+      "k": 3575,
+      "fiber": 27,
+      "ingredients": [
+        "瘦牛肉",
+        "柠檬草",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 7,
+      "meal_type": "晚餐",
+      "name": "煎糙米炖品",
+      "calories": 640,
+      "na": 2160,
+      "k": 3323,
+      "fiber": 27,
+      "ingredients": [
+        "酸奶",
+        "糙米",
+        "三文鱼",
+        "胡萝卜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "加餐",
+      "name": "烩黄瓜酸奶",
+      "calories": 182,
+      "na": 2169,
+      "k": 3668,
+      "fiber": 22,
+      "ingredients": [
+        "鸡蛋",
+        "薏米",
+        "牛奶",
+        "黄瓜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "蛋类",
+        "奶制品"
+      ]
+    }
+  ],
+  "aortic": [
+    {
+      "day": 1,
+      "meal_type": "早餐",
+      "name": "健康糙米蛋饼",
+      "calories": 448,
+      "na": 1795,
+      "k": 4114,
+      "fiber": 30,
+      "ingredients": [
+        "青椒",
+        "糙米",
+        "三文鱼",
+        "大蒜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "午餐",
+      "name": "泰式鸡蛋料理",
+      "calories": 698,
+      "na": 1779,
+      "k": 4182,
+      "fiber": 29,
+      "ingredients": [
+        "鸡蛋",
+        "椰子",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "晚餐",
+      "name": "烤菠菜晚餐",
+      "calories": 583,
+      "na": 1704,
+      "k": 3753,
+      "fiber": 29,
+      "ingredients": [
+        "菠菜",
+        "杏仁奶",
+        "藜麦",
+        "虾仁"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "加餐",
+      "name": "日式鸡蛋小吃",
+      "calories": 194,
+      "na": 1785,
+      "k": 3698,
+      "fiber": 29,
+      "ingredients": [
+        "鸡蛋",
+        "豆腐",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "蛋类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "早餐",
+      "name": "烤芹菜蛋饼",
+      "calories": 423,
+      "na": 1831,
+      "k": 3932,
+      "fiber": 34,
+      "ingredients": [
+        "薏米",
+        "芹菜",
+        "牛奶",
+        "鸡胸肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品",
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "午餐",
+      "name": "泰式米粉饭",
+      "calories": 696,
+      "na": 1729,
+      "k": 4280,
+      "fiber": 27,
+      "ingredients": [
+        "辣椒",
+        "虾仁",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "晚餐",
+      "name": "韩式豆腐主菜",
+      "calories": 560,
+      "na": 1651,
+      "k": 3538,
+      "fiber": 33,
+      "ingredients": [
+        "豆腐",
+        "泡菜",
+        "米饭"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "加餐",
+      "name": "泰式瘦牛肉小吃",
+      "calories": 197,
+      "na": 1876,
+      "k": 4288,
+      "fiber": 33,
+      "ingredients": [
+        "香茅",
+        "米饭",
+        "瘦牛肉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 3,
+      "meal_type": "早餐",
+      "name": "烤小米三明治",
+      "calories": 415,
+      "na": 1738,
+      "k": 3864,
+      "fiber": 33,
+      "ingredients": [
+        "酸奶",
+        "小米",
+        "虾仁",
+        "芹菜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类",
+        "奶制品",
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "午餐",
+      "name": "日式米饭料理",
+      "calories": 641,
+      "na": 1775,
+      "k": 3732,
+      "fiber": 34,
+      "ingredients": [
+        "鸭肉",
+        "海带",
+        "米饭"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": []
+    },
+    {
+      "day": 3,
+      "meal_type": "晚餐",
+      "name": "日式面条主菜",
+      "calories": 548,
+      "na": 1771,
+      "k": 3960,
+      "fiber": 25,
+      "ingredients": [
+        "三文鱼",
+        "海带",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "加餐",
+      "name": "清淡三文鱼点心",
+      "calories": 184,
+      "na": 1806,
+      "k": 3988,
+      "fiber": 25,
+      "ingredients": [
+        "番茄",
+        "三文鱼",
+        "黄瓜",
+        "全麦面包"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "早餐",
+      "name": "健康糙米蛋饼",
+      "calories": 426,
+      "na": 1913,
+      "k": 4273,
+      "fiber": 35,
+      "ingredients": [
+        "糙米",
+        "黄瓜",
+        "大蒜",
+        "金枪鱼"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "午餐",
+      "name": "和风鱼肉饭",
+      "calories": 637,
+      "na": 1943,
+      "k": 4441,
+      "fiber": 32,
+      "ingredients": [
+        "鱼肉",
+        "泡菜",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "晚餐",
+      "name": "泰式椰子炖品",
+      "calories": 591,
+      "na": 1929,
+      "k": 3530,
+      "fiber": 35,
+      "ingredients": [
+        "三文鱼",
+        "米饭",
+        "椰子"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "加餐",
+      "name": "日式面条点心",
+      "calories": 184,
+      "na": 1959,
+      "k": 4433,
+      "fiber": 32,
+      "ingredients": [
+        "豆腐",
+        "海带",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "大豆"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "早餐",
+      "name": "南洋米粉粥",
+      "calories": 431,
+      "na": 1682,
+      "k": 4201,
+      "fiber": 35,
+      "ingredients": [
+        "鱼肉",
+        "柠檬草",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "午餐",
+      "name": "烩芹菜面",
+      "calories": 597,
+      "na": 1682,
+      "k": 3765,
+      "fiber": 26,
+      "ingredients": [
+        "低脂奶酪",
+        "薏米",
+        "芹菜",
+        "虾仁"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类",
+        "奶制品",
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "晚餐",
+      "name": "泰式米粉主菜",
+      "calories": 575,
+      "na": 1950,
+      "k": 4472,
+      "fiber": 29,
+      "ingredients": [
+        "三文鱼",
+        "香茅",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "加餐",
+      "name": "健康洋葱点心",
+      "calories": 161,
+      "na": 1617,
+      "k": 4061,
+      "fiber": 27,
+      "ingredients": [
+        "鱼肉",
+        "洋葱",
+        "蘑菇",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "早餐",
+      "name": "韩式鱼肉粥",
+      "calories": 459,
+      "na": 1863,
+      "k": 4255,
+      "fiber": 27,
+      "ingredients": [
+        "鱼肉",
+        "紫菜",
+        "海带"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "午餐",
+      "name": "煎玉米面",
+      "calories": 595,
+      "na": 1937,
+      "k": 4315,
+      "fiber": 28,
+      "ingredients": [
+        "鱼肉",
+        "豆浆",
+        "黄瓜",
+        "玉米"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "晚餐",
+      "name": "烩豆浆汤",
+      "calories": 586,
+      "na": 1841,
+      "k": 4134,
+      "fiber": 29,
+      "ingredients": [
+        "豆浆",
+        "蘑菇",
+        "藜麦",
+        "金枪鱼"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "加餐",
+      "name": "和风鸡蛋小吃",
+      "calories": 184,
+      "na": 1925,
+      "k": 3800,
+      "fiber": 32,
+      "ingredients": [
+        "鸡蛋",
+        "海带",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "蛋类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "早餐",
+      "name": "南洋辣椒麦片",
+      "calories": 464,
+      "na": 1674,
+      "k": 4395,
+      "fiber": 25,
+      "ingredients": [
+        "豆腐",
+        "辣椒",
+        "米饭"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "午餐",
+      "name": "煎虾仁餐",
+      "calories": 599,
+      "na": 1821,
+      "k": 4052,
+      "fiber": 27,
+      "ingredients": [
+        "酸奶",
+        "燕麦",
+        "虾仁",
+        "芹菜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "甲壳类",
+        "奶制品",
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "晚餐",
+      "name": "健康大蒜炖品",
+      "calories": 599,
+      "na": 1782,
+      "k": 4273,
+      "fiber": 33,
+      "ingredients": [
+        "豆腐",
+        "小米",
+        "大蒜",
+        "蘑菇"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "加餐",
+      "name": "煎豆浆酸奶",
+      "calories": 172,
+      "na": 1533,
+      "k": 3540,
+      "fiber": 34,
+      "ingredients": [
+        "番茄",
+        "豆浆",
+        "豆腐",
+        "薏米"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    }
+  ],
+  "pulmonary": [
+    {
+      "day": 1,
+      "meal_type": "早餐",
+      "name": "烤豆浆麦片",
+      "calories": 462,
+      "na": 1397,
+      "k": 3705,
+      "fiber": 26,
+      "ingredients": [
+        "鱼肉",
+        "豆浆",
+        "小米",
+        "胡萝卜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "午餐",
+      "name": "煎牛奶料理",
+      "calories": 532,
+      "na": 1174,
+      "k": 3679,
+      "fiber": 26,
+      "ingredients": [
+        "鸭肉",
+        "糙米",
+        "洋葱",
+        "牛奶"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "晚餐",
+      "name": "泰式椰子主菜",
+      "calories": 469,
+      "na": 1258,
+      "k": 3551,
+      "fiber": 29,
+      "ingredients": [
+        "鸡蛋",
+        "椰子",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "加餐",
+      "name": "越式鸡蛋小吃",
+      "calories": 178,
+      "na": 1316,
+      "k": 3648,
+      "fiber": 30,
+      "ingredients": [
+        "鸡蛋",
+        "香茅",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "早餐",
+      "name": "韩式米饭粥",
+      "calories": 456,
+      "na": 1500,
+      "k": 3400,
+      "fiber": 26,
+      "ingredients": [
+        "鱼肉",
+        "泡菜",
+        "米饭"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "午餐",
+      "name": "健康黄瓜饭",
+      "calories": 620,
+      "na": 1462,
+      "k": 3897,
+      "fiber": 29,
+      "ingredients": [
+        "菠菜",
+        "黄瓜",
+        "金枪鱼",
+        "全麦面包"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "晚餐",
+      "name": "清淡菠菜晚餐",
+      "calories": 501,
+      "na": 1412,
+      "k": 3154,
+      "fiber": 22,
+      "ingredients": [
+        "菠菜",
+        "薏米",
+        "芹菜",
+        "鸡胸肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "加餐",
+      "name": "日式泡菜小吃",
+      "calories": 164,
+      "na": 1429,
+      "k": 3770,
+      "fiber": 20,
+      "ingredients": [
+        "泡菜",
+        "米饭",
+        "瘦牛肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": []
+    },
+    {
+      "day": 3,
+      "meal_type": "早餐",
+      "name": "烩胡萝卜蛋饼",
+      "calories": 379,
+      "na": 1189,
+      "k": 3660,
+      "fiber": 25,
+      "ingredients": [
+        "豆浆",
+        "三文鱼",
+        "藜麦",
+        "胡萝卜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "午餐",
+      "name": "健康薏米面",
+      "calories": 645,
+      "na": 1174,
+      "k": 3690,
+      "fiber": 25,
+      "ingredients": [
+        "番茄",
+        "薏米",
+        "西兰花",
+        "鸡胸肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 3,
+      "meal_type": "晚餐",
+      "name": "韩式紫菜主菜",
+      "calories": 527,
+      "na": 1312,
+      "k": 3911,
+      "fiber": 21,
+      "ingredients": [
+        "鱼肉",
+        "豆腐",
+        "紫菜"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "加餐",
+      "name": "清淡胡萝卜小吃",
+      "calories": 153,
+      "na": 1466,
+      "k": 3994,
+      "fiber": 30,
+      "ingredients": [
+        "三文鱼",
+        "小米",
+        "胡萝卜",
+        "西兰花"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "早餐",
+      "name": "日式米饭麦片",
+      "calories": 441,
+      "na": 1354,
+      "k": 3029,
+      "fiber": 24,
+      "ingredients": [
+        "豆腐",
+        "海带",
+        "米饭"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "午餐",
+      "name": "营养鸡胸肉饭",
+      "calories": 627,
+      "na": 1048,
+      "k": 3338,
+      "fiber": 24,
+      "ingredients": [
+        "荞麦",
+        "西兰花",
+        "蘑菇",
+        "鸡胸肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 4,
+      "meal_type": "晚餐",
+      "name": "清淡小米晚餐",
+      "calories": 514,
+      "na": 1204,
+      "k": 3504,
+      "fiber": 26,
+      "ingredients": [
+        "菠菜",
+        "西兰花",
+        "小米",
+        "瘦牛肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 4,
+      "meal_type": "加餐",
+      "name": "清淡胡萝卜酸奶",
+      "calories": 173,
+      "na": 1382,
+      "k": 3928,
+      "fiber": 21,
+      "ingredients": [
+        "黄瓜",
+        "燕麦",
+        "胡萝卜",
+        "鸡胸肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "早餐",
+      "name": "健康玉米三明治",
+      "calories": 409,
+      "na": 1387,
+      "k": 3482,
+      "fiber": 26,
+      "ingredients": [
+        "番茄",
+        "三文鱼",
+        "蘑菇",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "午餐",
+      "name": "和风面条饭",
+      "calories": 653,
+      "na": 1403,
+      "k": 3449,
+      "fiber": 21,
+      "ingredients": [
+        "海带",
+        "面条",
+        "金枪鱼"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "晚餐",
+      "name": "煎鱼肉炖品",
+      "calories": 557,
+      "na": 1445,
+      "k": 3621,
+      "fiber": 29,
+      "ingredients": [
+        "鱼肉",
+        "青椒",
+        "杏仁奶",
+        "全麦面包"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "加餐",
+      "name": "煎鸡胸肉水果拼盘",
+      "calories": 184,
+      "na": 1406,
+      "k": 3512,
+      "fiber": 27,
+      "ingredients": [
+        "菠菜",
+        "杏仁奶",
+        "鸡胸肉",
+        "全麦面包"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "早餐",
+      "name": "煎豆腐蛋饼",
+      "calories": 454,
+      "na": 1364,
+      "k": 3408,
+      "fiber": 27,
+      "ingredients": [
+        "豆浆",
+        "豆腐",
+        "小米",
+        "大蒜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "午餐",
+      "name": "营养西兰花面",
+      "calories": 652,
+      "na": 1173,
+      "k": 3670,
+      "fiber": 28,
+      "ingredients": [
+        "青椒",
+        "薏米",
+        "西兰花",
+        "虾仁"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "晚餐",
+      "name": "和风米饭炖品",
+      "calories": 471,
+      "na": 1227,
+      "k": 3511,
+      "fiber": 25,
+      "ingredients": [
+        "海带",
+        "米饭",
+        "虾仁"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "加餐",
+      "name": "煎鱼肉水果拼盘",
+      "calories": 152,
+      "na": 1185,
+      "k": 3211,
+      "fiber": 26,
+      "ingredients": [
+        "鱼肉",
+        "豆浆",
+        "洋葱",
+        "玉米"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "早餐",
+      "name": "健康三文鱼蛋饼",
+      "calories": 420,
+      "na": 1080,
+      "k": 3904,
+      "fiber": 24,
+      "ingredients": [
+        "番茄",
+        "三文鱼",
+        "小米",
+        "大蒜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "午餐",
+      "name": "清淡玉米餐",
+      "calories": 542,
+      "na": 1379,
+      "k": 3080,
+      "fiber": 21,
+      "ingredients": [
+        "瘦牛肉",
+        "胡萝卜",
+        "芹菜",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "晚餐",
+      "name": "煎全麦面包炖品",
+      "calories": 528,
+      "na": 1009,
+      "k": 3681,
+      "fiber": 25,
+      "ingredients": [
+        "三文鱼",
+        "低脂奶酪",
+        "大蒜",
+        "全麦面包"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "加餐",
+      "name": "泰式米粉水果拼盘",
+      "calories": 176,
+      "na": 1392,
+      "k": 3984,
+      "fiber": 23,
+      "ingredients": [
+        "鸭肉",
+        "香茅",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    }
+  ],
+  "pericardial": [
+    {
+      "day": 1,
+      "meal_type": "早餐",
+      "name": "越式豆腐麦片",
+      "calories": 470,
+      "na": 1998,
+      "k": 3766,
+      "fiber": 31,
+      "ingredients": [
+        "豆腐",
+        "米饭",
+        "椰子"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "午餐",
+      "name": "越式米粉餐",
+      "calories": 682,
+      "na": 1955,
+      "k": 3706,
+      "fiber": 26,
+      "ingredients": [
+        "鸭肉",
+        "柠檬草",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 1,
+      "meal_type": "晚餐",
+      "name": "营养小米主菜",
+      "calories": 510,
+      "na": 1764,
+      "k": 4453,
+      "fiber": 26,
+      "ingredients": [
+        "小米",
+        "大蒜",
+        "金枪鱼",
+        "西兰花"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "加餐",
+      "name": "和风面条酸奶",
+      "calories": 204,
+      "na": 1515,
+      "k": 3932,
+      "fiber": 28,
+      "ingredients": [
+        "鱼肉",
+        "豆腐",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "早餐",
+      "name": "和风海带麦片",
+      "calories": 494,
+      "na": 1891,
+      "k": 3651,
+      "fiber": 32,
+      "ingredients": [
+        "鱼肉",
+        "紫菜",
+        "海带"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "午餐",
+      "name": "日式虾仁料理",
+      "calories": 658,
+      "na": 1633,
+      "k": 4135,
+      "fiber": 30,
+      "ingredients": [
+        "豆腐",
+        "紫菜",
+        "虾仁"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "甲壳类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "晚餐",
+      "name": "健康薏米晚餐",
+      "calories": 534,
+      "na": 1963,
+      "k": 4281,
+      "fiber": 26,
+      "ingredients": [
+        "菠菜",
+        "薏米",
+        "黄瓜",
+        "鸡胸肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 2,
+      "meal_type": "加餐",
+      "name": "烤牛奶酸奶",
+      "calories": 198,
+      "na": 1863,
+      "k": 3705,
+      "fiber": 31,
+      "ingredients": [
+        "鱼肉",
+        "薏米",
+        "蘑菇",
+        "牛奶"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "早餐",
+      "name": "日式米饭蛋饼",
+      "calories": 500,
+      "na": 1516,
+      "k": 4315,
+      "fiber": 27,
+      "ingredients": [
+        "豆腐",
+        "米饭",
+        "金枪鱼"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "午餐",
+      "name": "韩式泡菜餐",
+      "calories": 733,
+      "na": 1580,
+      "k": 4284,
+      "fiber": 33,
+      "ingredients": [
+        "鸡蛋",
+        "泡菜",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "蛋类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "晚餐",
+      "name": "清淡胡萝卜汤",
+      "calories": 575,
+      "na": 1687,
+      "k": 3926,
+      "fiber": 26,
+      "ingredients": [
+        "糙米",
+        "胡萝卜",
+        "大蒜",
+        "鸡胸肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 3,
+      "meal_type": "加餐",
+      "name": "韩式泡菜水果拼盘",
+      "calories": 208,
+      "na": 1787,
+      "k": 3625,
+      "fiber": 29,
+      "ingredients": [
+        "紫菜",
+        "泡菜",
+        "虾仁"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "早餐",
+      "name": "营养虾仁粥",
+      "calories": 515,
+      "na": 1604,
+      "k": 3978,
+      "fiber": 35,
+      "ingredients": [
+        "蘑菇",
+        "西兰花",
+        "藜麦",
+        "虾仁"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "午餐",
+      "name": "泰式辣椒料理",
+      "calories": 693,
+      "na": 1711,
+      "k": 3982,
+      "fiber": 25,
+      "ingredients": [
+        "辣椒",
+        "米饭",
+        "金枪鱼"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "晚餐",
+      "name": "烤洋葱晚餐",
+      "calories": 621,
+      "na": 1551,
+      "k": 3631,
+      "fiber": 34,
+      "ingredients": [
+        "酸奶",
+        "薏米",
+        "洋葱",
+        "虾仁"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "加餐",
+      "name": "烩低脂奶酪小吃",
+      "calories": 184,
+      "na": 1612,
+      "k": 3869,
+      "fiber": 34,
+      "ingredients": [
+        "三文鱼",
+        "洋葱",
+        "低脂奶酪",
+        "玉米"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "早餐",
+      "name": "南洋米粉蛋饼",
+      "calories": 450,
+      "na": 1559,
+      "k": 3801,
+      "fiber": 29,
+      "ingredients": [
+        "鸭肉",
+        "椰子",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 5,
+      "meal_type": "午餐",
+      "name": "煎酸奶料理",
+      "calories": 707,
+      "na": 1661,
+      "k": 3989,
+      "fiber": 28,
+      "ingredients": [
+        "菠菜",
+        "酸奶",
+        "糙米",
+        "三文鱼"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "晚餐",
+      "name": "煎蘑菇炖品",
+      "calories": 541,
+      "na": 1726,
+      "k": 4201,
+      "fiber": 32,
+      "ingredients": [
+        "豆浆",
+        "豆腐",
+        "燕麦",
+        "蘑菇"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "大豆"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "加餐",
+      "name": "营养芹菜小吃",
+      "calories": 177,
+      "na": 1585,
+      "k": 3916,
+      "fiber": 27,
+      "ingredients": [
+        "菠菜",
+        "薏米",
+        "芹菜",
+        "瘦牛肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "早餐",
+      "name": "烩番茄麦片",
+      "calories": 469,
+      "na": 1925,
+      "k": 4379,
+      "fiber": 29,
+      "ingredients": [
+        "番茄",
+        "酸奶",
+        "小米",
+        "虾仁"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "午餐",
+      "name": "泰式辣椒饭",
+      "calories": 636,
+      "na": 1652,
+      "k": 4487,
+      "fiber": 26,
+      "ingredients": [
+        "鱼肉",
+        "辣椒",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "晚餐",
+      "name": "韩式泡菜晚餐",
+      "calories": 589,
+      "na": 1943,
+      "k": 4325,
+      "fiber": 28,
+      "ingredients": [
+        "鸡蛋",
+        "紫菜",
+        "泡菜"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "加餐",
+      "name": "日式泡菜小吃",
+      "calories": 193,
+      "na": 1954,
+      "k": 4122,
+      "fiber": 33,
+      "ingredients": [
+        "紫菜",
+        "泡菜",
+        "金枪鱼"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "早餐",
+      "name": "煎荞麦三明治",
+      "calories": 475,
+      "na": 1712,
+      "k": 4210,
+      "fiber": 26,
+      "ingredients": [
+        "青椒",
+        "荞麦",
+        "牛奶",
+        "鸡胸肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "午餐",
+      "name": "健康蘑菇料理",
+      "calories": 652,
+      "na": 1687,
+      "k": 4261,
+      "fiber": 35,
+      "ingredients": [
+        "番茄",
+        "蘑菇",
+        "全麦面包",
+        "瘦牛肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "晚餐",
+      "name": "营养燕麦炖品",
+      "calories": 595,
+      "na": 1968,
+      "k": 3650,
+      "fiber": 34,
+      "ingredients": [
+        "豆腐",
+        "燕麦",
+        "黄瓜",
+        "西兰花"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "大豆"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "加餐",
+      "name": "日式面条点心",
+      "calories": 202,
+      "na": 1927,
+      "k": 3846,
+      "fiber": 32,
+      "ingredients": [
+        "鸡蛋",
+        "泡菜",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "蛋类"
+      ]
+    }
+  ],
+  "peripheral_artery": [
+    {
+      "day": 1,
+      "meal_type": "早餐",
+      "name": "泰式鸡胸肉粥",
+      "calories": 488,
+      "na": 1757,
+      "k": 3502,
+      "fiber": 34,
+      "ingredients": [
+        "辣椒",
+        "鸡胸肉",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 1,
+      "meal_type": "午餐",
+      "name": "南洋米粉面",
+      "calories": 637,
+      "na": 1766,
+      "k": 3562,
+      "fiber": 39,
+      "ingredients": [
+        "辣椒",
+        "鸡胸肉",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 1,
+      "meal_type": "晚餐",
+      "name": "营养番茄主菜",
+      "calories": 592,
+      "na": 1955,
+      "k": 4382,
+      "fiber": 36,
+      "ingredients": [
+        "番茄",
+        "糙米",
+        "豆腐",
+        "芹菜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "芹菜/香菜",
+        "大豆"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "加餐",
+      "name": "营养虾仁点心",
+      "calories": 182,
+      "na": 1920,
+      "k": 3693,
+      "fiber": 37,
+      "ingredients": [
+        "糙米",
+        "蘑菇",
+        "大蒜",
+        "虾仁"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "早餐",
+      "name": "煎低脂奶酪麦片",
+      "calories": 489,
+      "na": 1717,
+      "k": 4384,
+      "fiber": 32,
+      "ingredients": [
+        "番茄",
+        "糙米",
+        "低脂奶酪",
+        "瘦牛肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "午餐",
+      "name": "煎蘑菇面",
+      "calories": 611,
+      "na": 1624,
+      "k": 3518,
+      "fiber": 30,
+      "ingredients": [
+        "豆浆",
+        "燕麦",
+        "蘑菇",
+        "瘦牛肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "晚餐",
+      "name": "清淡豆腐炖品",
+      "calories": 516,
+      "na": 1524,
+      "k": 4249,
+      "fiber": 30,
+      "ingredients": [
+        "豆腐",
+        "洋葱",
+        "燕麦",
+        "蘑菇"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "加餐",
+      "name": "韩式豆腐小吃",
+      "calories": 168,
+      "na": 1801,
+      "k": 4119,
+      "fiber": 32,
+      "ingredients": [
+        "豆腐",
+        "紫菜",
+        "鸡胸肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "早餐",
+      "name": "和风鸭肉麦片",
+      "calories": 499,
+      "na": 1633,
+      "k": 4019,
+      "fiber": 40,
+      "ingredients": [
+        "鸭肉",
+        "海带",
+        "米饭"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": []
+    },
+    {
+      "day": 3,
+      "meal_type": "午餐",
+      "name": "烤薏米餐",
+      "calories": 571,
+      "na": 1934,
+      "k": 4191,
+      "fiber": 39,
+      "ingredients": [
+        "豆浆",
+        "鸭肉",
+        "薏米",
+        "大蒜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "晚餐",
+      "name": "烤低脂奶酪晚餐",
+      "calories": 509,
+      "na": 1806,
+      "k": 4277,
+      "fiber": 35,
+      "ingredients": [
+        "低脂奶酪",
+        "小米",
+        "虾仁",
+        "芹菜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类",
+        "奶制品",
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "加餐",
+      "name": "健康大蒜水果拼盘",
+      "calories": 189,
+      "na": 1932,
+      "k": 3994,
+      "fiber": 30,
+      "ingredients": [
+        "鸡蛋",
+        "小米",
+        "大蒜",
+        "西兰花"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "早餐",
+      "name": "泰式三文鱼三明治",
+      "calories": 470,
+      "na": 1824,
+      "k": 4038,
+      "fiber": 40,
+      "ingredients": [
+        "三文鱼",
+        "米饭",
+        "椰子"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "午餐",
+      "name": "南洋香茅料理",
+      "calories": 652,
+      "na": 1661,
+      "k": 4282,
+      "fiber": 37,
+      "ingredients": [
+        "香茅",
+        "金枪鱼",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "晚餐",
+      "name": "清淡豆腐炖品",
+      "calories": 556,
+      "na": 1968,
+      "k": 4373,
+      "fiber": 37,
+      "ingredients": [
+        "菠菜",
+        "青椒",
+        "豆腐",
+        "藜麦"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "加餐",
+      "name": "和风鸡蛋小吃",
+      "calories": 179,
+      "na": 1519,
+      "k": 4401,
+      "fiber": 31,
+      "ingredients": [
+        "鸡蛋",
+        "泡菜",
+        "米饭"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "早餐",
+      "name": "韩式米饭蛋饼",
+      "calories": 411,
+      "na": 1816,
+      "k": 4197,
+      "fiber": 32,
+      "ingredients": [
+        "泡菜",
+        "米饭",
+        "鸡胸肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": []
+    },
+    {
+      "day": 5,
+      "meal_type": "午餐",
+      "name": "韩式紫菜餐",
+      "calories": 613,
+      "na": 1647,
+      "k": 3997,
+      "fiber": 40,
+      "ingredients": [
+        "紫菜",
+        "海带",
+        "金枪鱼"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "晚餐",
+      "name": "泰式鸡蛋晚餐",
+      "calories": 527,
+      "na": 1920,
+      "k": 3891,
+      "fiber": 35,
+      "ingredients": [
+        "鸡蛋",
+        "辣椒",
+        "米饭"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "加餐",
+      "name": "烤豆浆点心",
+      "calories": 186,
+      "na": 1557,
+      "k": 3662,
+      "fiber": 40,
+      "ingredients": [
+        "豆浆",
+        "薏米",
+        "西兰花",
+        "金枪鱼"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "早餐",
+      "name": "和风鸡胸肉麦片",
+      "calories": 436,
+      "na": 1859,
+      "k": 4361,
+      "fiber": 39,
+      "ingredients": [
+        "海带",
+        "面条",
+        "鸡胸肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "午餐",
+      "name": "韩式面条餐",
+      "calories": 655,
+      "na": 1831,
+      "k": 3917,
+      "fiber": 30,
+      "ingredients": [
+        "鱼肉",
+        "泡菜",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "晚餐",
+      "name": "烤金枪鱼炖品",
+      "calories": 586,
+      "na": 1509,
+      "k": 3773,
+      "fiber": 31,
+      "ingredients": [
+        "牛奶",
+        "芹菜",
+        "金枪鱼",
+        "全麦面包"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类",
+        "奶制品",
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "加餐",
+      "name": "营养荞麦水果拼盘",
+      "calories": 188,
+      "na": 1686,
+      "k": 4064,
+      "fiber": 39,
+      "ingredients": [
+        "番茄",
+        "荞麦",
+        "蘑菇",
+        "瘦牛肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 7,
+      "meal_type": "早餐",
+      "name": "烤玉米蛋饼",
+      "calories": 470,
+      "na": 1549,
+      "k": 4030,
+      "fiber": 38,
+      "ingredients": [
+        "酸奶",
+        "三文鱼",
+        "胡萝卜",
+        "玉米"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "午餐",
+      "name": "泰式鸭肉餐",
+      "calories": 657,
+      "na": 1686,
+      "k": 4338,
+      "fiber": 37,
+      "ingredients": [
+        "鸭肉",
+        "椰子",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 7,
+      "meal_type": "晚餐",
+      "name": "清淡蘑菇炖品",
+      "calories": 556,
+      "na": 1725,
+      "k": 4437,
+      "fiber": 37,
+      "ingredients": [
+        "菠菜",
+        "蘑菇",
+        "鸡胸肉",
+        "全麦面包"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "加餐",
+      "name": "南洋米粉水果拼盘",
+      "calories": 174,
+      "na": 1553,
+      "k": 4033,
+      "fiber": 32,
+      "ingredients": [
+        "柠檬草",
+        "虾仁",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    }
+  ],
+  "venous": [
+    {
+      "day": 1,
+      "meal_type": "早餐",
+      "name": "煎豆浆麦片",
+      "calories": 494,
+      "na": 2255,
+      "k": 4223,
+      "fiber": 27,
+      "ingredients": [
+        "鱼肉",
+        "豆浆",
+        "洋葱",
+        "燕麦"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "午餐",
+      "name": "健康番茄料理",
+      "calories": 689,
+      "na": 2072,
+      "k": 3661,
+      "fiber": 31,
+      "ingredients": [
+        "番茄",
+        "糙米",
+        "蘑菇",
+        "鸡胸肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 1,
+      "meal_type": "晚餐",
+      "name": "健康鸡蛋晚餐",
+      "calories": 613,
+      "na": 2308,
+      "k": 4447,
+      "fiber": 35,
+      "ingredients": [
+        "鸡蛋",
+        "胡萝卜",
+        "西兰花",
+        "藜麦"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "加餐",
+      "name": "烤大蒜点心",
+      "calories": 197,
+      "na": 2449,
+      "k": 3936,
+      "fiber": 35,
+      "ingredients": [
+        "杏仁奶",
+        "糙米",
+        "大蒜",
+        "虾仁"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "早餐",
+      "name": "韩式紫菜三明治",
+      "calories": 516,
+      "na": 2142,
+      "k": 4270,
+      "fiber": 29,
+      "ingredients": [
+        "豆腐",
+        "紫菜"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "午餐",
+      "name": "烤三文鱼餐",
+      "calories": 722,
+      "na": 2133,
+      "k": 4141,
+      "fiber": 26,
+      "ingredients": [
+        "三文鱼",
+        "低脂奶酪",
+        "小米",
+        "大蒜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "晚餐",
+      "name": "营养黄瓜主菜",
+      "calories": 607,
+      "na": 2057,
+      "k": 4394,
+      "fiber": 32,
+      "ingredients": [
+        "菠菜",
+        "黄瓜",
+        "金枪鱼",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "加餐",
+      "name": "营养胡萝卜点心",
+      "calories": 182,
+      "na": 2441,
+      "k": 4307,
+      "fiber": 26,
+      "ingredients": [
+        "鸡蛋",
+        "青椒",
+        "胡萝卜",
+        "藜麦"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "早餐",
+      "name": "烩金枪鱼三明治",
+      "calories": 442,
+      "na": 2088,
+      "k": 4179,
+      "fiber": 28,
+      "ingredients": [
+        "牛奶",
+        "小米",
+        "蘑菇",
+        "金枪鱼"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "午餐",
+      "name": "清淡菠菜料理",
+      "calories": 713,
+      "na": 2478,
+      "k": 4469,
+      "fiber": 29,
+      "ingredients": [
+        "菠菜",
+        "豆腐",
+        "薏米",
+        "芹菜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "芹菜/香菜",
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "晚餐",
+      "name": "韩式海带晚餐",
+      "calories": 588,
+      "na": 2087,
+      "k": 4211,
+      "fiber": 25,
+      "ingredients": [
+        "海带",
+        "米饭",
+        "鸡胸肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": []
+    },
+    {
+      "day": 3,
+      "meal_type": "加餐",
+      "name": "营养金枪鱼点心",
+      "calories": 205,
+      "na": 2076,
+      "k": 3660,
+      "fiber": 28,
+      "ingredients": [
+        "菠菜",
+        "薏米",
+        "黄瓜",
+        "金枪鱼"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "早餐",
+      "name": "健康燕麦蛋饼",
+      "calories": 509,
+      "na": 2355,
+      "k": 3882,
+      "fiber": 26,
+      "ingredients": [
+        "鱼肉",
+        "洋葱",
+        "燕麦",
+        "黄瓜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "午餐",
+      "name": "清淡番茄料理",
+      "calories": 679,
+      "na": 2399,
+      "k": 3965,
+      "fiber": 33,
+      "ingredients": [
+        "番茄",
+        "青椒",
+        "三文鱼",
+        "燕麦"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "晚餐",
+      "name": "烩豆腐炖品",
+      "calories": 603,
+      "na": 2092,
+      "k": 4449,
+      "fiber": 34,
+      "ingredients": [
+        "豆浆",
+        "豆腐",
+        "小米",
+        "蘑菇"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "加餐",
+      "name": "营养洋葱水果拼盘",
+      "calories": 180,
+      "na": 2232,
+      "k": 4293,
+      "fiber": 33,
+      "ingredients": [
+        "豆腐",
+        "洋葱",
+        "藜麦",
+        "胡萝卜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "早餐",
+      "name": "泰式三文鱼三明治",
+      "calories": 517,
+      "na": 2293,
+      "k": 3593,
+      "fiber": 35,
+      "ingredients": [
+        "三文鱼",
+        "柠檬草",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "午餐",
+      "name": "烩燕麦面",
+      "calories": 638,
+      "na": 2307,
+      "k": 3935,
+      "fiber": 25,
+      "ingredients": [
+        "西兰花",
+        "燕麦",
+        "杏仁奶",
+        "瘦牛肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "晚餐",
+      "name": "日式面条主菜",
+      "calories": 613,
+      "na": 2007,
+      "k": 4046,
+      "fiber": 31,
+      "ingredients": [
+        "三文鱼",
+        "豆腐",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "加餐",
+      "name": "越式椰子水果拼盘",
+      "calories": 205,
+      "na": 2148,
+      "k": 3575,
+      "fiber": 33,
+      "ingredients": [
+        "椰子",
+        "虾仁",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "早餐",
+      "name": "和风豆腐蛋饼",
+      "calories": 427,
+      "na": 2414,
+      "k": 4118,
+      "fiber": 25,
+      "ingredients": [
+        "鸡蛋",
+        "豆腐",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "蛋类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "午餐",
+      "name": "清淡西兰花面",
+      "calories": 702,
+      "na": 2078,
+      "k": 4142,
+      "fiber": 28,
+      "ingredients": [
+        "鱼肉",
+        "糙米",
+        "西兰花",
+        "菠菜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "晚餐",
+      "name": "煎豆腐晚餐",
+      "calories": 600,
+      "na": 2299,
+      "k": 3716,
+      "fiber": 28,
+      "ingredients": [
+        "青椒",
+        "荞麦",
+        "豆腐",
+        "低脂奶酪"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品",
+        "大豆"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "加餐",
+      "name": "和风泡菜点心",
+      "calories": 206,
+      "na": 2249,
+      "k": 3835,
+      "fiber": 25,
+      "ingredients": [
+        "三文鱼",
+        "紫菜",
+        "泡菜"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "早餐",
+      "name": "和风鸭肉三明治",
+      "calories": 496,
+      "na": 2005,
+      "k": 4054,
+      "fiber": 28,
+      "ingredients": [
+        "鸭肉",
+        "海带",
+        "米饭"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": []
+    },
+    {
+      "day": 7,
+      "meal_type": "午餐",
+      "name": "清淡西兰花面",
+      "calories": 714,
+      "na": 2272,
+      "k": 4190,
+      "fiber": 34,
+      "ingredients": [
+        "青椒",
+        "西兰花",
+        "全麦面包",
+        "瘦牛肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "晚餐",
+      "name": "煎黄瓜炖品",
+      "calories": 564,
+      "na": 2250,
+      "k": 3648,
+      "fiber": 29,
+      "ingredients": [
+        "鱼肉",
+        "豆浆",
+        "黄瓜",
+        "全麦面包"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "加餐",
+      "name": "烤豆浆点心",
+      "calories": 193,
+      "na": 2069,
+      "k": 4367,
+      "fiber": 31,
+      "ingredients": [
+        "豆浆",
+        "荞麦",
+        "大蒜",
+        "金枪鱼"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    }
+  ],
+  "infectious": [
+    {
+      "day": 1,
+      "meal_type": "早餐",
+      "name": "泰式鱼肉三明治",
+      "calories": 494,
+      "na": 2304,
+      "k": 4293,
+      "fiber": 31,
+      "ingredients": [
+        "鱼肉",
+        "辣椒",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "午餐",
+      "name": "清淡鸭肉餐",
+      "calories": 676,
+      "na": 2266,
+      "k": 4258,
+      "fiber": 35,
+      "ingredients": [
+        "菠菜",
+        "鸭肉",
+        "糙米",
+        "洋葱"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 1,
+      "meal_type": "晚餐",
+      "name": "泰式鸭肉晚餐",
+      "calories": 560,
+      "na": 2128,
+      "k": 4388,
+      "fiber": 30,
+      "ingredients": [
+        "鸭肉",
+        "柠檬草",
+        "米饭"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 1,
+      "meal_type": "加餐",
+      "name": "营养洋葱点心",
+      "calories": 213,
+      "na": 2491,
+      "k": 3624,
+      "fiber": 28,
+      "ingredients": [
+        "番茄",
+        "三文鱼",
+        "洋葱",
+        "燕麦"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "早餐",
+      "name": "泰式香茅麦片",
+      "calories": 488,
+      "na": 2321,
+      "k": 4430,
+      "fiber": 25,
+      "ingredients": [
+        "香茅",
+        "米饭",
+        "瘦牛肉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 2,
+      "meal_type": "午餐",
+      "name": "和风泡菜料理",
+      "calories": 752,
+      "na": 2136,
+      "k": 4236,
+      "fiber": 33,
+      "ingredients": [
+        "紫菜",
+        "泡菜",
+        "鸡胸肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": []
+    },
+    {
+      "day": 2,
+      "meal_type": "晚餐",
+      "name": "泰式米粉晚餐",
+      "calories": 593,
+      "na": 2183,
+      "k": 4327,
+      "fiber": 26,
+      "ingredients": [
+        "鸡蛋",
+        "辣椒",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "加餐",
+      "name": "泰式米粉点心",
+      "calories": 193,
+      "na": 2338,
+      "k": 4469,
+      "fiber": 30,
+      "ingredients": [
+        "辣椒",
+        "金枪鱼",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "早餐",
+      "name": "日式鸡胸肉三明治",
+      "calories": 529,
+      "na": 2290,
+      "k": 3798,
+      "fiber": 30,
+      "ingredients": [
+        "豆腐",
+        "紫菜",
+        "鸡胸肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "午餐",
+      "name": "烤青椒面",
+      "calories": 708,
+      "na": 2247,
+      "k": 3601,
+      "fiber": 25,
+      "ingredients": [
+        "鸡蛋",
+        "青椒",
+        "藜麦",
+        "豆浆"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "蛋类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "晚餐",
+      "name": "和风海带晚餐",
+      "calories": 628,
+      "na": 2312,
+      "k": 3730,
+      "fiber": 35,
+      "ingredients": [
+        "鸡蛋",
+        "海带",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "蛋类"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "加餐",
+      "name": "健康玉米酸奶",
+      "calories": 190,
+      "na": 2068,
+      "k": 3584,
+      "fiber": 25,
+      "ingredients": [
+        "番茄",
+        "胡萝卜",
+        "鸡胸肉",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 4,
+      "meal_type": "早餐",
+      "name": "煎杏仁奶蛋饼",
+      "calories": 485,
+      "na": 2257,
+      "k": 3964,
+      "fiber": 28,
+      "ingredients": [
+        "鱼肉",
+        "小米",
+        "胡萝卜",
+        "杏仁奶"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "午餐",
+      "name": "烤大蒜饭",
+      "calories": 664,
+      "na": 2028,
+      "k": 4320,
+      "fiber": 35,
+      "ingredients": [
+        "鱼肉",
+        "酸奶",
+        "糙米",
+        "大蒜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "晚餐",
+      "name": "烤胡萝卜主菜",
+      "calories": 572,
+      "na": 2442,
+      "k": 4168,
+      "fiber": 35,
+      "ingredients": [
+        "豆浆",
+        "胡萝卜",
+        "藜麦",
+        "虾仁"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "甲壳类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "加餐",
+      "name": "清淡番茄小吃",
+      "calories": 185,
+      "na": 2284,
+      "k": 3734,
+      "fiber": 31,
+      "ingredients": [
+        "番茄",
+        "荞麦",
+        "豆腐",
+        "大蒜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "早餐",
+      "name": "健康西兰花三明治",
+      "calories": 549,
+      "na": 2205,
+      "k": 4270,
+      "fiber": 31,
+      "ingredients": [
+        "豆腐",
+        "薏米",
+        "西兰花",
+        "黄瓜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "午餐",
+      "name": "南洋米粉料理",
+      "calories": 686,
+      "na": 2490,
+      "k": 4420,
+      "fiber": 34,
+      "ingredients": [
+        "鸭肉",
+        "辣椒",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 5,
+      "meal_type": "晚餐",
+      "name": "健康洋葱汤",
+      "calories": 610,
+      "na": 2078,
+      "k": 4250,
+      "fiber": 30,
+      "ingredients": [
+        "鱼肉",
+        "青椒",
+        "洋葱",
+        "燕麦"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "加餐",
+      "name": "南洋米粉水果拼盘",
+      "calories": 195,
+      "na": 2049,
+      "k": 3880,
+      "fiber": 28,
+      "ingredients": [
+        "鸭肉",
+        "香茅",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 6,
+      "meal_type": "早餐",
+      "name": "营养黄瓜粥",
+      "calories": 496,
+      "na": 2471,
+      "k": 3628,
+      "fiber": 28,
+      "ingredients": [
+        "番茄",
+        "黄瓜",
+        "鸡胸肉",
+        "全麦面包"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "午餐",
+      "name": "南洋米粉料理",
+      "calories": 692,
+      "na": 2088,
+      "k": 4158,
+      "fiber": 32,
+      "ingredients": [
+        "鸡蛋",
+        "辣椒",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "晚餐",
+      "name": "清淡西兰花炖品",
+      "calories": 598,
+      "na": 2488,
+      "k": 3538,
+      "fiber": 31,
+      "ingredients": [
+        "洋葱",
+        "薏米",
+        "西兰花",
+        "金枪鱼"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "加餐",
+      "name": "韩式米饭小吃",
+      "calories": 192,
+      "na": 2359,
+      "k": 4108,
+      "fiber": 27,
+      "ingredients": [
+        "三文鱼",
+        "泡菜",
+        "米饭"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "早餐",
+      "name": "健康番茄蛋饼",
+      "calories": 484,
+      "na": 2221,
+      "k": 3941,
+      "fiber": 33,
+      "ingredients": [
+        "番茄",
+        "青椒",
+        "藜麦",
+        "鸡胸肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 7,
+      "meal_type": "午餐",
+      "name": "泰式椰子料理",
+      "calories": 665,
+      "na": 2368,
+      "k": 4185,
+      "fiber": 34,
+      "ingredients": [
+        "鸡蛋",
+        "椰子",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "晚餐",
+      "name": "营养洋葱晚餐",
+      "calories": 560,
+      "na": 2063,
+      "k": 3998,
+      "fiber": 32,
+      "ingredients": [
+        "菠菜",
+        "鸭肉",
+        "洋葱",
+        "藜麦"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 7,
+      "meal_type": "加餐",
+      "name": "泰式辣椒小吃",
+      "calories": 214,
+      "na": 2034,
+      "k": 3555,
+      "fiber": 26,
+      "ingredients": [
+        "辣椒",
+        "鸡胸肉",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    }
+  ],
+  "cardiac_tumor": [
+    {
+      "day": 1,
+      "meal_type": "早餐",
+      "name": "营养鸡蛋蛋饼",
+      "calories": 431,
+      "na": 1649,
+      "k": 4316,
+      "fiber": 32,
+      "ingredients": [
+        "鸡蛋",
+        "薏米",
+        "大蒜",
+        "黄瓜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "蛋类"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "午餐",
+      "name": "韩式豆腐饭",
+      "calories": 675,
+      "na": 1508,
+      "k": 3968,
+      "fiber": 31,
+      "ingredients": [
+        "豆腐",
+        "泡菜",
+        "米饭"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "晚餐",
+      "name": "和风米饭晚餐",
+      "calories": 518,
+      "na": 1579,
+      "k": 3717,
+      "fiber": 29,
+      "ingredients": [
+        "鱼肉",
+        "豆腐",
+        "米饭"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 1,
+      "meal_type": "加餐",
+      "name": "煎鸡胸肉点心",
+      "calories": 186,
+      "na": 1754,
+      "k": 4207,
+      "fiber": 25,
+      "ingredients": [
+        "低脂奶酪",
+        "薏米",
+        "蘑菇",
+        "鸡胸肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品"
+      ]
+    },
+    {
+      "day": 2,
+      "meal_type": "早餐",
+      "name": "清淡瘦牛肉三明治",
+      "calories": 479,
+      "na": 1994,
+      "k": 3611,
+      "fiber": 34,
+      "ingredients": [
+        "糙米",
+        "西兰花",
+        "黄瓜",
+        "瘦牛肉"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 2,
+      "meal_type": "午餐",
+      "name": "南洋瘦牛肉面",
+      "calories": 684,
+      "na": 1876,
+      "k": 3869,
+      "fiber": 34,
+      "ingredients": [
+        "瘦牛肉",
+        "香茅",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 2,
+      "meal_type": "晚餐",
+      "name": "烩洋葱主菜",
+      "calories": 550,
+      "na": 1643,
+      "k": 3967,
+      "fiber": 30,
+      "ingredients": [
+        "糙米",
+        "洋葱",
+        "杏仁奶",
+        "瘦牛肉"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 2,
+      "meal_type": "加餐",
+      "name": "韩式紫菜小吃",
+      "calories": 191,
+      "na": 1984,
+      "k": 4032,
+      "fiber": 32,
+      "ingredients": [
+        "豆腐",
+        "紫菜",
+        "瘦牛肉"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "早餐",
+      "name": "南洋豆腐粥",
+      "calories": 450,
+      "na": 1563,
+      "k": 4459,
+      "fiber": 33,
+      "ingredients": [
+        "豆腐",
+        "柠檬草",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "午餐",
+      "name": "烩薏米餐",
+      "calories": 653,
+      "na": 1646,
+      "k": 3944,
+      "fiber": 31,
+      "ingredients": [
+        "豆浆",
+        "三文鱼",
+        "薏米",
+        "大蒜"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "晚餐",
+      "name": "烩豆腐晚餐",
+      "calories": 548,
+      "na": 1861,
+      "k": 4203,
+      "fiber": 33,
+      "ingredients": [
+        "豆腐",
+        "洋葱",
+        "低脂奶酪",
+        "玉米"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品",
+        "大豆"
+      ]
+    },
+    {
+      "day": 3,
+      "meal_type": "加餐",
+      "name": "营养荞麦小吃",
+      "calories": 182,
+      "na": 1567,
+      "k": 3702,
+      "fiber": 29,
+      "ingredients": [
+        "菠菜",
+        "鸭肉",
+        "荞麦",
+        "胡萝卜"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 4,
+      "meal_type": "早餐",
+      "name": "清淡玉米三明治",
+      "calories": 493,
+      "na": 1807,
+      "k": 3922,
+      "fiber": 34,
+      "ingredients": [
+        "番茄",
+        "瘦牛肉",
+        "大蒜",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": []
+    },
+    {
+      "day": 4,
+      "meal_type": "午餐",
+      "name": "烩黄瓜餐",
+      "calories": 628,
+      "na": 1629,
+      "k": 4407,
+      "fiber": 35,
+      "ingredients": [
+        "酸奶",
+        "黄瓜",
+        "燕麦",
+        "虾仁"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "甲壳类",
+        "奶制品"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "晚餐",
+      "name": "营养鸭肉主菜",
+      "calories": 520,
+      "na": 1508,
+      "k": 3544,
+      "fiber": 27,
+      "ingredients": [
+        "鸭肉",
+        "洋葱",
+        "芹菜",
+        "玉米"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "芹菜/香菜"
+      ]
+    },
+    {
+      "day": 4,
+      "meal_type": "加餐",
+      "name": "越式椰子酸奶",
+      "calories": 193,
+      "na": 1633,
+      "k": 4369,
+      "fiber": 27,
+      "ingredients": [
+        "三文鱼",
+        "椰子",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "早餐",
+      "name": "韩式金枪鱼三明治",
+      "calories": 489,
+      "na": 1699,
+      "k": 4110,
+      "fiber": 26,
+      "ingredients": [
+        "紫菜",
+        "泡菜",
+        "金枪鱼"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "鱼类"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "午餐",
+      "name": "烩薏米饭",
+      "calories": 678,
+      "na": 1715,
+      "k": 4227,
+      "fiber": 28,
+      "ingredients": [
+        "菠菜",
+        "豆腐",
+        "薏米",
+        "牛奶"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "奶制品",
+        "大豆"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "晚餐",
+      "name": "南洋豆腐晚餐",
+      "calories": 600,
+      "na": 1911,
+      "k": 3766,
+      "fiber": 35,
+      "ingredients": [
+        "豆腐",
+        "辣椒",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "大豆"
+      ]
+    },
+    {
+      "day": 5,
+      "meal_type": "加餐",
+      "name": "韩式豆腐点心",
+      "calories": 178,
+      "na": 1719,
+      "k": 3511,
+      "fiber": 34,
+      "ingredients": [
+        "鸭肉",
+        "豆腐",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "大豆"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "早餐",
+      "name": "煎燕麦三明治",
+      "calories": 521,
+      "na": 1637,
+      "k": 4341,
+      "fiber": 31,
+      "ingredients": [
+        "豆腐",
+        "燕麦",
+        "杏仁奶",
+        "西兰花"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "大豆"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "午餐",
+      "name": "烩洋葱餐",
+      "calories": 629,
+      "na": 1622,
+      "k": 4355,
+      "fiber": 30,
+      "ingredients": [
+        "鱼肉",
+        "豆浆",
+        "洋葱",
+        "全麦面包"
+      ],
+      "cuisine": "西餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类",
+        "大豆"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "晚餐",
+      "name": "营养黄瓜炖品",
+      "calories": 531,
+      "na": 1723,
+      "k": 4113,
+      "fiber": 28,
+      "ingredients": [
+        "豆腐",
+        "黄瓜",
+        "大蒜",
+        "全麦面包"
+      ],
+      "cuisine": "中餐",
+      "allergen_tags": [
+        "含麸质谷物",
+        "大豆"
+      ]
+    },
+    {
+      "day": 6,
+      "meal_type": "加餐",
+      "name": "南洋虾仁水果拼盘",
+      "calories": 203,
+      "na": 1754,
+      "k": 3650,
+      "fiber": 35,
+      "ingredients": [
+        "辣椒",
+        "米饭",
+        "虾仁"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": [
+        "甲壳类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "早餐",
+      "name": "韩式面条蛋饼",
+      "calories": 507,
+      "na": 1619,
+      "k": 3886,
+      "fiber": 35,
+      "ingredients": [
+        "三文鱼",
+        "泡菜",
+        "面条"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    },
+    {
+      "day": 7,
+      "meal_type": "午餐",
+      "name": "泰式米粉面",
+      "calories": 706,
+      "na": 1947,
+      "k": 4376,
+      "fiber": 27,
+      "ingredients": [
+        "辣椒",
+        "鸡胸肉",
+        "米粉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 7,
+      "meal_type": "晚餐",
+      "name": "越式椰子晚餐",
+      "calories": 523,
+      "na": 1691,
+      "k": 3947,
+      "fiber": 30,
+      "ingredients": [
+        "椰子",
+        "米饭",
+        "鸡胸肉"
+      ],
+      "cuisine": "东南亚",
+      "allergen_tags": []
+    },
+    {
+      "day": 7,
+      "meal_type": "加餐",
+      "name": "日式金枪鱼酸奶",
+      "calories": 197,
+      "na": 1647,
+      "k": 3526,
+      "fiber": 32,
+      "ingredients": [
+        "泡菜",
+        "面条",
+        "金枪鱼"
+      ],
+      "cuisine": "日韩",
+      "allergen_tags": [
+        "含麸质谷物",
+        "鱼类"
+      ]
+    }
+  ]
+}

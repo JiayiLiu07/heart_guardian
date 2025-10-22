@@ -97,6 +97,13 @@ def render():
     # 自定义CSS样式（与 p00_intro.py 风格一致）
     st.markdown("""
     <style>
+    section[data-testid="stSidebar"] {
+    display: none !important;
+    }
+    .stSidebar {
+        display: none !important;
+    }
+
     .main-header {
         font-size: 3rem;
         font-weight: bold;

@@ -1,54 +1,99 @@
-# utils/viz.py
-
-# This file is intended for helper functions related to visualization generation,
-# which are called by train.py.
-# The actual visualization generation logic (using matplotlib, seaborn, shap, etc.)
-# is currently embedded within train.py for simplicity of this example.
-# In a larger project, these functions might be moved here for better modularity.
-
-# For now, this file can remain mostly empty or contain utility functions
-# that don't involve direct plotting calls but prepare data for plotting.
-
+# 📁 utils/viz.py
 import streamlit as st
 import pandas as pd
-import numpy as np
+import plotly.express as px
 import matplotlib.pyplot as plt
 import seaborn as sns
-import shap
-from sklearn.inspection import PartialDependenceDisplay
 
-# --- Example: Function to prepare data for a specific plot ---
-def prepare_shap_summary_plot_data(model, X_data):
-    """ Prepares data for SHAP summary plot. """
-    try:
-        explainer = shap.TreeExplainer(model)
-        shap_values = explainer.shap_values(X_data)
-        # For binary classification, shap_values might be a list.
-        # Assuming we need SHAP values for class 1 (cardio disease).
-        if isinstance(shap_values, list) and len(shap_values) > 1:
-            shap_values = shap_values[1]
-        
-        return X_data, shap_values # Return data and SHAP values for plotting
-    except Exception as e:
-        st.error(f"Error preparing SHAP summary plot data: {e}")
-        return None, None
+# --- Universal Styling ---
+# Apply consistent font and color palette
+def get_theme_styles():
+    """Returns a dictionary of theme styles for plots."""
+    # These colors can be linked to your global CSS variables if available
+    return {
+        "font": "Arial, sans-serif",
+        "primary_color": "#007bff", # Example: Blue
+        "accent_color": "#17a2b8",  # Example: Cyan
+        "success_color": "#28a745", # Example: Green
+        "warning_color": "#ffc107", # Example: Yellow
+        "danger_color": "#dc3545",  # Example: Red
+        "neutral_color": "#6c757d", # Example: Gray
+        "figure_bg_color": "white",
+        "plot_bg_color": "white",
+        "axis_color": "#333",
+        "title_color": "#333",
+    }
 
-def plot_shap_summary_bar(X_data, shap_values, feature_names, output_path):
-    """ Plots and saves SHAP summary bar plot. """
-    if X_data is None or shap_values is None or not feature_names:
-        st.warning("Missing data for SHAP summary bar plot.")
-        return
+# --- Plotting Functions ---
 
-    plt.figure(figsize=(10, 8))
-    shap.summary_plot(shap_values, X_data, feature_names=feature_names, plot_type="bar", show=False, color='#E94560')
-    plt.title('Global Feature Importance (SHAP)')
-    plt.savefig(output_path, bbox_inches='tight', dpi=300)
-    plt.close()
-    print(f"SHAP summary bar plot saved to {output_path}")
+def plot_age_bp_scatter(df: pd.DataFrame, title: str = "Age vs Blood Pressure", **kwargs):
+    """
+    Generates a Plotly scatter plot for Age vs Blood Pressure (Systolic and Diastolic).
+    Assumes df has 'age', 'ap_high', 'ap_low' columns, and 'timestamp' for coloring/hover.
+    """
+    if df is None or df.empty:
+        st.warning("No data available for plotting Age vs BP.")
+        return None
 
-# --- Other potential visualization helper functions ---
-# def plot_correlation_heatmap(...): ...
-# def plot_partial_dependence(...): ...
+    # Ensure required columns exist
+    required_cols = ['age', 'ap_high', 'ap_low']
+    if not all(col in df.columns for col in required_cols):
+        st.error(f"DataFrame is missing required columns for BP plot: {required_cols}")
+        return None
 
-# The functions in train.py are currently directly implementing the plots.
-# If these functions become complex or are reused, they can be moved here.
+    # Use timestamp for coloring if available, otherwise use age or a simple color
+    color_col = 'timestamp' if 'timestamp' in df.columns else 'age'
+    
+    fig = px.scatter(df, 
+                     x='age', 
+                     y='ap_high', 
+                     color=color_col,
+                     size='ap_low', # Using size for diastolic BP
+                     hover_name='age', # Display age on hover
+                     hover_data={'ap_high': True, 'ap_low': True, 'timestamp': True, 'age': False}, # Customize hover info
+                     title=title,
+                     labels={
+                         'age': '年龄', 
+                         'ap_high': '收缩压 (mmHg)', 
+                         'ap_low': '舒张压 (mmHg)',
+                         'timestamp': '记录时间'
+                     },
+                     color_continuous_scale=px.colors.sequential.Viridis # Example color scale
+                    )
+
+    fig.update_layout(
+        xaxis_title="年龄",
+        yaxis_title="收缩压 (mmHg)",
+        hovermode='closest', # Show hover info for the closest point
+        plot_bgcolor=get_theme_styles()["plot_bg_color"],
+        paper_bgcolor=get_theme_styles()["figure_bg_color"],
+        font=dict(family=get_theme_styles()["font"]),
+        title_font_color=get_theme_styles()["title_color"],
+        xaxis=dict(tickfont=dict(color=get_theme_styles()["axis_color"])),
+        yaxis=dict(tickfont=dict(color=get_theme_styles()["axis_color"])),
+        coloraxis_colorbar=dict(title="时间" if color_col == 'timestamp' else "年龄") # Colorbar title
+    )
+    
+    # Add a secondary y-axis if needed, or just plot them together
+    # For simplicity, let's just use scatter plot for now.
+    
+    return fig
+
+# Add other plotting functions as needed, e.g., for distribution, trends, etc.
+# def plot_obesity_distribution(df, ...): ...
+# def plot_health_trends_line(df, metric, ...): ...
+
+# Example: Matplotlib-based plot
+def plot_matplotlib_bar(data: pd.Series, title: str = "Bar Chart"):
+    """Generates a simple Matplotlib bar plot."""
+    styles = get_theme_styles()
+    fig, ax = plt.subplots(figsize=(8, 5))
+    sns.barplot(x=data.index, y=data.values, ax=ax, palette="viridis") # Using seaborn for better aesthetics
+    
+    ax.set_title(title, fontsize=16, color=styles["title_color"])
+    ax.set_xlabel("Category", fontsize=12, color=styles["axis_color"])
+    ax.set_ylabel("Value", fontsize=12, color=styles["axis_color"])
+    ax.tick_params(axis='both', which='major', labelsize=10, colors=styles["axis_color"])
+    
+    plt.tight_layout()
+    return fig
