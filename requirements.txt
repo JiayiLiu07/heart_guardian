@@ -7,15 +7,14 @@ seaborn==0.13.2
 scikit-learn==1.6.1
 xgboost==2.1.4
 plotly==6.3.0
-openai==1.108.1           # Aliyun DashScope compatible
-dashscope==1.24.5         # official DashScope SDK (kept as fallback)
-tenacity==9.1.2           # retry decorator you use in 02_nutrition
-python-dotenv==1.1.1      # local .env support (Cloud will ignore)
+openai==1.108.1
+dashscope==1.24.5
+tenacity==9.1.2
+python-dotenv==1.1.1
 
 # --------- PDF / Report ---------
-reportlab==4.4.4          # p01_profile PDF export
-matplotlib-backends-backend-pdf  # already ships with matplotlib
+reportlab==4.4.4
 
 # --------- Optional Nice-to-Have ---------
-streamlit-quill==0.0.3    # if you enable rich-text notes in p05_me
-streamlit-lottie==0.0.5   # should you add animations later
+streamlit-quill==0.0.3
+streamlit-lottie==0.0.5
