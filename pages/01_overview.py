@@ -1,164 +1,123 @@
 # pages/01_overview.py
-import streamlit as st
-import pandas as pd
-from pages.p01_profile import load_profile_data
-from utils.disease_dict import DISEASE_ENUM
-from utils.api import client
-from io import BytesIO
-import matplotlib.pyplot as plt
-import seaborn as sns
-import base64
+import streamlit as st, pandas as pd, matplotlib, matplotlib.pyplot as plt, seaborn as sns, base64, io, os
+from components.top_nav import render_nav
+st.session_state.current_page = "overview"
+render_nav()
+matplotlib.use("Agg")
 
-# 统一风格，与p00_intro.py匹配
+st.markdown("<style>section[data-testid='stSidebar'] {display: none !important;}</style>", unsafe_allow_html=True)
+
 st.markdown("""
 <style>
-:root {{ --primary: #1a237e; --accent: #00e5ff; --danger: #ff5252; --bg: #0f1629; --text: #e1f5fe; --shadow: rgba(0,229,255,.3); }}
-body {{ background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; }}
-.hero-section {{
-    background: linear-gradient(135deg, var(--primary) 0%, #283593 50%, #3949ab 100%);
-    padding: 4rem 2rem;
-    border-radius: 15px;
-    margin-bottom: 2rem;
-    color: white;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 8px 32px var(--shadow);
-    backdrop-filter: blur(10px);
-}}
-.hero-section::before {{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-    opacity: 0.3;
-}}
-.hero-title {{
-    font-size: 3.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    background: linear-gradient(45deg, #00e5ff, #2979ff, #00e5ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    position: relative;
-    animation: gradientAnimation 5s ease infinite;
-    background-size: 200% 200%;
-    text-shadow: 0 0 10px var(--shadow);
-}}
-.hero-subtitle {{
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-    opacity: 0.9;
-    font-weight: 300;
-    text-shadow: 0 0 5px var(--shadow);
-}}
-@keyframes gradientAnimation {{
-    0% {{ background-position: 0% 50%; }}
-    50% {{ background-position: 100% 50%; }}
-    100% {{ background-position: 0% 50%; }}
-}}
-.feature-card {{
-    background: rgba(255, 255, 255, 0.05);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    margin: 1rem 0;
-    border: 1px solid var(--shadow);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-}}
-.feature-card:hover {{
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px var(--shadow);
-}}
-.skeleton {{height:300px;background:linear-gradient(90deg, #333 25%, #444 50%, #333 75%);background-size:200% 100%;animation:skeleton-pulse 1.5s infinite;border-radius:12px;}}
-@keyframes skeleton-pulse {{0%{background-position:200% 0}100%{background-position:-200% 0}}}
-.desc-card {{background: rgba(41,121,255,.1); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px var(--shadow); margin-top: 1rem;}}
+.cyber-title{font-size:2.4rem;font-weight:700;background:linear-gradient(90deg,#00e5ff,#2979ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientShift 4s ease infinite;background-size:200% 200%;}
+@keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.neon-chart{background:radial-gradient(circle at center,rgba(0,229,255,.08) 0%,transparent 70%);border:1px solid rgba(0,229,255,.4);border-radius:16px;padding:1rem;box-shadow:0 0 20px rgba(0,229,255,.35);}
+.holo-card{display:flex;align-items:center;gap:.8rem;background:linear-gradient(135deg,rgba(0,229,255,.05) 0%,rgba(41,121,255,.05) 100%);border-left:4px solid #00e5ff;border-radius:12px;padding:1rem 1.2rem;margin:.8rem 0;backdrop-filter:blur(6px);transition:all .3s ease;}
+.holo-card:hover{transform:translateX(6px);box-shadow:0 0 15px rgba(0,229,255,.45)}
+.holo-icon{font-size:1.6rem}
+.holo-text{color:#000000;font-weight:500}
+.health-tip{background:rgba(255,82,82,.08);border-left:4px solid #ff5252;border-radius:12px;padding:1rem 1.2rem;margin:.8rem 0;backdrop-filter:blur(6px);}
+.health-tip-icon{font-size:1.4rem;margin-right:.6rem}
 </style>
 """, unsafe_allow_html=True)
 
 df = pd.read_csv("data/cardio_train.csv", sep=";")
+df["age_year"] = (df["age"] / 365.25).round().astype(int)
 
-def generate_plot_image(prompt, key):
-    place = st.empty()
-    place.markdown('<div class="skeleton"></div>', unsafe_allow_html=True)
-    try:
-        # Use VLLM to get description in Chinese
-        resp = client.chat.completions.create(model="qwen-turbo", messages=[{"role": "user", "content": prompt + " Provide a Chinese description with key data insights. Use markdown for formatting, bold key points. Do not mention access to files or generating visualizations."}], stream=False)
-        desc = resp.choices[0].message.content.strip()
+st.markdown('<div class="cyber-title">❤️ 心血管科普展览馆</div>', unsafe_allow_html=True)
+st.markdown("**仅基于公开数据集** `cardio_train.csv` **告诉你：心血管被什么害、怎么防**")
 
-        # Generate plot using matplotlib based on type
-        buf = BytesIO()
-        fig, ax = plt.subplots(figsize=(12, 7))
-        fig.patch.set_facecolor('#0f1629')
-        ax.patch.set_facecolor('#0f1629')
-        ax.spines['top'].set_color('#e1f5fe')
-        ax.spines['bottom'].set_color('#e1f5fe')
-        ax.spines['left'].set_color('#e1f5fe')
-        ax.spines['right'].set_color('#e1f5fe')
+tabs = st.tabs(["🔍 高危因素", "📈 血压迷踪", "🍏 生活方式", "⚠️ 健康警示"])
+
+with tabs[0]:
+    st.markdown("#### ① 高危因素排行榜")
+    importances = df.corr()['cardio'].abs().sort_values(ascending=False)[1:11]
+    fig, ax = plt.subplots(figsize=(6, 4))
+    fig.patch.set_facecolor('#0f1629'); ax.set_facecolor('#0f1629')
+    sns.barplot(x=importances.values, y=importances.index, ax=ax, palette='Blues_r')
+    ax.set_title('Top 10 Risk Factors', color='#e1f5fe')
+    for sp in ax.spines.values(): sp.set_color('#e1f5fe')
+    ax.tick_params(colors='#e1f5fe')
+    buf = io.BytesIO(); fig.savefig(buf, format="png", bbox_inches='tight'); buf.seek(0)
+    st.image(buf, use_container_width=True)
+    st.markdown("""
+    <div class="holo-card">
+      <div class="holo-icon">🩸</div>
+      <div class="holo-text"><b>收缩压</b> 每升高 20 mmHg，心血管事件风险翻倍！高血压是心血管疾病的主要诱因，建议定期监测血压，保持健康饮食，避免高盐食物，并结合药物治疗控制血压在正常范围。及早干预可显著降低心梗和中风风险。</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with tabs[1]:
+    st.markdown("#### ② 血压迷踪")
+    fig, ax = plt.subplots(figsize=(6, 4))
+    fig.patch.set_facecolor('#0f1629'); ax.set_facecolor('#0f1629')
+    sns.scatterplot(data=df, x='ap_hi', y='ap_lo', hue='cardio', ax=ax, palette={0:'#00e5ff',1:'#ff5252'})
+    ax.set_title('Systolic vs Diastolic Distribution', color='#e1f5fe')
+    for sp in ax.spines.values(): sp.set_color('#e1f5fe')
+    ax.tick_params(colors='#e1f5fe')
+    buf = io.BytesIO(); fig.savefig(buf, format="png", bbox_inches='tight'); buf.seek(0)
+    st.image(buf, use_container_width=True)
+    st.markdown("""
+    <div class="health-tip">
+      <span class="health-tip-icon">⚠️</span>
+      理想血压：< 120/80 mmHg；超过 140/90 即为高血压，需干预！高血压会损伤血管壁，导致动脉硬化，增加心脏负担。预防措施包括低钠饮食、多吃蔬果、适量运动和定期体检。如果血压持续升高，应及时就医，使用降压药物控制。
+    </div>
+    """, unsafe_allow_html=True)
+
+with tabs[2]:
+    st.markdown("#### ③ 生活方式画像")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        fig, ax = plt.subplots(figsize=(4, 3))
+        fig.patch.set_facecolor('#0f1629'); ax.set_facecolor('#0f1629')
+        sns.countplot(data=df, x='smoke', hue='cardio', ax=ax, palette={0:'#00e5ff',1:'#ff5252'})
+        ax.set_title('Smoking vs Cardiovascular', color='#e1f5fe')
+        for sp in ax.spines.values(): sp.set_color('#e1f5fe')
         ax.tick_params(colors='#e1f5fe')
-        ax.title.set_color('#e1f5fe')
-        ax.xaxis.label.set_color('#e1f5fe')
-        ax.yaxis.label.set_color('#e1f5fe')
-        
-        if "feature importance" in prompt.lower():
-            importances = df.corr()['cardio'].abs().sort_values(ascending=False)[1:16]
-            sns.barplot(x=importances.values, y=importances.index, ax=ax, palette='Blues_r')
-            ax.set_title('Top 15 Feature Importance', color='#e1f5fe')
-            ax.set_xlabel('Importance', color='#e1f5fe')
-            ax.set_ylabel('Features', color='#e1f5fe')
-            ax.grid(color='rgba(0,229,255,.3)')
-        elif "correlation heatmap" in prompt.lower():
-            corr = df.corr()
-            sns.heatmap(corr, ax=ax, cmap='coolwarm', annot=True, fmt=".2f", annot_kws={"color": "black"})
-            ax.set_title('Correlation Heatmap', color='#e1f5fe')
-        elif "partial dependence" in prompt.lower():
-            ap_hi_range = range(80, 200, 10)
-            risk = [df[(df['ap_hi'] >= v-5) & (df['ap_hi'] < v+5)]['cardio'].mean() for v in ap_hi_range]
-            sns.lineplot(x=ap_hi_range, y=risk, ax=ax, color='#00e5ff', marker='o')
-            ax.set_title('Partial Dependence of ap_hi on Risk', color='#e1f5fe')
-            ax.set_xlabel('ap_hi', color='#e1f5fe')
-            ax.set_ylabel('Risk', color='#e1f5fe')
-            ax.grid(color='rgba(0,229,255,.3)')
-        elif "feature distribution" in prompt.lower():
-            sns.violinplot(data=df, x='cardio', y='age', ax=ax, palette='Blues', inner='quartile')
-            ax.set_title('Feature Distribution (Age by Cardio)', color='#e1f5fe')
-            ax.set_xlabel('Cardio', color='#e1f5fe')
-            ax.set_ylabel('Age', color='#e1f5fe')
-        
-        fig.savefig(buf, format="png")
-        buf.seek(0)
-        img_base64 = base64.b64encode(buf.read()).decode('utf-8')
-        
-        place.empty()
-        st.image(f"data:image/png;base64,{img_base64}", use_container_width=True)
-        st.markdown(f'<div class="desc-card">{desc}</div>', unsafe_allow_html=True)
-    except Exception as e:
-        place.error(f"生成失败: {e}")
-    if st.button("🔁 重新生成", key=key):
-        generate_plot_image(prompt, key)
+        buf = io.BytesIO(); fig.savefig(buf, format="png", bbox_inches='tight'); buf.seek(0)
+        st.image(buf, use_container_width=True)
+    with col2:
+        fig, ax = plt.subplots(figsize=(4, 3))
+        fig.patch.set_facecolor('#0f1629'); ax.set_facecolor('#0f1629')
+        sns.countplot(data=df, x='alco', hue='cardio', ax=ax, palette={0:'#00e5ff',1:'#ff5252'})
+        ax.set_title('Alcohol vs Cardiovascular', color='#e1f5fe')
+        for sp in ax.spines.values(): sp.set_color('#e1f5fe')
+        ax.tick_params(colors='#e1f5fe')
+        buf = io.BytesIO(); fig.savefig(buf, format="png", bbox_inches='tight'); buf.seek(0)
+        st.image(buf, use_container_width=True)
+    with col3:
+        fig, ax = plt.subplots(figsize=(4, 3))
+        fig.patch.set_facecolor('#0f1629'); ax.set_facecolor('#0f1629')
+        sns.countplot(data=df, x='active', hue='cardio', ax=ax, palette={0:'#00e5ff',1:'#ff5252'})
+        ax.set_title('Exercise vs Cardiovascular', color='#e1f5fe')
+        for sp in ax.spines.values(): sp.set_color('#e1f5fe')
+        ax.tick_params(colors='#e1f5fe')
+        buf = io.BytesIO(); fig.savefig(buf, format="png", bbox_inches='tight'); buf.seek(0)
+        st.image(buf, use_container_width=True)
+    st.markdown("""
+    <div class="holo-card">
+      <div class="holo-icon">🏃</div>
+      <div class="holo-text">每周 150 min 中等强度运动，心血管事件风险降低 30%！运动能改善心肺功能，降低血压和胆固醇水平。建议从散步、游泳或骑行开始，坚持规律锻炼。同时，避免吸烟和过量饮酒，这些习惯会加速血管损伤，增加血栓风险。</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-def render():
-    st.markdown("<style>section[data-testid='stSidebar'], .stSidebar, [data-testid='collapsedControl'], #MainMenu, footer {display: none !important;}</style>", unsafe_allow_html=True)
+with tabs[3]:
+    st.markdown("#### ④ 年龄警示线")
+    fig, ax = plt.subplots(figsize=(6, 4))
+    fig.patch.set_facecolor('#0f1629'); ax.set_facecolor('#0f1629')
+    sns.histplot(data=df, x='age_year', hue='cardio', ax=ax, palette={0:'#00e5ff',1:'#ff5252'}, element='step', fill=True)
+    ax.set_title('Age Distribution vs Cardiovascular', color='#e1f5fe')
+    ax.axvline(45, color='#ff5252', linestyle='--', linewidth=2)
+    ax.text(46, ax.get_ylim()[1]*0.9, 'Risk spikes at 45', color='#ff5252', fontsize=10)
+    for sp in ax.spines.values(): sp.set_color('#e1f5fe')
+    ax.tick_params(colors='#e1f5fe')
+    buf = io.BytesIO(); fig.savefig(buf, format="png", bbox_inches='tight'); buf.seek(0)
+    st.image(buf, use_container_width=True)
+    st.markdown("""
+    <div class="health-tip">
+      <span class="health-tip-icon">⚠️</span>
+      45 岁后心血管风险陡升，建议每年做<strong>心脏彩超 + 冠脉 CT</strong>！随着年龄增长，血管弹性下降，容易积累斑块。预防包括均衡饮食、控制体重、定期筛查高血压和高脂血症，早发现早治疗可有效降低发病率。
+    </div>
+    """, unsafe_allow_html=True)
 
-    st.markdown('<div class="hero-section"><h1 class="hero-title">AI 风险总览</h1><p class="hero-subtitle">基于大数据 + 您的档案</p></div>', unsafe_allow_html=True)
-
-    tabs = st.tabs(["特征重要性", "相关性热图", "血压依赖", "特征分布"])
-    prompts = [
-        "基于 cardio_train.csv 数据集，描述前 15 个平均 SHAP 值的水平条形图。图中标签用英文。提供中文关键数据洞察，使用 markdown 加粗重点。",
-        "基于 cardio_train.csv 数据集，描述数值特征的相关性热图。图中标签用英文。提供中文关键数据洞察，使用 markdown 加粗重点。",
-        "基于 cardio_train.csv 数据集，描述 ap_hi 对风险的部分依赖关系。图中标签用英文。提供中文关键数据洞察，使用 markdown 加粗重点。",
-        "基于 cardio_train.csv 数据集，描述前几个特征的 SHAP 蜂群图。图中标签用英文。提供中文关键数据洞察，使用 markdown 加粗重点。"
-    ]
-    titles = ["特征重要性", "相关性热图", "血压依赖", "特征分布"]
-    for tab, prompt, title in zip(tabs, prompts, titles):
-        with tab:
-            generate_plot_image(prompt, title)
-
-if __name__ == "__main__":
-    render()
+st.markdown('<div style="height:70px"></div>', unsafe_allow_html=True)

@@ -8,6 +8,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import base64
 import pandas as pd
+import json
+
+from components.top_nav import render_nav
+st.session_state.current_page = "knowledge"
+render_nav()
 
 df = pd.read_csv("data/cardio_train.csv", sep=";")
 
@@ -55,9 +60,18 @@ def ask_vllm(question):
 def render_knowledge_tree(kb, user_disease):
     if user_disease:
         st.markdown(f'<div class="tree-root">{user_disease}</div>', unsafe_allow_html=True)
+    subtype_map = json.load(open("assets/subtype_dict.json"))
     for key, value in kb.items():
         with st.expander(f"{value['label']} {value.get('icon', '❤️')}", expanded=key == user_disease):
-            st.markdown(value.get('content', '暂无内容'))
+            # 在大类展开里再嵌亚型
+            for sub in [s for s, info in subtype_map.items() if info["parent"] == key]:
+                sub_info = subtype_map[sub]
+                with st.expander(f"{sub_info['icon']} {sub_info['label']}", expanded=False):
+                    st.markdown(f"**饮食提示**：{sub_info.get('diet_tip', '均衡饮食')}")
+                    st.markdown(f"**常见症状**：{sub_info.get('symptoms', '暂无')}")
+                    # 亚型数据洞察（可复用 data_viz.py 函数，只过滤该亚型）
+                    sub_df = df[df["cardio"] == 1]  # 示例
+                    st.write("亚型样本数", len(sub_df))
 
 def render():
     st.markdown("<style>section[data-testid='stSidebar'], .stSidebar, [data-testid='collapsedControl'], #MainMenu, footer {display: none !important;}</style>", unsafe_allow_html=True)
@@ -88,7 +102,7 @@ def render():
     col1, col2 = st.columns([3,7])
     with col1:
         st.subheader("目录树")
-        render_knowledge_tree({k.name: DISEASE_ENUM[k].value for k in DISEASE_ENUM if k.name != 'none'}, user_disease)
+        render_knowledge_tree({member.name: member.value for member in DISEASE_ENUM if member.name != 'none'}, user_disease)
 
     with col2:
         st.subheader("详情 / 洞察")
@@ -123,3 +137,23 @@ def render():
 
 if __name__ == "__main__":
     render()
+
+st.markdown("""
+<style>
+.neon-tree-content{
+  border-left:2px solid #00e5ff;
+  padding-left:1rem;margin-top:.5rem;
+  background:rgba(0,229,255,.05);
+  border-radius:0 8px 8px 0;
+}
+.glass-viz{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(0,229,255,.3);
+  border-radius:12px;padding:1rem;
+  backdrop-filter:blur(8px);margin:1rem 0;
+}
+.viz-desc{
+  margin-top:.5rem;font-size:.9rem;color:rgba(225,245,254,.8)
+}
+</style>
+""", unsafe_allow_html=True)

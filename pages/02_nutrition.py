@@ -1,3 +1,4 @@
+# pages/02_nutrition.py
 import streamlit as st
 import pandas as pd
 import os
@@ -6,6 +7,11 @@ import logging
 import sys
 from openai import OpenAI
 from pages.p01_profile import load_profile_data
+import json
+
+from components.top_nav import render_nav
+st.session_state.current_page = "nutrition"
+render_nav()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -205,3 +211,41 @@ def show_ai_charts_page():
 
 if __name__ == "__main__":
     show_ai_charts_page()
+
+st.markdown("""
+<style>
+.chip-search{
+  display:flex;gap:.5rem;
+  background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.3);
+  border-radius:12px;padding:.5rem .8rem;
+}
+.chip-search input{
+  background:transparent;border:none;color:#e1f5fe;
+}
+.chip-search button{
+  box-shadow:0 0 10px rgba(0,229,255,.45) !important;
+}
+
+.slider-track{
+  display:flex;gap:1rem;overflow-x:auto;
+  padding:1rem 0;
+}
+.slider-track::-webkit-scrollbar{height:6px}
+.slider-track::-webkit-scrollbar-thumb{background:#00e5ff;border-radius:3px}
+
+.glass-dish{
+  min-width:160px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(0,229,255,.3);border-radius:12px;
+  padding:1rem;backdrop-filter:blur(8px);
+  text-align:center;transition:all .3s ease;
+}
+.glass-dish:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,229,255,.35)}
+.dish-name{font-weight:600;color:#e1f5fe}
+.dish-cal{font-size:.8rem;color:rgba(225,245,254,.7)}
+.sub-tag{
+  background:linear-gradient(90deg,#ff5252,#ff867c);
+  color:#fff;font-size:.7rem;padding:.2rem .5rem;
+  border-radius:10px;margin-left:.5rem;
+}
+</style>
+""", unsafe_allow_html=True)

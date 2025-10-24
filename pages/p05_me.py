@@ -15,6 +15,10 @@ except ImportError:
     st.error("Error importing modules. Make sure 'utils' and 'pages' directories are structured correctly.")
     st.stop()
 
+from components.top_nav import render_nav
+st.session_state.current_page = "me"
+render_nav()
+
 # Initialize logger for this module
 logger = logging.getLogger(__name__)
 
@@ -135,3 +139,14 @@ def render_p05_me():
 # This function is called when the script is run directly
 if __name__ == "__main__":
     render_p05_me()
+
+st.markdown("""
+<style>
+.export-dock{display:flex;justify-content:center}
+.download-pulse{
+  width:60px;height:60px;margin:auto;
+  border:4px solid #00e5ff;border-radius:50%;
+  animation:pulse 1s infinite;
+}
+</style>
+""", unsafe_allow_html=True)

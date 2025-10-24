@@ -6,6 +6,11 @@ from utils.api import client
 from pages.p01_profile import load_profile_data
 from utils.disease_dict import DISEASE_ENUM
 from utils.cache import cache_response, load_cached_response
+import json
+
+from components.top_nav import render_nav
+st.session_state.current_page = "ai_doctor"
+render_nav()
 
 PROMPT_TEMPLATE = """
 你是一名专业AI心脏健康助手，根据用户症状和档案{user_data}，给出易懂建议。
@@ -60,16 +65,26 @@ def render():
     if 'chat_history' not in st.session_state:
         st.session_state.chat_history = []
 
+    subtype_map = json.load(open("assets/subtype_dict.json"))
+
+    # 动态生成亚型快捷问
+    user_sub = user_data.get("cardio_subtypes", [])
+    quick_questions = {}
+    for sub in user_sub:
+        info = subtype_map[sub]
+        quick_questions[sub] = {
+            "label": info["label"],
+            "icon": info["icon"],
+            "ask": f"我有{info['label']}，日常需要注意什么？"
+        }
+
+    # 渲染按钮（沿用原 5×3 布局）
     cols = st.columns(5)
-    quick_questions = {k: f"关于{DISEASE_ENUM[k]['label']}的建议" for k in DISEASE_ENUM if k != 'none'}
-    for i, (k, q) in enumerate(quick_questions.items()):
-        if i < 15:  # 5列 x 3行
-            with cols[i % 5]:
-                if st.button(q, type="secondary", key=f"q_{i}"):
-                    response = ask_ai_doctor(q, user_data)
-                    if response:
-                        st.session_state.chat_history.append({"question": q, "answer": response})
-                        st.rerun()
+    for i, (k, v) in enumerate(quick_questions.items()):
+        with cols[i % 5]:
+            if st.button(f"{v['icon']} {v['label']}", key=f"sub_q_{i}"):
+                st.session_state["question"] = v["ask"]
+                st.rerun()
 
     chat = st.container()
     with chat:
@@ -92,3 +107,22 @@ def render():
 
 if __name__ == "__main__":
     render()
+
+st.markdown("""
+<style>
+.quick-chips{display:flex;flex-wrap:wrap;gap:.6rem}
+.quick-chips button{
+  background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.3);
+  border-radius:20px;padding:.4rem .8rem;color:#e1f5fe;
+  transition:all .3s ease;
+}
+.quick-chips button:hover{box-shadow:0 0 15px rgba(0,229,255,.55)}
+.bubble{
+  max-width:70%;padding:.8rem 1rem;margin:.6rem 0;
+  border-radius:18px;backdrop-filter:blur(10px);
+  line-height:1.4;
+}
+.bubble.user{align-self:flex-end;background:rgba(0,229,255,.15);color:#e1f5fe}
+.bubble.ai{align-self:flex-start;background:rgba(255,255,255,.9);color:#1a237e}
+</style>
+""", unsafe_allow_html=True)

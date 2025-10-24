@@ -238,7 +238,7 @@ def render():
                             st.success(f"欢迎回来，{message}！")
                             st.balloons()
                             time.sleep(1.5)
-                            st.switch_page("pages/p01_profile.py")
+                            st.switch_page("pages/01_overview.py")
                         except Exception as e:
                             st.error(f"跳转到个人资料页面失败: {e}")
                     else:
