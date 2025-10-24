@@ -1,201 +1,98 @@
 # components/top_nav.py
+
 import streamlit as st
 
-def render_nav():
-    current = st.session_state.get('current_page', 'overview')
-    pages = {
-        "overview": "总览",
-        "nutrition": "饮食",
-        "ai_doctor": "咨询",
-        "knowledge": "知识",
-        "profile": "档案",
-        "me": "我的"
+def render_nav(page_map):
+    current = st.session_state.get('current_page', 'pages/01_overview.py')
+    current_short = current.split('/')[-1].replace('.py', '')
+
+    # 定义导航标签
+    nav_labels = {
+        "01_overview": "总览",
+        "02_nutrition": "饮食", 
+        "03_ai_doctor": "咨询",
+        "p04_knowledge": "知识",
+        "p01_profile": "档案",
+        "p05_me": "我的"
     }
 
-    nav_items = ""
-    for key, name in pages.items():
-        active = 'active' if current == key else ''
-        nav_items += f'<a href="#" onclick="navigate(\'{key}\')" class="nav-btn {active}">{name}</a>'
-
-    # 用户头像（首字母）
-    user_id = st.session_state.get('user_id', 'U')
-    avatar_letter = user_id[0].upper() if user_id else 'U'
-
-    st.markdown(f"""
-    <div class="nav-bar">
-        <div class="logo">HeartGuardian</div>
-        <div class="nav-links">{nav_items}</div>
-        <div class="user-menu">
-            <div class="avatar">{avatar_letter}</div>
-            <div class="dropdown">
-                <a href="#" onclick="navigate('me')">个人中心</a>
-                <a href="#" onclick="logout()">注销</a>
-            </div>
-        </div>
-        <div class="hamburger">☰</div>
-    </div>
+    # CSS for fixed top navigation
+    st.markdown("""
     <style>
-    :root {{
+    :root {
         --primary: #1a237e;
         --accent: #00e5ff;
-        --danger: #ff5252;
         --bg: #0f1629;
         --text: #e1f5fe;
-    }}
-    body {{ background: var(--bg); color: var(--text); }}
-    @keyframes gradientFlow {{
-        0% {{ background-position: 0% 50%; }}
-        100% {{ background-position: 200% 50%; }}
-    }}
-    @keyframes pulse {{
-        0% {{ box-shadow: 0 0 0 0 rgba(0,229,255,.7); }}
-        70% {{ box-shadow: 0 0 0 10px rgba(0,229,255,0); }}
-        100% {{ box-shadow: 0 0 0 0 rgba(0,229,255,0); }}
-    }}
-    .nav-bar {{
+    }
+    .cyber-nav {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: 64px;
         background: linear-gradient(90deg, var(--primary), #283593, #3949ab, #283593, var(--primary));
         background-size: 300% 100%;
         animation: gradientFlow 8s ease infinite;
-        padding: 1rem 2rem;
-        position: fixed;
-        top: 0; left: 0; right: 0;
-        z-index: 1000;
-        display: flex;
+        display: flex !important;
+        align-items: center;
         justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 4px 30px rgba(0,0,0,.4);
-        border-bottom: 1px solid rgba(0,229,255,.3);
-        font-family: 'Segoe UI', sans-serif;
-    }}
-    .logo {{
-        color: var(--accent);
-        font-size: 1.8rem;
-        font-weight: bold;
-        text-shadow: 0 0 10px rgba(0,229,255,.6);
-        animation: pulse 2s infinite;
-    }}
-    .nav-btn {{
-        background: rgba(255,255,255,.1);
-        color: var(--text);
-        border: none;
-        padding: .7rem 1.5rem;
-        border-radius: 25px;
-        font-size: 1rem;
-        font-weight: 500;
-        text-decoration: none;
-        transition: all .3s;
-        backdrop-filter: blur(5px);
-    }}
-    .nav-btn:hover {{
-        background: var(--accent);
-        color: var(--primary);
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0,229,255,.4);
-    }}
-    .nav-btn.active {{
-        background: var(--danger);
-        color: white;
-        font-weight: bold;
-        box-shadow: 0 0 15px rgba(255,82,82,.6);
-        animation: pulse 1.5s infinite;
-    }}
-    .user-menu {{
-        position: relative;
-    }}
-    .avatar {{
-        width: 40px; height: 40px;
-        border-radius: 50%;
-        background: var(--accent);
-        color: var(--primary);
-        font-weight: bold;
-        font-size: 1.2rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all .3s;
-    }}
-    .avatar:hover {{
-        transform: scale(1.1);
-        box-shadow: 0 0 15px rgba(0,229,255,.6);
-    }}
-    .dropdown {{
-        position: absolute;
-        right: 0;
-        top: 50px;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 8px 25px rgba(0,0,0,.3);
-        min-width: 160px;
-        display: none;
-        flex-direction: column;
-        overflow: hidden;
-    }}
-    .dropdown a {{
-        padding: .8rem 1rem;
-        color: var(--primary);
-        text-decoration: none;
-        transition: all .2s;
-    }}
-    .dropdown a:hover {{
-        background: #f0f7ff;
-        color: var(--accent);
-    }}
-    .hamburger {{
-        display: none;
-        color: var(--text);
+        padding: 0 2rem;
+        z-index: 1000000 !important;
+        box-shadow: 0 4px 20px rgba(0,229,255,.3);
+        font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    }
+    @keyframes gradientFlow {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 200% 50%; }
+    }
+    .logo {
         font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--accent);
+        letter-spacing: 1px;
+    }
+    .nav-links {
+        display: flex !important;
+        gap: 1rem;
+        align-items: center;
+    }
+    .nav-btn {
+        color: var(--text);
+        background: none;
+        border: none;
+        font-weight: 500;
+        padding: .5rem 1rem;
+        border-radius: 8px;
+        transition: all .2s ease;
+        font-size: 0.95rem;
+        font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
         cursor: pointer;
-        padding: .5rem;
-    }}
-    @media (max-width: 768px) {{
-        .nav-links {{
-            position: absolute;
-            top: 100%;
-            left: 0; right: 0;
-            background: var(--primary);
-            flex-direction: column;
-            padding: 1rem;
-            display: none;
-            box-shadow: 0 4px 20px rgba(0,0,0,.3);
-        }}
-        .nav-links.active {{ display: flex; }}
-        .hamburger {{ display: block; }}
-    }}
+    }
+    .nav-btn:hover,
+    .nav-btn.active {
+        background: rgba(0,229,255,.2);
+        color: var(--accent);
+        box-shadow: 0 0 12px rgba(0,229,255,.6);
+    }
     </style>
-
-    <script>
-    function navigate(page) {{
-        const params = new URLSearchParams(window.location.search);
-        params.set('page', page);
-        window.location.search = params.toString();
-    }}
-    // 汉堡菜单切换
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
-    hamburger.addEventListener('click', () => {{
-        navLinks.classList.toggle('active');
-    }});
-
-    // 头像下拉
-    const avatar = document.querySelector('.avatar');
-    const dropdown = document.querySelector('.dropdown');
-    avatar.addEventListener('click', (e) => {{
-        e.stopPropagation();
-        dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
-    }});
-
-    // 点击空白关闭下拉
-    document.addEventListener('click', () => {{
-        dropdown.style.display = 'none';
-    }});
-
-    // 注销
-    function logout() {{
-        window.location.href = "?logout=true";
-    }}
-    </script>
     """, unsafe_allow_html=True)
 
-    # 留出高度
-    st.markdown("<div style='height: 60px;'></div>", unsafe_allow_html=True)
+    # 渲染导航栏
+    with st.container():
+        st.markdown('<div class="cyber-nav"><div class="logo">HeartGuardian</div><div class="nav-links">', unsafe_allow_html=True)
+        
+        # 创建导航按钮
+        for page_file, page_label in nav_labels.items():
+            page_key = page_file.replace('01_', '').replace('02_', '').replace('03_', '').replace('p0', '').replace('p', '')
+            is_active = current_short == page_file
+            
+            # 使用st.button而不是HTML按钮
+            if st.button(page_label, key=f"nav_{page_key}", type="primary" if is_active else "secondary"):
+                target_page = page_map.get(page_key)
+                if target_page and st.session_state.current_page != target_page:
+                    st.session_state.current_page = target_page
+                    st.rerun()
+        
+        st.markdown('</div></div>', unsafe_allow_html=True)
+        st.markdown("<div style='height: 80px;'></div>", unsafe_allow_html=True)

@@ -8,10 +8,6 @@ from utils.disease_dict import DISEASE_ENUM
 from utils.cache import cache_response, load_cached_response
 import json
 
-from components.top_nav import render_nav
-st.session_state.current_page = "ai_doctor"
-render_nav()
-
 PROMPT_TEMPLATE = """
 你是一名专业AI心脏健康助手，根据用户症状和档案{user_data}，给出易懂建议。
 规则：专业准确，通俗语言，不诊断，只建议。引用来源如《2023 Braunwald’s Heart Disease》。
@@ -39,6 +35,7 @@ def render():
     st.markdown("""
     <style>
     :root{--p:#1a237e;--a:#00e5ff;--bg:#0f1629;}
+    .block-container {padding-top: 80px !important; margin-top: 0 !important;}
     body{background:var(--bg);color:#e1f5fe;}
     .hero{background:linear-gradient(135deg,var(--p),#283593,#3949ab);padding:3rem 1rem;border-radius:15px;text-align:center;color:white;margin:2rem 0;}
     .chat-container {height:60vh;overflow-y:auto;scroll-behavior:smooth;padding:1rem;border:1px solid rgba(0,229,255,.2);border-radius:15px;background:rgba(255,255,255,.05);backdrop-filter:blur(10px);}
@@ -126,3 +123,4 @@ st.markdown("""
 .bubble.ai{align-self:flex-start;background:rgba(255,255,255,.9);color:#1a237e}
 </style>
 """, unsafe_allow_html=True)
+st.markdown('<div style="height:80px"></div>', unsafe_allow_html=True)

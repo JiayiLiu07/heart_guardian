@@ -1,99 +1,41 @@
-# 📁 utils/viz.py
-import streamlit as st
-import pandas as pd
-import plotly.express as px
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# --- Universal Styling ---
-# Apply consistent font and color palette
-def get_theme_styles():
-    """Returns a dictionary of theme styles for plots."""
-    # These colors can be linked to your global CSS variables if available
-    return {
-        "font": "Arial, sans-serif",
-        "primary_color": "#007bff", # Example: Blue
-        "accent_color": "#17a2b8",  # Example: Cyan
-        "success_color": "#28a745", # Example: Green
-        "warning_color": "#ffc107", # Example: Yellow
-        "danger_color": "#dc3545",  # Example: Red
-        "neutral_color": "#6c757d", # Example: Gray
-        "figure_bg_color": "white",
-        "plot_bg_color": "white",
-        "axis_color": "#333",
-        "title_color": "#333",
-    }
-
-# --- Plotting Functions ---
-
-def plot_age_bp_scatter(df: pd.DataFrame, title: str = "Age vs Blood Pressure", **kwargs):
+def apply_custom_style():
     """
-    Generates a Plotly scatter plot for Age vs Blood Pressure (Systolic and Diastolic).
-    Assumes df has 'age', 'ap_high', 'ap_low' columns, and 'timestamp' for coloring/hover.
+    应用统一的图表样式，符合高科技风格，图表标签使用英文
+
+    返回:
+        None: 直接修改当前 Matplotlib 图表的样式
     """
-    if df is None or df.empty:
-        st.warning("No data available for plotting Age vs BP.")
-        return None
-
-    # Ensure required columns exist
-    required_cols = ['age', 'ap_high', 'ap_low']
-    if not all(col in df.columns for col in required_cols):
-        st.error(f"DataFrame is missing required columns for BP plot: {required_cols}")
-        return None
-
-    # Use timestamp for coloring if available, otherwise use age or a simple color
-    color_col = 'timestamp' if 'timestamp' in df.columns else 'age'
+    # 设置 Seaborn 主题
+    sns.set_style("whitegrid")
     
-    fig = px.scatter(df, 
-                     x='age', 
-                     y='ap_high', 
-                     color=color_col,
-                     size='ap_low', # Using size for diastolic BP
-                     hover_name='age', # Display age on hover
-                     hover_data={'ap_high': True, 'ap_low': True, 'timestamp': True, 'age': False}, # Customize hover info
-                     title=title,
-                     labels={
-                         'age': '年龄', 
-                         'ap_high': '收缩压 (mmHg)', 
-                         'ap_low': '舒张压 (mmHg)',
-                         'timestamp': '记录时间'
-                     },
-                     color_continuous_scale=px.colors.sequential.Viridis # Example color scale
-                    )
-
-    fig.update_layout(
-        xaxis_title="年龄",
-        yaxis_title="收缩压 (mmHg)",
-        hovermode='closest', # Show hover info for the closest point
-        plot_bgcolor=get_theme_styles()["plot_bg_color"],
-        paper_bgcolor=get_theme_styles()["figure_bg_color"],
-        font=dict(family=get_theme_styles()["font"]),
-        title_font_color=get_theme_styles()["title_color"],
-        xaxis=dict(tickfont=dict(color=get_theme_styles()["axis_color"])),
-        yaxis=dict(tickfont=dict(color=get_theme_styles()["axis_color"])),
-        coloraxis_colorbar=dict(title="时间" if color_col == 'timestamp' else "年龄") # Colorbar title
-    )
+    # 自定义 Matplotlib 参数
+    plt.rcParams.update({
+        'font.family': 'Arial',  # 使用 Arial 字体，适合英文标签
+        'font.size': 12,
+        'axes.titlesize': 14,
+        'axes.labelsize': 12,
+        'xtick.labelsize': 10,
+        'ytick.labelsize': 10,
+        'axes.titleweight': 'bold',
+        'axes.labelweight': 'medium',
+        'axes.grid': True,
+        'grid.alpha': 0.3,
+        'grid.color': '#e0e0e0',
+        'axes.edgecolor': '#2979ff',  # 边框颜色与主题一致
+        'axes.facecolor': 'rgba(255, 255, 255, 0.95)',  # 背景略带透明
+        'figure.facecolor': 'rgba(255, 255, 255, 0)',  # 图表背景透明
+        'axes.spines.top': False,  # 移除顶部边框
+        'axes.spines.right': False,  # 移除右侧边框
+        'axes.prop_cycle': plt.cycler(color=['#2979ff', '#00e5ff', '#ff4081', '#1a237e'])  # 主题渐变色
+    })
     
-    # Add a secondary y-axis if needed, or just plot them together
-    # For simplicity, let's just use scatter plot for now.
+    # 添加圆角效果（通过设置 axes 的边框样式）
+    for spine in plt.gca().spines.values():
+        spine.set_linewidth(1.5)
+        spine.set_color('#2979ff')
     
-    return fig
-
-# Add other plotting functions as needed, e.g., for distribution, trends, etc.
-# def plot_obesity_distribution(df, ...): ...
-# def plot_health_trends_line(df, metric, ...): ...
-
-# Example: Matplotlib-based plot
-def plot_matplotlib_bar(data: pd.Series, title: str = "Bar Chart"):
-    """Generates a simple Matplotlib bar plot."""
-    styles = get_theme_styles()
-    fig, ax = plt.subplots(figsize=(8, 5))
-    sns.barplot(x=data.index, y=data.values, ax=ax, palette="viridis") # Using seaborn for better aesthetics
-    
-    ax.set_title(title, fontsize=16, color=styles["title_color"])
-    ax.set_xlabel("Category", fontsize=12, color=styles["axis_color"])
-    ax.set_ylabel("Value", fontsize=12, color=styles["axis_color"])
-    ax.tick_params(axis='both', which='major', labelsize=10, colors=styles["axis_color"])
-    
-    plt.tight_layout()
-    return fig
+    # 设置网格线样式
+    plt.grid(True, linestyle='--', alpha=0.3)

@@ -1,14 +1,13 @@
-# pages/01_overview.py
-import streamlit as st, pandas as pd, matplotlib, matplotlib.pyplot as plt, seaborn as sns, base64, io, os
-from components.top_nav import render_nav
-st.session_state.current_page = "overview"
-render_nav()
-matplotlib.use("Agg")
-
-st.markdown("<style>section[data-testid='stSidebar'] {display: none !important;}</style>", unsafe_allow_html=True)
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import io
 
 st.markdown("""
 <style>
+section[data-testid='stSidebar'] {display: none !important;}
+.block-container {padding-top: 80px !important; margin-top: 0 !important;}
 .cyber-title{font-size:2.4rem;font-weight:700;background:linear-gradient(90deg,#00e5ff,#2979ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientShift 4s ease infinite;background-size:200% 200%;}
 @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 .neon-chart{background:radial-gradient(circle at center,rgba(0,229,255,.08) 0%,transparent 70%);border:1px solid rgba(0,229,255,.4);border-radius:16px;padding:1rem;box-shadow:0 0 20px rgba(0,229,255,.35);}
@@ -34,16 +33,16 @@ with tabs[0]:
     importances = df.corr()['cardio'].abs().sort_values(ascending=False)[1:11]
     fig, ax = plt.subplots(figsize=(6, 4))
     fig.patch.set_facecolor('#0f1629'); ax.set_facecolor('#0f1629')
-    sns.barplot(x=importances.values, y=importances.index, ax=ax, palette='Blues_r')
+    sns.barplot(x=importances.values, y=importances.index, hue=importances.index, ax=ax, palette='Blues_r', legend=False)
     ax.set_title('Top 10 Risk Factors', color='#e1f5fe')
     for sp in ax.spines.values(): sp.set_color('#e1f5fe')
     ax.tick_params(colors='#e1f5fe')
     buf = io.BytesIO(); fig.savefig(buf, format="png", bbox_inches='tight'); buf.seek(0)
-    st.image(buf, use_container_width=True)
+    st.image(buf, width='stretch')
     st.markdown("""
     <div class="holo-card">
-      <div class="holo-icon">🩸</div>
-      <div class="holo-text"><b>收缩压</b> 每升高 20 mmHg，心血管事件风险翻倍！高血压是心血管疾病的主要诱因，建议定期监测血压，保持健康饮食，避免高盐食物，并结合药物治疗控制血压在正常范围。及早干预可显著降低心梗和中风风险。</div>
+      <div class="holo-icon">⚠️</div>
+      <div class="holo-text">高血压、胆固醇和年龄是心血管疾病的三大驱动因素。控制血压和胆固醇可降低 40% 风险！建议定期体检，监测收缩压（ap_hi）和舒张压（ap_lo），并保持健康饮食。</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -51,21 +50,21 @@ with tabs[1]:
     st.markdown("#### ② 血压迷踪")
     fig, ax = plt.subplots(figsize=(6, 4))
     fig.patch.set_facecolor('#0f1629'); ax.set_facecolor('#0f1629')
-    sns.scatterplot(data=df, x='ap_hi', y='ap_lo', hue='cardio', ax=ax, palette={0:'#00e5ff',1:'#ff5252'})
-    ax.set_title('Systolic vs Diastolic Distribution', color='#e1f5fe')
+    sns.scatterplot(data=df, x='age_year', y='ap_hi', hue='cardio', ax=ax, palette={0:'#00e5ff',1:'#ff5252'})
+    ax.set_title('Age vs Systolic BP', color='#e1f5fe')
     for sp in ax.spines.values(): sp.set_color('#e1f5fe')
     ax.tick_params(colors='#e1f5fe')
     buf = io.BytesIO(); fig.savefig(buf, format="png", bbox_inches='tight'); buf.seek(0)
-    st.image(buf, use_container_width=True)
+    st.image(buf, width='stretch')
     st.markdown("""
-    <div class="health-tip">
-      <span class="health-tip-icon">⚠️</span>
-      理想血压：< 120/80 mmHg；超过 140/90 即为高血压，需干预！高血压会损伤血管壁，导致动脉硬化，增加心脏负担。预防措施包括低钠饮食、多吃蔬果、适量运动和定期体检。如果血压持续升高，应及时就医，使用降压药物控制。
+    <div class="holo-card">
+      <div class="holo-icon">📈</div>
+      <div class="holo-text">收缩压（ap_hi）超过 140 mmHg 或舒张压（ap_lo）超过 90 mmHg 时，心血管风险显著增加。建议减少盐摄入，避免压力，必要时咨询医生使用降压药。</div>
     </div>
     """, unsafe_allow_html=True)
 
 with tabs[2]:
-    st.markdown("#### ③ 生活方式画像")
+    st.markdown("#### ③ 生活方式分析")
     col1, col2, col3 = st.columns(3)
     with col1:
         fig, ax = plt.subplots(figsize=(4, 3))
@@ -75,7 +74,7 @@ with tabs[2]:
         for sp in ax.spines.values(): sp.set_color('#e1f5fe')
         ax.tick_params(colors='#e1f5fe')
         buf = io.BytesIO(); fig.savefig(buf, format="png", bbox_inches='tight'); buf.seek(0)
-        st.image(buf, use_container_width=True)
+        st.image(buf, width='stretch')
     with col2:
         fig, ax = plt.subplots(figsize=(4, 3))
         fig.patch.set_facecolor('#0f1629'); ax.set_facecolor('#0f1629')
@@ -84,7 +83,7 @@ with tabs[2]:
         for sp in ax.spines.values(): sp.set_color('#e1f5fe')
         ax.tick_params(colors='#e1f5fe')
         buf = io.BytesIO(); fig.savefig(buf, format="png", bbox_inches='tight'); buf.seek(0)
-        st.image(buf, use_container_width=True)
+        st.image(buf, width='stretch')
     with col3:
         fig, ax = plt.subplots(figsize=(4, 3))
         fig.patch.set_facecolor('#0f1629'); ax.set_facecolor('#0f1629')
@@ -93,7 +92,7 @@ with tabs[2]:
         for sp in ax.spines.values(): sp.set_color('#e1f5fe')
         ax.tick_params(colors='#e1f5fe')
         buf = io.BytesIO(); fig.savefig(buf, format="png", bbox_inches='tight'); buf.seek(0)
-        st.image(buf, use_container_width=True)
+        st.image(buf, width='stretch')
     st.markdown("""
     <div class="holo-card">
       <div class="holo-icon">🏃</div>
@@ -112,7 +111,7 @@ with tabs[3]:
     for sp in ax.spines.values(): sp.set_color('#e1f5fe')
     ax.tick_params(colors='#e1f5fe')
     buf = io.BytesIO(); fig.savefig(buf, format="png", bbox_inches='tight'); buf.seek(0)
-    st.image(buf, use_container_width=True)
+    st.image(buf, width='stretch')
     st.markdown("""
     <div class="health-tip">
       <span class="health-tip-icon">⚠️</span>
@@ -120,4 +119,4 @@ with tabs[3]:
     </div>
     """, unsafe_allow_html=True)
 
-st.markdown('<div style="height:70px"></div>', unsafe_allow_html=True)
+st.markdown('<div style="height:80px"></div>', unsafe_allow_html=True)

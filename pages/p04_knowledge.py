@@ -10,10 +10,6 @@ import base64
 import pandas as pd
 import json
 
-from components.top_nav import render_nav
-st.session_state.current_page = "knowledge"
-render_nav()
-
 df = pd.read_csv("data/cardio_train.csv", sep=";")
 
 def generate_viz_image_and_desc(viz_type):
@@ -25,7 +21,7 @@ def generate_viz_image_and_desc(viz_type):
         ax.set_title('Age vs Blood Pressure Scatter')
         prompt = "基于 cardio_train.csv 数据集，描述年龄与血压分布散点图。图中标签用英文。提供中文关键数据洞察，使用 markdown 加粗重点。"
     elif viz_type == "disease_distribution":
-        sns.countplot(data=df, x='cardio', ax=ax)
+        sns.countplot(data=df, x='cardio', hue='cardio', ax=ax, palette={0:'#00e5ff',1:'#ff5252'}, legend=False)
         ax.set_title('Disease Distribution')
         prompt = "基于 cardio_train.csv 数据集，描述疾病分布柱状图。图中标签用英文。提供中文关键数据洞察，使用 markdown 加粗重点。"
     elif viz_type == "bmi_chol_heatmap":
@@ -62,33 +58,12 @@ def render_knowledge_tree(kb, user_disease):
         st.markdown(f'<div class="tree-root">{user_disease}</div>', unsafe_allow_html=True)
     subtype_map = json.load(open("assets/subtype_dict.json"))
     for key, value in kb.items():
-        with st.expander(f"{value['label']} {value.get('icon', '❤️')}", expanded=key == user_disease):
-            # 在大类展开里再嵌亚型
-            for sub in [s for s, info in subtype_map.items() if info["parent"] == key]:
-                sub_info = subtype_map[sub]
-                with st.expander(f"{sub_info['icon']} {sub_info['label']}", expanded=False):
-                    st.markdown(f"**饮食提示**：{sub_info.get('diet_tip', '均衡饮食')}")
-                    st.markdown(f"**常见症状**：{sub_info.get('symptoms', '暂无')}")
-                    # 亚型数据洞察（可复用 data_viz.py 函数，只过滤该亚型）
-                    sub_df = df[df["cardio"] == 1]  # 示例
-                    st.write("亚型样本数", len(sub_df))
+        if key == user_disease:
+            st.markdown(f'<div class="neon-tree-content">{value}</div>', unsafe_allow_html=True)
+        else:
+            st.markdown(f'<div class="neon-tree-content">{key}: {value}</div>', unsafe_allow_html=True)
 
 def render():
-    st.markdown("<style>section[data-testid='stSidebar'], .stSidebar, [data-testid='collapsedControl'], #MainMenu, footer {display: none !important;}</style>", unsafe_allow_html=True)
-    st.markdown("""
-    <style>
-    :root{--p:#1a237e;--a:#00e5ff;--bg:#0f1629;}
-    body{background:var(--bg);color:#e1f5fe;}
-    .hero{background:linear-gradient(135deg,var(--p),#283593,#3949ab);padding:3rem 1rem;border-radius:15px;text-align:center;color:white;margin:2rem 0;}
-    .tree-root {border:2px solid var(--a);background:rgba(255,255,255,.1);padding:1rem;border-radius:8px;}
-    .viz-card {background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border:1px solid rgba(0,229,255,.2);border-radius:16px;padding:1.5rem;margin:1rem 0;}
-    .source-card {background:rgba(41,121,255,.2);border-radius:12px;padding:1rem;}
-    .hot-chip {background:var(--a);color:var(--p);padding:0.5rem 1rem;border-radius:20px;margin:0.5rem;display:inline-block;cursor:pointer;}
-    .hot-chip:hover {background:#2979ff;}
-    .desc-card {background: #f0f7ff; border-left: 4px solid #00e5ff; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,229,255,0.1);}
-    </style>
-    """, unsafe_allow_html=True)
-
     st.markdown('<div class="hero"><h1>心脏健康知识库</h1><p>探索专业知识与数据洞察</p></div>', unsafe_allow_html=True)
 
     user_id = st.session_state.get('user_id')
@@ -115,7 +90,7 @@ def render():
             for func, caption in zip(viz_funcs, captions):
                 st.markdown('<div class="viz-card">', unsafe_allow_html=True)
                 img_base64, desc = generate_viz_image_and_desc(func)
-                st.image(f"data:image/png;base64,{img_base64}")
+                st.image(f"data:image/png;base64,{img_base64}", width='stretch')
                 st.markdown(f'<p>{caption}</p>', unsafe_allow_html=True)
                 st.markdown(f'<div class="desc-card">{desc}</div>', unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
@@ -140,6 +115,7 @@ if __name__ == "__main__":
 
 st.markdown("""
 <style>
+.block-container {padding-top: 80px !important; margin-top: 0 !important;}
 .neon-tree-content{
   border-left:2px solid #00e5ff;
   padding-left:1rem;margin-top:.5rem;
@@ -157,3 +133,4 @@ st.markdown("""
 }
 </style>
 """, unsafe_allow_html=True)
+st.markdown('<div style="height:80px"></div>', unsafe_allow_html=True)

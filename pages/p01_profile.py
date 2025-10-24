@@ -1,17 +1,18 @@
 # pages/p01_profile.py
-import streamlit as st, pandas as pd, os, base64, io
-from components.top_nav import render_nav
-st.session_state.current_page = "profile"
-render_nav()
+import streamlit as st
+import pandas as pd
+import os
+import base64
+import io
+from utils.api import client
 import json
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
-from utils.api import client
-
-st.markdown("<style>section[data-testid='stSidebar'] {display: none !important;}</style>", unsafe_allow_html=True)
 
 st.markdown("""
 <style>
+section[data-testid='stSidebar'] {display: none !important;}
+.block-container {padding-top: 80px !important; margin-top: 0 !important;}
 .cyber-title{font-size:2.4rem;font-weight:700;background:linear-gradient(90deg,#00e5ff,#2979ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientShift 4s ease infinite;background-size:200% 200%;}
 @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 .step-bar{height:6px;background:rgba(0,229,255,.15);border-radius:3px;margin:1rem 0}
@@ -36,64 +37,50 @@ if not user_id:
 
 USERS_FOLDER = 'users'
 os.makedirs(USERS_FOLDER, exist_ok=True)
+
 def load_profile_data(uid):
     path = f"{USERS_FOLDER}/{uid}_profile.csv"
     if os.path.exists(path):
         df = pd.read_csv(path, encoding='utf-8')
         return df.iloc[0].to_dict()
-    return {'cardio_subtypes':[],'gender':'男','age':30,'height':170.0,'weight':70.0,'waist':80.0,'sleep_hours':8.0,'exercise_min':150}
-def save_profile_data(uid, data):
-    pd.DataFrame([data]).to_csv(f"{USERS_FOLDER}/{uid}_profile.csv", index=False, encoding='utf-8')
+    return {'cardio_subtypes':[],'gender':'男','age':30,'height':170.0,'weight':70.0,'waist':80.0,'sleep_hours':8.0}
 
-if 'profile_data' not in st.session_state:
-    st.session_state.profile_data = load_profile_data(user_id)
-profile = st.session_state.profile_data
-
-# ----- Step 条 -----
-cols = st.columns(3)
-for i, txt in enumerate(["基本信息", "亚型档案", "AI 报告"]):
-    cls = ""
-    if 'step' in st.session_state and st.session_state.step == i+1:
-        cls = " step-active"
-    cols[i].markdown(f'<div class="step-bar{cls}"></div><div style="text-align:center;color:#e1f5fe;">{txt}</div>', unsafe_allow_html=True)
+def save_profile_data(uid, profile):
+    path = f"{USERS_FOLDER}/{uid}_profile.csv"
+    df = pd.DataFrame([profile])
+    df.to_csv(path, index=False, encoding='utf-8')
 
 if 'step' not in st.session_state:
     st.session_state.step = 1
-step = st.session_state.step
 
-if step == 1:
+profile = load_profile_data(user_id)
+if not profile:
+    profile = {'cardio_subtypes':[],'gender':'男','age':30,'height':170.0,'weight':70.0,'waist':80.0,'sleep_hours':8.0}
+
+if st.session_state.step == 1:
     st.subheader("① 基本信息")
-    c1, c2 = st.columns(2)
-    with c1:
-        profile['gender'] = st.selectbox("性别", ["男", "女"], index=0 if profile.get('gender')=='男' else 1)
-        profile['age'] = st.number_input("年龄（岁）", 18, 120, int(profile.get('age', 30)))
-        profile['height'] = st.number_input("身高（cm）", 100.0, 250.0, float(profile.get('height', 170.0)), step=0.5)
-        profile['weight'] = st.number_input("体重（kg）", 30.0, 200.0, float(profile.get('weight', 70.0)), step=0.5)
-    with c2:
-        profile['waist'] = st.number_input("腰围（cm）", 50.0, 200.0, float(profile.get('waist', 80.0)), step=0.5)
-        profile['sleep_hours'] = st.slider("平均睡眠（小时）", 4.0, 12.0, float(profile.get('sleep_hours', 8.0)), step=0.5)
-        profile['exercise_min'] = st.number_input("每周运动（分钟）", 0, 840, int(profile.get('exercise_min', 150)), step=30)
-    # BMI 仪表盘
-    if profile['height'] and profile['weight']:
-        bmi = profile['weight'] / ((profile['height'] / 100) ** 2)
-        status = "偏瘦" if bmi < 18.5 else "正常" if bmi < 25 else "超重" if bmi < 30 else "肥胖"
-        st.markdown(f'<div class="bmi-gauge"><div class="gauge-value">{bmi:.1f}</div><div class="gauge-label">{status}</div></div>', unsafe_allow_html=True)
-    if st.button("下一步 ➡️", type="primary"):
+    profile['name'] = st.text_input("姓名", value=profile.get('name', ''))
+    profile['gender'] = st.selectbox("性别", ["男", "女"], index=0 if profile.get('gender') == '男' else 1)
+    profile['age'] = st.number_input("年龄", min_value=18, max_value=120, value=profile.get('age', 30))
+    if st.button("下一步 ➡️"):
         st.session_state.step = 2
-        save_profile_data(user_id, profile)
         st.rerun()
 
-if step == 2:
-    st.subheader("② 亚型档案")
-    subtype_map = json.load(open("assets/subtype_dict.json")) if os.path.exists("assets/subtype_dict.json") else {}
-    selected_sub = profile.get("cardio_subtypes", [])
-    cols = st.columns(4)
-    for i, (k, v) in enumerate(subtype_map.items()):
-        with cols[i % 4]:
-            if st.checkbox(f"{v['icon']} {v['label']}", value=k in selected_sub, key=k):
-                if k not in selected_sub: selected_sub.append(k)
-            else:
-                if k in selected_sub: selected_sub.remove(k)
+if st.session_state.step == 2:
+    st.subheader("② 健康数据")
+    profile['height'] = st.number_input("身高 (cm)", min_value=100.0, max_value=250.0, value=profile.get('height', 170.0))
+    profile['weight'] = st.number_input("体重 (kg)", min_value=30.0, max_value=200.0, value=profile.get('weight', 70.0))
+    profile['waist'] = st.number_input("腰围 (cm)", min_value=50.0, max_value=150.0, value=profile.get('waist', 80.0))
+    profile['sleep_hours'] = st.number_input("平均睡眠时间 (小时)", min_value=0.0, max_value=24.0, value=profile.get('sleep_hours', 8.0))
+    subtype_map = json.load(open("assets/subtype_dict.json"))
+    selected_sub = profile.get('cardio_subtypes', [])
+    for k, v in subtype_map.items():
+        if st.checkbox(f"{v['icon']} {v['label']}", key=k):
+            if k not in selected_sub:
+                selected_sub.append(k)
+        else:
+            if k in selected_sub:
+                selected_sub.remove(k)
     profile["cardio_subtypes"] = selected_sub
     col1, col2 = st.columns(2)
     with col1:
@@ -106,7 +93,7 @@ if step == 2:
             st.session_state.step = 3
             st.rerun()
 
-if step == 3:
+if st.session_state.step == 3:
     st.success("档案已保存！🎉")
     st.subheader("③ AI 亚型报告")
     if st.button("🔍 生成报告", type="primary"):
@@ -138,10 +125,8 @@ if step == 3:
             mime="application/pdf",
             help="内含亚型分析及 AI 建议",
             key="download_pdf",
-            on_click=None,
             type="primary",
-            disabled=False,
-            use_container_width=True
+            width='stretch'
         )
 
-st.markdown('<div style="height:70px"></div>', unsafe_allow_html=True)
+st.markdown('<div style="height:80px"></div>', unsafe_allow_html=True)

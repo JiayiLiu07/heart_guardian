@@ -4,14 +4,9 @@ import pandas as pd
 import os
 import re
 import logging
-import sys
 from openai import OpenAI
 from pages.p01_profile import load_profile_data
 import json
-
-from components.top_nav import render_nav
-st.session_state.current_page = "nutrition"
-render_nav()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -95,99 +90,84 @@ def generate_chart_with_vllm(question, user_profile, cardio_df):
     [分析图表中展示的数据模式、趋势和统计信息]
     
     💡 **健康洞察:**
-    [结合用户档案，提供个性化的健康建议和风险提示]
-    
-    🔍 **关键发现:**
-    [总结最重要的2-3个数据发现]
-    
-    注意: 请用中文回复，使用友好的语气和适当的emoji。
+    [结合用户档案，提供个性化的健康建议]
     """
     
     try:
-        client = initialize_client(st.session_state.get("api_key", ""))
-        messages = [{"role": "user", "content": prompt}]
-        
-        resp = client.chat.completions.create(
-            model="qwen-plus",
-            messages=messages,
-            temperature=0.7,
-            max_tokens=1500
+        client = initialize_client(st.session_state.get('api_key'))
+        response = client.chat.completions.create(
+            model="qwen-turbo",
+            messages=[{"role": "user", "content": prompt}],
+            stream=False
         )
-        
-        analysis = resp.choices[0].message.content.strip()
+        analysis = response.choices[0].message.content.strip()
         return analysis
-        
     except Exception as e:
-        logging.error(f"VLLM调用失败: {e}")
-        return f"❌ 生成分析时出错: {str(e)}"
+        logging.error(f"Error in VLLM request: {e}")
+        return None
 
 def show_ai_charts_page():
-    st.title("📊 AI健康数据分析")
-    st.markdown("基于您的心血管健康数据，AI将生成详细的数据分析和健康洞察")
-    
-    # Check API key
-    if not st.session_state.get("api_key"):
-        st.warning("⚠️ 请先在FitForge_Hub🚀页面输入有效的API密钥")
+    user_id = st.session_state.get('user_id')
+    if not user_id:
+        st.warning("请先登录")
         return
-    
-    # Load data
+
+    user_profile = load_profile_data(user_id)
     cardio_df = load_cardio_data()
+    
     if cardio_df is None:
         return
-    
-    user_profile = load_profile_data()
-    
-    st.subheader("🔍 数据分析查询")
-    
-    # Example queries
-    example_queries = [
-        "选择示例查询...",
-        "分析不同年龄段的心血管疾病发病率",
-        "比较男性和女性的血压分布情况",
-        "展示体重与心血管疾病风险的关系",
-        "分析胆固醇水平对健康的影响",
-        "比较吸烟者和非吸烟者的健康状况"
-    ]
-    
-    selected_query = st.selectbox("💡 选择示例查询:", example_queries)
-    
-    custom_question = st.text_area(
-        "💬 或输入自定义查询:",
-        placeholder="例如：分析我的年龄组在数据集中的健康状况...",
-        height=100
-    )
-    
-    # Determine which query to use
-    if selected_query != "选择示例查询..." and not custom_question.strip():
-        question_to_use = selected_query
-    else:
-        question_to_use = custom_question.strip()
-    
-    if st.button("🚀 生成分析报告", type="primary"):
-        if not question_to_use or question_to_use == "选择示例查询...":
-            st.error("❌ 请输入查询问题或选择示例")
-        else:
-            with st.spinner("🤖 AI正在分析数据并生成报告..."):
-                analysis = generate_chart_with_vllm(question_to_use, user_profile, cardio_df)
-                
-                if analysis:
-                    # Save to history
-                    st.session_state.chart_history.append({
-                        "question": question_to_use,
-                        "analysis": analysis,
-                        "timestamp": pd.Timestamp.now()
-                    })
-                    
-                    # Display analysis
-                    st.subheader("📋 分析报告")
-                    st.markdown(analysis)
-                    
-                    # Add some visual separators
-                    st.markdown("---")
-                    st.success("✅ 分析完成！")
-                else:
-                    st.error("❌ 生成分析失败，请重试")
 
+    st.markdown('<div class="hero"><h1>🍎 AI 营养分析</h1><p>个性化饮食建议，守护心血管健康</p></div>', unsafe_allow_html=True)
+    
+    # Search bar
+    with st.container():
+        st.markdown('<div class="chip-search">', unsafe_allow_html=True)
+        col1, col2 = st.columns([8, 2])
+        with col1:
+            question = st.text_input("输入您的问题", placeholder="例如：低盐饮食对高血压的影响？")
+        with col2:
+            ask_button = st.button("🔍 提问", key="ask_chart")
+        st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Quick questions
+    st.markdown('<div class="slider-track">', unsafe_allow_html=True)
+    quick_questions = [
+        "低盐饮食对高血压的影响？",
+        "高胆固醇推荐哪些食物？",
+        "适合心脏健康的运动？",
+        "如何通过饮食降低血糖？"
+    ]
+    cols = st.columns(4)
+    for i, q in enumerate(quick_questions):
+        with cols[i]:
+            if st.button(q, key=f"quick_q_{i}", type="secondary"):
+                st.session_state["nutrition_question"] = q
+                st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Handle question
+    question_to_use = st.session_state.get("nutrition_question", question)
+    if (ask_button or "nutrition_question" in st.session_state) and question_to_use:
+        analysis = generate_chart_with_vllm(question_to_use, user_profile, cardio_df)
+        if analysis:
+            # Save to history
+            st.session_state.chart_history.append({
+                "question": question_to_use,
+                "analysis": analysis,
+                "timestamp": pd.Timestamp.now()
+            })
+            
+            # Display analysis
+            st.subheader("📋 分析报告")
+            st.markdown(analysis)
+            
+            # Add some visual separators
+            st.markdown("---")
+            st.success("✅ 分析完成！")
+        else:
+            st.error("❌ 生成分析失败，请重试")
+    
     # Display history
     if st.session_state.chart_history:
         st.subheader("🕒 历史查询")
@@ -214,6 +194,7 @@ if __name__ == "__main__":
 
 st.markdown("""
 <style>
+.block-container {padding-top: 80px !important; margin-top: 0 !important;}
 .chip-search{
   display:flex;gap:.5rem;
   background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.3);
@@ -225,14 +206,12 @@ st.markdown("""
 .chip-search button{
   box-shadow:0 0 10px rgba(0,229,255,.45) !important;
 }
-
 .slider-track{
   display:flex;gap:1rem;overflow-x:auto;
   padding:1rem 0;
 }
 .slider-track::-webkit-scrollbar{height:6px}
 .slider-track::-webkit-scrollbar-thumb{background:#00e5ff;border-radius:3px}
-
 .glass-dish{
   min-width:160px;background:rgba(255,255,255,.06);
   border:1px solid rgba(0,229,255,.3);border-radius:12px;
@@ -249,3 +228,4 @@ st.markdown("""
 }
 </style>
 """, unsafe_allow_html=True)
+st.markdown('<div style="height:80px"></div>', unsafe_allow_html=True)
