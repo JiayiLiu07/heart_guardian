@@ -1,5 +1,4 @@
 # --------- Core App ---------
---python-version 3.11
 streamlit==1.49.1
 pandas==2.3.2
 numpy==2.0.2
