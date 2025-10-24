@@ -1,4 +1,5 @@
 # --------- Core App ---------
+--python-version 3.11
 streamlit==1.49.1
 pandas==2.3.2
 numpy==2.0.2
@@ -11,7 +12,7 @@ openai==1.108.1
 dashscope==1.24.5
 tenacity==9.1.2
 python-dotenv==1.1.1
-
+gtts==2.5.3
 # --------- PDF / Report ---------
 reportlab==4.4.4
 
