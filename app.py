@@ -2,7 +2,11 @@
 import streamlit as st
 from dotenv import load_dotenv
 
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ModuleNotFoundError:
+    pass  # Cloud 不需要 .env
 
 # === 页面配置 ===
 st.set_page_config(page_title="HeartGuardian", layout="wide", initial_sidebar_state="collapsed")
