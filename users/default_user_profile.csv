@@ -1,2 +1,0 @@
-name,gender,birth_date,height,weight,bmi,bmi_category,systolic,diastolic,has_genetic_history,cardio_disease,cardio_subtype,diet_habits,exercise_frequency,smoking,alcohol,completion_date,user_id
-407,女,2004-02-26,170.0,70.0,24.221453287197235,超重,120,80,否,无心血管疾病,无,['荤素均衡'],几乎不运动,不吸烟,不饮酒,2025-10-07 10:26:21,default_user

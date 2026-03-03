@@ -6,18 +6,33 @@ import time
 import json
 
 def render():
+    # 【新增】状态同步检查：如果已经登录，提示用户并允许跳转
+    if st.session_state.get('is_logged_in', False):
+        username = st.session_state.get('username', '用户')
+        st.warning(f"✅ 您已作为 **{username}** 登录。")
+        col1, col2 = st.columns([1, 1])
+        with col1:
+            if st.button("前往健康档案", type="primary", use_container_width=True):
+                st.switch_page("pages/p01_profile.py")
+        with col2:
+            if st.button("退出登录", type="secondary", use_container_width=True):
+                for key in list(st.session_state.keys()):
+                    del st.session_state[key]
+                st.rerun()
+        st.markdown("---")
+        # 即使已登录，也允许用户查看登录页（比如想切换账号），但默认引导去健康档案
+
     st.set_page_config(
         page_title="登录注册 - CardioGuard AI",
         page_icon="🔑",
         layout="centered"
     )
-
     # 用户数据文件夹路径（指向根目录 heart_guardian/users）
     USERS_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "users"))
     USER_DATA_FILE = os.path.join(USERS_FOLDER, "user_data.json")
 
     def ensure_users_folder():
-        """确保users文件夹存在"""
+        """确保 users 文件夹存在"""
         if not os.path.exists(USERS_FOLDER):
             os.makedirs(USERS_FOLDER)
 
@@ -29,7 +44,7 @@ def render():
                 with open(USER_DATA_FILE, 'r', encoding='utf-8') as f:
                     return json.load(f)
             except Exception as e:
-                st.error(f"加载用户数据失败: {e}")
+                st.error(f"加载用户数据失败：{e}")
                 return {}
         return {}
 
@@ -40,7 +55,7 @@ def render():
             with open(USER_DATA_FILE, 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
         except Exception as e:
-            st.error(f"保存用户数据失败: {e}")
+            st.error(f"保存用户数据失败：{e}")
 
     def hash_password(password):
         """密码哈希处理"""
@@ -49,28 +64,28 @@ def render():
     def validate_account(account):
         """验证帐号格式"""
         if len(account) < 6:
-            return False, "帐号长度不能少于6位"
+            return False, "帐号长度不能少于 6 位"
         
         # 检查是否为手机号
         if re.match(r'^1[3-9]\d{9}$', account):
             return True, "手机号格式正确"
         
-        # 检查是否为QQ号
+        # 检查是否为 QQ 号
         if re.match(r'^[1-9]\d{4,11}$', account):
-            return True, "QQ号格式正确"
+            return True, "QQ 号格式正确"
         
         # 检查是否为邮箱
         if re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', account):
             return True, "邮箱格式正确"
         
-        return False, "请输入有效的手机号、QQ号或邮箱"
+        return False, "请输入有效的手机号、QQ 号或邮箱"
 
     def validate_username(username):
         """验证用户名格式"""
         if len(username) < 2:
-            return False, "用户名至少2个字符"
+            return False, "用户名至少 2 个字符"
         if len(username) > 20:
-            return False, "用户名不能超过20个字符"
+            return False, "用户名不能超过 20 个字符"
         if not re.match(r'^[\u4e00-\u9fa5a-zA-Z0-9_]+$', username):
             return False, "用户名只能包含中文、英文、数字和下划线"
         return True, "用户名格式正确"
@@ -78,9 +93,9 @@ def render():
     def validate_password(password):
         """验证密码强度"""
         if len(password) < 6:
-            return False, "密码至少6个字符"
+            return False, "密码至少 6 个字符"
         if len(password) > 20:
-            return False, "密码不能超过20个字符"
+            return False, "密码不能超过 20 个字符"
         return True, "密码格式正确"
 
     def verify_user(account, password):
@@ -94,16 +109,15 @@ def render():
                 return False, "密码错误"
         return False, "帐号不存在"
 
-    # 自定义CSS样式（与 p00_intro.py 风格一致）
+    # 自定义 CSS 样式（与 p00_intro.py 风格一致）
     st.markdown("""
     <style>
     section[data-testid="stSidebar"] {
-    display: none !important;
+        display: none !important;
     }
     .stSidebar {
         display: none !important;
     }
-
     .main-header {
         font-size: 3rem;
         font-weight: bold;
@@ -203,7 +217,7 @@ def render():
 
     # 主界面
     st.markdown('<div class="main-header">🔑 CardioGuard AI</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sub-header">心脏健康守护者 - 专业AI分析平台</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sub-header">心脏健康守护者 - 专业 AI 分析平台</div>', unsafe_allow_html=True)
 
     # 使用标签页
     tab1, tab2 = st.tabs(["🚪 登录", "📝 注册"])
@@ -214,7 +228,7 @@ def render():
         with st.form("login_form"):
             login_account = st.text_input(
                 "帐号",
-                placeholder="请输入帐号（手机号/QQ号/邮箱）",
+                placeholder="请输入帐号（手机号/QQ 号/邮箱）",
                 key="login_account"
             )
             
@@ -231,16 +245,34 @@ def render():
                 else:
                     valid, message = verify_user(login_account, login_password)
                     if valid:
+                        # 设置登录状态 - 确保所有必要字段都设置
                         st.session_state.is_logged_in = True
-                        st.session_state.username = message  # message 是用户名
+                        st.session_state.username = message
                         st.session_state.user_id = message
-                        try:
-                            st.success(f"欢迎回来，{message}！")
-                            st.balloons()
-                            time.sleep(1.5)
-                            st.switch_page("pages/01_overview.py")
-                        except Exception as e:
-                            st.error(f"跳转到个人资料页面失败: {e}")
+                        st.session_state.login_time = time.strftime("%Y-%m-%d %H:%M:%S")
+                        
+                        # 设置额外的会话状态以确保登录信息持久化
+                        st.session_state['auth_status'] = 'authenticated'
+                        st.session_state['user'] = {
+                            'username': message,
+                            'account': login_account,
+                            'login_time': st.session_state.login_time
+                        }
+                        
+                        # 调试信息 - 可以在控制台查看
+                        print("="*50)
+                        print("登录成功！Session State 已设置：")
+                        print(f"is_logged_in: {st.session_state.is_logged_in}")
+                        print(f"username: {st.session_state.username}")
+                        print(f"user_id: {st.session_state.user_id}")
+                        print(f"login_time: {st.session_state.login_time}")
+                        print("="*50)
+                        
+                        st.success(f"欢迎回来，{message}！")
+                        st.balloons()
+                        time.sleep(1.5)
+                        # 跳转到健康档案页面
+                        st.switch_page("pages/p01_profile.py")
                     else:
                         st.error(message)
         
@@ -257,20 +289,20 @@ def render():
         with st.form("register_form"):
             reg_username = st.text_input(
                 "用户名",
-                placeholder="请输入用户名（2-20个字符）",
+                placeholder="请输入用户名（2-20 个字符）",
                 key="reg_username"
             )
             
             reg_account = st.text_input(
                 "帐号",
-                placeholder="请输入帐号（手机号/QQ号/邮箱）",
+                placeholder="请输入帐号（手机号/QQ 号/邮箱）",
                 key="reg_account"
             )
             
             reg_password1 = st.text_input(
                 "密码",
                 type="password",
-                placeholder="请输入密码（6-20个字符）",
+                placeholder="请输入密码（6-20 个字符）",
                 key="reg_password1"
             )
             
@@ -337,14 +369,14 @@ def render():
         with st.form("reset_password_form"):
             reset_account = st.text_input(
                 "原帐号",
-                placeholder="请输入您的帐号（手机号/QQ号/邮箱）",
+                placeholder="请输入您的帐号（手机号/QQ 号/邮箱）",
                 key="reset_account"
             )
             
             new_password1 = st.text_input(
                 "新密码",
                 type="password",
-                placeholder="请输入新密码（6-20个字符）",
+                placeholder="请输入新密码（6-20 个字符）",
                 key="new_password1"
             )
             
@@ -386,7 +418,7 @@ def render():
                             elif new_password1 != new_password2:
                                 st.error("两次输入的密码不一致")
                             else:
-                                # 更新密码
+                                # 更新密码 (哈希)
                                 user_data[user_found]['password'] = hash_password(new_password1)
                                 save_user_data(user_data)
                                 st.success("密码已修改！")

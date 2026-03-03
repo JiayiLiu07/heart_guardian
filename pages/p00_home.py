@@ -1,22 +1,17 @@
+# p00_home.py
 import streamlit as st
 
 def render():
-    """首页渲染函数 - 医疗专业化版本 (已移除实时数据条)"""
+    """首页渲染函数 - 医疗专业化版本（带导航栏）"""
     # 自定义CSS样式 - 医疗专业版
     st.markdown("""
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
         /* 隐藏默认元素 */
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        header {visibility: hidden;}
+        #MainMenu, footer, section[data-testid="stSidebar"] { display: none !important; }
         
-        /* 强制隐藏顶部导航栏 */
-        .top-navbar { display: none !important; }
-        div[class*="top-navbar"] { display: none !important; }
-        .stApp header { display: none !important; }
-        section[data-testid="stSidebar"] { display: none !important; }
-        
-        /* 隐藏Streamlit默认元素 - 增强版 */
+        /* 隐藏所有可能的Streamlit生成的底部元素 - 增强版 */
         .stApp footer { display: none !important; }
         .stApp [data-testid="stFooter"] { display: none !important; }
         .st-emotion-cache-1jicfl2 { display: none !important; }
@@ -30,7 +25,28 @@ def render():
         [data-testid="stBottom"] { display: none !important; }
         [data-testid="stBottomBlock"] { display: none !important; }
         
-        /* ===== 医疗专业色彩系统 ===== */
+        .stApp {
+            font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(180deg, #FAFBFC 0%, #F0F4F8 100%) !important;
+        }
+        
+        .main > div { padding-top: 0 !important; }
+        .block-container { 
+            padding: 1rem 2rem 2rem !important; 
+            max-width: 1400px; 
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .block-container > * {
+            width: 100%;
+            max-width: 1200px;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        
+        /* ===== 医疗风格色彩系统 - 使用深蓝色 ===== */
         :root {
             --medical-blue-dark: #0D47A1;
             --medical-blue: #1976D2;
@@ -45,19 +61,58 @@ def render():
             --border-light: #ECEFF1;
         }
         
-        /* 全局样式 - 医疗渐变背景 */
-        .stApp {
-            background: linear-gradient(180deg, #FAFBFC 0%, #F0F4F8 100%) !important;
-        }
-        
-        .main {
-            background: transparent;
-            padding: 2rem;
-        }
-        
         /* 所有文字颜色 */
         body, p, h1, h2, h3, h4, h5, h6, div, span, label {
             color: var(--text-primary) !important;
+        }
+        
+        /* ========== 导航栏 - 完全对齐 overview，颜色改为深蓝色 ========== */
+        .top-navbar {
+            background: white;
+            padding: 0 2.5rem;
+            height: 70px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 0;
+            width: 100%;
+        }
+        
+        .nav-logo { 
+            font-weight: 700; 
+            font-size: 1.4rem; 
+            color: var(--medical-blue) !important;
+            cursor: default; 
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-links { 
+            display: flex; 
+            gap: 8px;
+        }
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--text-secondary) !important; 
+            font-weight: 500; 
+            padding: 8px 16px; 
+            border-radius: 20px; 
+            transition: all 0.3s; 
+            font-size: 0.95rem;
+        }
+        .nav-links a:hover { 
+            background-color: var(--medical-blue-light);
+            color: var(--medical-blue) !important; 
+        }
+        .nav-links a.active { 
+            background: var(--medical-blue);
+            color: white !important; 
         }
         
         /* ===== 自定义滚动条 ===== */
@@ -89,6 +144,7 @@ def render():
             justify-content: center;
             position: relative;
             overflow: hidden;
+            margin-top: 1rem;
         }
         /* 背景网格渐变 */
         .hero-bg-grid {
@@ -252,7 +308,7 @@ def render():
             font-size: 1.2rem;
             opacity: 0.6;
             animation: floatIcon 4s ease-in-out infinite;
-            color: var(--medical-blue);
+            color: var(--medical-blue) !important;
         }
         .fi-1 { top: 10%; left: 10%; animation-delay: 0s; }
         .fi-2 { bottom: 15%; right: 15%; animation-delay: 1s; }
@@ -284,117 +340,13 @@ def render():
             color: var(--medical-accent) !important;
             -webkit-text-fill-color: var(--medical-accent);
         }
-        /* ===== 按钮区域增强 ===== */
-        .start-button-wrapper {
-            text-align: center;
-            margin: 1.5rem auto 3rem;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            position: relative;
-            z-index: 10;
-        }
-        .stButton {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            position: relative;
-        }
-        .btn-magnetic-area {
-            position: relative;
-            display: inline-block;
-        }
-        .stButton > button {
-            background: linear-gradient(145deg, #0D47A1, #1976D2) !important;
-            color: #FFFFFF !important;
-            font-size: 2.5rem !important;
-            font-weight: 700 !important;
-            padding: 1.2rem 8.5rem !important;
-            border: 3px solid rgba(255, 255, 255, 0.5) !important;
-            border-radius: 70px !important;
-            cursor: pointer !important;
-            box-shadow: 0 4px 20px rgba(13, 71, 161, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.2) !important;
-            width: auto !important;
-            min-width: 580px !important;
-            margin: 0 auto !important;
-            transition: transform 0.1s ease-out !important;
-            letter-spacing: 2px;
-            position: relative;
-            overflow: visible !important;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
-        }
-        .stButton > button::before {
-            content: "✚";
-            font-size: 2.5rem;
-            margin-right: 18px;
-            display: inline-block;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
-        }
-        /* 涟漪动画 */
-        .stButton > button::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 100%;
-            border-radius: 70px;
-            border: 2px solid white;
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 0;
-            animation: pulse-ring 2s infinite;
-            pointer-events: none;
-        }
-        @keyframes pulse-ring {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-            100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0; }
-        }
-        .stButton > button:hover {
-            background: linear-gradient(145deg, #1565C0, #1E88E5) !important;
-            box-shadow: 0 8px 30px rgba(13, 71, 161, 0.6), 0 0 0 4px rgba(255, 255, 255, 0.3) !important;
-            color: #FFFFFF !important;
-            border-color: white !important;
-        }
-        /* 悬浮提示 Tooltip */
-        .btn-tooltip {
-            position: absolute;
-            bottom: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--medical-blue-dark);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            z-index: 20;
-        }
-        .btn-tooltip::before {
-            content: '';
-            position: absolute;
-            top: -4px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-bottom: 5px solid var(--medical-blue-dark);
-        }
-        .btn-magnetic-area:hover .btn-tooltip {
-            opacity: 1;
-            visibility: visible;
-            bottom: -50px;
-        }
         
         /* ===== 专业分隔线 ===== */
         .section-divider {
             width: 120px;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--medical-blue), var(--medical-green), var(--medical-blue), transparent);
-            margin: 1.5rem auto;
+            margin: 2rem auto;
             border-radius: 2px;
         }
         
@@ -848,7 +800,7 @@ def render():
             color: white !important;
         }
         .footer-desc {
-            color: rgba(255,255,255,0.8);
+            color: rgba(255,255,255,0.8) !important;
             line-height: 1.5;
             margin-bottom: 1.2rem;
             font-size: 0.9rem;
@@ -867,7 +819,7 @@ def render():
             justify-content: center;
             font-size: 1.2rem;
             border: 1px solid rgba(255,255,255,0.2);
-            color: white;
+            color: white !important;
             transition: all 0.3s ease;
             cursor: pointer;
         }
@@ -996,6 +948,7 @@ def render():
         @media (max-width: 1200px) {
             .disease-grid { grid-template-columns: repeat(3, 1fr); padding: 0 1rem; }
             .footer-grid { grid-template-columns: repeat(2, 1fr); }
+            .main-title { font-size: 4rem; padding: 0 120px; }
         }
         @media (max-width: 900px) {
             .disease-grid { grid-template-columns: repeat(2,1fr); }
@@ -1010,7 +963,6 @@ def render():
             .main-title::before { font-size: 2.5rem; left: -10px; }
             .main-title::after { font-size: 2.2rem; right: -10px; }
             .platform-sub { font-size: 0.95rem; flex-direction: column; gap: 0.2rem; }
-            .stButton > button { font-size: 2rem !important; padding: 1rem 5rem !important; min-width: 420px !important; }
             .section-title { font-size: 1.6rem; padding: 0 1rem; }
             .footer-bottom { flex-direction: column; text-align: center; }
             .legal-links { justify-content: center; flex-wrap: wrap; gap: 1rem; }
@@ -1023,51 +975,13 @@ def render():
             .main-title::before { font-size: 2rem; left: -5px; }
             .main-title::after { font-size: 1.8rem; right: -5px; }
         }
-        
-        /* 强制主容器居中 */
-        .block-container {
-            max-width: 1400px !important;
-            padding: 0 1.5rem !important;
-            margin: 0 auto !important;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .block-container > * {
-            width: 100%;
-            max-width: 1200px;
-            margin-left: auto !important;
-            margin-right: auto !important;
-        }
     </style>
     
     <!-- JavaScript 交互增强 -->
     <script>
         // 等待 DOM 加载完成
         document.addEventListener('DOMContentLoaded', function() {
-            // 1. 按钮磁吸效果
-            const btnArea = document.querySelector('.btn-magnetic-area');
-            const btn = document.querySelector('.stButton > button');
-            
-            if (btnArea && btn) {
-                btnArea.addEventListener('mousemove', function(e) {
-                    const rect = btnArea.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-                    
-                    // 限制移动范围
-                    const moveX = x * 0.15;
-                    const moveY = y * 0.15;
-                    
-                    btn.style.transform = `translate(${moveX}px, ${moveY}px)`;
-                });
-                
-                btnArea.addEventListener('mouseleave', function() {
-                    btn.style.transform = 'translate(0, 0)';
-                });
-            }
-            
-            // 2. 平台容器 3D 倾斜效果
+            // 平台容器 3D 倾斜效果
             const platform = document.querySelector('.platform-container');
             if (platform) {
                 platform.addEventListener('mousemove', (e) => {
@@ -1089,6 +1003,22 @@ def render():
             }
         });
     </script>
+    """, unsafe_allow_html=True)
+    
+    # 顶部导航栏 - 与 overview 一致，颜色改为深蓝色
+    st.markdown("""
+    <div class="top-navbar">
+        <div class="nav-logo">❤️ CardioGuard AI</div>
+        <div class="nav-links">
+            <a href="/p00_home" class="active">🏠 首页</a>
+            <a href="/p01_profile">📋 健康档案</a>
+            <a href="/p01_overview">📊 健康总览</a>
+            <a href="/p02_nutrition">🥗 营养建议</a>
+            <a href="/p03_ai_doctor">🩺 AI 医生</a>
+            <a href="/p04_knowledge">📚 知识库</a>
+            <a href="/p05_me">👤 我的中心</a>
+        </div>
+    </div>
     """, unsafe_allow_html=True)
     
     # 主标题区域
@@ -1125,6 +1055,9 @@ def render():
     
     st.markdown('</div>', unsafe_allow_html=True)
     
+    # 专业分隔线
+    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+    
     # 了解心血管疾病（视频）
     st.markdown('<h2 class="section-title">📺 了解心血管疾病</h2>', unsafe_allow_html=True)
     st.markdown("""
@@ -1141,20 +1074,6 @@ def render():
         </div>
     </div>
     """, unsafe_allow_html=True)
-    
-    # 开始诊断按钮
-    st.markdown('<div class="start-button-wrapper">', unsafe_allow_html=True)
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        st.markdown('<div class="btn-magnetic-area">', unsafe_allow_html=True)
-        if st.button("立即开始 AI 诊断", use_container_width=True):
-            st.switch_page("pages/p00_auth.py")
-        st.markdown('<div class="btn-tooltip">已有 10,000+ 用户使用</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-    
-    # 专业分隔线
-    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
     
     # 为什么选择 CardioGuard AI
     st.markdown('<h2 class="section-title">🎯 为什么选择 CardioGuard AI？</h2>', unsafe_allow_html=True)

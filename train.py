@@ -1,175 +1,96 @@
 # train.py
 import pandas as pd
-import pickle
 import xgboost as xgb
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, roc_auc_score
-from sklearn.preprocessing import StandardScaler   # 新增
-import joblib                                      # 替换 pickle
-import os
+from sklearn.metrics import accuracy_score, classification_report
 import json
+import os
 
-# --- Paths and Directories ---
-ASSETS_DIR = "./assets/"
-RISK_MODEL_PATH = os.path.join(ASSETS_DIR, "xgb_risk.pkl")
-SUBTYPE_MODELS_DIR = os.path.join(ASSETS_DIR, "subtype_models/")
-RECIPE_POOL_PATH = os.path.join(ASSETS_DIR, "recipe_pool.json")
+# --- 1. 路径设置 ---
+data_path = 'data/cardio_train.csv'
+assets_dir = 'assets'
+os.makedirs(assets_dir, exist_ok=True)
+model_path = os.path.join(assets_dir, 'cv_risk_model.json')
+meta_path = os.path.join(assets_dir, 'model_metadata.json')
 
-# --- Ensure Directories Exist ---
-os.makedirs(ASSETS_DIR, exist_ok=True)
-os.makedirs(SUBTYPE_MODELS_DIR, exist_ok=True)
+print(f"📂 正在加载数据：{data_path} ...")
 
-# --- Data Path ---
-DATA_PATH = "data/cardio_train.csv"
+if not os.path.exists(data_path):
+    raise FileNotFoundError(f"❌ 文件不存在：{data_path}")
 
-# --- Import Disease Definitions ---
-try:
-    from utils.disease_dict import DISEASE_ENUM
-except ImportError:
-    print("Error: Could not import DISEASE_ENUM from utils.disease_dict. Using fallback.")
-    class DISEASE_ENUM:
-        @staticmethod
-        def get_all_diseases(): return []
-        @staticmethod
-        def get_disease_keys(): return []
-        @staticmethod
-        def get_disease_labels(): return {}
+# --- 2. 读取数据 (关键修复：指定分隔符为分号) ---
+df = pd.read_csv(data_path, sep=';')
 
-# --- Data Loading Function ---
-def load_data(filepath):
-    print(f"Loading data from: {filepath}")
-    if not os.path.exists(filepath):
-        raise FileNotFoundError(f"Data file not found at {filepath}")
-    df = pd.read_csv(filepath, sep=";")
-    print(f"Data loaded: {df.shape[0]} rows, {df.shape[1]} columns.")
-    return df
+print(f"✅ 数据加载成功。形状：{df.shape}")
+print(f"🏷️  列名确认：{df.columns.tolist()}")
 
-# --- Feature Engineering ---
-def feature_engineering(df):
-    print("Performing feature engineering...")
-    df['age_year'] = (df['age'] / 365.25).round().astype(int)
-    df['bmi'] = df['weight'] / ((df['height'] / 100)**2)
-    df['gender'] = df['gender'].map({1: 0, 2: 1})  # 1=Male→0, 2=Female→1 (or adjust)
-    print("Feature engineering complete.")
-    return df
+# --- 3. 数据预处理 ---
+# 清洗异常值 (根据实际列名访问)
+# ap_hi: 收缩压, ap_lo: 舒张压
+df = df[(df['ap_hi'] > 50) & (df['ap_hi'] < 250)]
+df = df[(df['ap_lo'] > 30) & (df['ap_lo'] < 150)]
+df = df[(df['height'] > 100) & (df['height'] < 250)]
+df = df[(df['weight'] > 30) & (df['weight'] < 200)]
 
-# --- Train Risk Model ---
-def train_risk_model(df):
-    """Trains and saves the overall cardiovascular risk model with scaler."""
-    print("\n--- Training Overall Risk Model ---")
-    if 'cardio' not in df.columns:
-        raise ValueError("Target column 'cardio' not found in DataFrame.")
+# 特征工程
+# 计算 BMI
+df['bmi'] = df['weight'] / ((df['height'] / 100) ** 2)
+# 转换年龄为天 -> 年
+df['age_years'] = (df['age'] / 365).astype(int)
 
-    # 选择用于风险小测的极简特征（仅用于 demo）
-    feature_cols = ['age_year', 'ap_hi']
-    X = df[feature_cols]
-    y = df['cardio']
+# --- 4. 准备模型输入 ---
+# 注意：原数据集中 alcohol 列名为 'alco'
+features = ['age_years', 'gender', 'height', 'weight', 'ap_hi', 'ap_lo', 'cholesterol', 'gluc', 'smoke', 'alco', 'active', 'bmi']
+target = 'cardio'
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42, stratify=y
-    )
-    print(f"Train: {X_train.shape}, Test: {X_test.shape}")
+# 检查是否有缺失列
+missing = [col for col in features if col not in df.columns]
+if missing:
+    raise ValueError(f"❌ 数据集中缺少以下列：{missing}")
 
-    # 标准化（必须！否则模型泛化差）
-    scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
+X = df[features]
+y = df[target]
 
-    # XGBoost 模型
-    model = xgb.XGBClassifier(
-        objective='binary:logistic',
-        eval_metric='logloss',
-        n_estimators=150,
-        max_depth=4,
-        learning_rate=0.1,
-        random_state=42,
-        verbosity=0
-    )
-    model.fit(X_train_scaled, y_train)
+# 划分训练集和测试集
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
-    # 评估
-    y_pred = model.predict(X_test_scaled)
-    y_prob = model.predict_proba(X_test_scaled)[:, 1]
-    acc = accuracy_score(y_test, y_pred)
-    auc = roc_auc_score(y_test, y_prob)
-    print(f"Accuracy: {acc:.4f}, AUC: {auc:.4f}")
+print("🚀 开始训练 XGBoost 模型...")
 
-    # 保存 model + scaler
-    pipeline = {'model': model, 'scaler': scaler, 'features': feature_cols}
-    joblib.dump(pipeline, RISK_MODEL_PATH)
-    print(f"Risk model + scaler saved to: {RISK_MODEL_PATH}")
+# --- 5. 模型训练 ---
+model = xgb.XGBClassifier(
+    objective='binary:logistic',
+    n_estimators=150,
+    max_depth=6,
+    learning_rate=0.1,
+    subsample=0.8,
+    colsample_bytree=0.8,
+    eval_metric='logloss',
+    use_label_encoder=False,
+    random_state=42
+)
 
-    return model, scaler, X_test, y_test
+model.fit(X_train, y_train)
 
-# --- Train Subtype Models (保持原逻辑，仅跳过无关部分) ---
-def train_subtype_models(df):
-    trained_models = {}
-    diseases = DISEASE_ENUM.get_all_diseases()
-    if not diseases:
-        print("No diseases defined in DISEASE_ENUM. Skipping subtype training.")
-        return trained_models
+# --- 6. 模型评估 ---
+y_pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+print(f"✅ 训练完成！测试集准确率：{accuracy:.4f}")
+print(classification_report(y_test, y_pred, target_names=['No Disease', 'Disease']))
 
-    print(f"\n--- Training {len(diseases)} Subtype Models ---")
-    for disease_key in diseases:
-        target_column_name = DISEASE_ENUM.get_disease_labels().get(disease_key, {}).get('target_col')
-        if not target_column_name or target_column_name not in df.columns:
-            print(f"Warning: Target '{target_column_name}' not found for {disease_key}. Skipping.")
-            continue
+# --- 7. 保存模型 ---
+model.save_model(model_path)
+print(f"💾 模型已保存：{model_path}")
 
-        X = df.drop(columns=[target_column_name])
-        y = df[target_column_name]
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+# 保存元数据 (包含特征重要性，用于前端展示)
+metadata = {
+    "features": features,
+    "accuracy": float(accuracy),
+    "feature_importances": dict(zip(features, model.feature_importances_.tolist())),
+    "column_mapping_note": "alco corresponds to alcohol consumption"
+}
 
-        model = xgb.XGBClassifier(
-            objective='binary:logistic',
-            eval_metric='logloss',
-            n_estimators=100,
-            max_depth=3,
-            learning_rate=0.1,
-            random_state=42,
-            verbosity=0
-        )
-        model.fit(X_train, y_train)
+with open(meta_path, 'w', encoding='utf-8') as f:
+    json.dump(metadata, f, indent=4, ensure_ascii=False)
 
-        model_path = os.path.join(SUBTYPE_MODELS_DIR, f"{disease_key}.pkl")
-        joblib.dump(model, model_path)
-        trained_models[disease_key] = model
-        print(f"  → {disease_key} model saved.")
-
-    return trained_models
-
-# --- Visualizations (保持空实现) ---
-def generate_visualizations(X_test, y_test, model, subtype_models, data):
-    print("\n--- Skipping visualization generation as requested ---")
-
-# --- Main Execution ---
-if __name__ == "__main__":
-    print("Starting model training process...")
-
-    try:
-        df_raw = load_data(DATA_PATH)
-        df = feature_engineering(df_raw.copy())
-        print("Data preprocessing complete.")
-    except Exception as e:
-        print(f"ERROR in data loading: {e}")
-        exit(1)
-
-    # 训练主风险模型（用于 30 秒小测）
-    try:
-        risk_model, scaler, X_test_risk, y_test_risk = train_risk_model(df.copy())
-    except Exception as e:
-        print(f"ERROR training risk model: {e}")
-        risk_model, scaler = None, None
-
-    # 训练亚型模型
-    subtype_models = {}
-    if DISEASE_ENUM.get_all_diseases():
-        try:
-            subtype_models = train_subtype_models(df.copy())
-        except Exception as e:
-            print(f"ERROR training subtype models: {e}")
-
-    # 可选：生成可视化
-    generate_visualizations(X_test_risk, y_test_risk, risk_model, subtype_models, df)
-
-    print("\nModel training process finished.")
+print(f"📝 元数据已保存：{meta_path}")
+print("🎉 一切就绪！请运行 streamlit 查看效果。")

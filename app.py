@@ -1,73 +1,93 @@
 # app.py
-
 import streamlit as st
+import logging
+import sys
+from pathlib import Path
 
-# === Page Configuration ===
-st.set_page_config(page_title="HeartGuardian", layout="wide", initial_sidebar_state="collapsed")
+# 添加日志配置
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-# === CSS to Ensure Navigation Bar is Visible ===
-st.markdown("""
-<style>
-section[data-testid="stSidebar"], .stSidebar, [data-testid="collapsedControl"],
-#MainMenu, footer, .css-1d391kg, .stDeployButton {display: none !important;}
-.block-container {padding-top: 80px !important; margin-top: 0 !important;}
-</style>
-""", unsafe_allow_html=True)
+# 页面配置
+st.set_page_config(
+    page_title="CardioGuard AI 健康管理平台",
+    page_icon="🏥",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 
-# === Login Check ===
-if 'user_id' not in st.session_state:
-    st.switch_page("pages/p00_intro.py")
-
-# === Define Page Mapping ===
-page_map = {
-    "overview": "pages/01_overview.py",
-    "nutrition": "pages/02_nutrition.py", 
-    "ai_doctor": "pages/03_ai_doctor.py",
-    "knowledge": "pages/p04_knowledge.py",
-    "profile": "pages/p01_profile.py",
-    "me": "pages/p05_me.py"
+# ==================== 页面映射表 ====================
+# key: URL 参数值, value: 模块文件名 (用于导入)
+page_mapping = {
+    "intro": "p00_intro",
+    "auth": "p00_auth",
+    "overview": "p01_overview",
+    "profile": "p01_profile",
+    "nutrition": "p02_nutrition",
+    "ai_doctor": "p03_ai_doctor",
+    "knowledge": "p04_knowledge",
+    "me": "p05_me"
 }
 
-# === Initialize Session State ===
-if 'current_page' not in st.session_state:
-    st.session_state.current_page = "pages/01_overview.py"
+def load_page_module(module_name):
+    """安全动态加载页面模块"""
+    try:
+        # 假设所有页面文件都在 pages 目录
+        module = __import__(f"pages.{module_name}", fromlist=["main", "render"])
+        return module
+    except ModuleNotFoundError as e:
+        logger.error(f"模块未找到：{e}")
+        return None
+    except Exception as e:
+        logger.error(f"导入失败：{e}")
+        return None
 
-# === Render Navigation ===
-from components.top_nav import render_nav
-with st.container():
-    render_nav(page_map)
-
-# === Render Current Page ===
-try:
-    # Debug: Display current page (hidden)
-    st.markdown(f"<div style='display:none'>当前页面: {st.session_state.current_page}</div>", unsafe_allow_html=True)
-    
-    current_page = st.session_state.current_page
-    if current_page == "pages/01_overview.py":
-        import pages.p01_overview as overview_page
-        overview_page.render()
-    elif current_page == "pages/02_nutrition.py":
-        import pages.p02_nutrition as nutrition_page
-        nutrition_page.show_ai_charts_page()
-    elif current_page == "pages/03_ai_doctor.py":
-        import pages.p03_ai_doctor as ai_doctor_page
-        ai_doctor_page.render()
-    elif current_page == "pages/p04_knowledge.py":
-        import pages.p04_knowledge as knowledge_page
-        knowledge_page.render()
-    elif current_page == "pages/p01_profile.py":
-        import pages.p01_profile as profile_page
-        # p01_profile.py is executed directly
-    elif current_page == "pages/p05_me.py":
-        import pages.p05_me as me_page
-        me_page.render_p05_me()
+def execute_page_module(module):
+    """
+    执行页面模块，兼容两种入口函数：main() 或 render()
+    """
+    if hasattr(module, "main"):
+        module.main()
+    elif hasattr(module, "render"):
+        module.render()
     else:
-        st.error(f"页面未找到: {current_page}")
-        st.session_state.current_page = "pages/01_overview.py"
-        st.rerun()
+        st.error(f"模块缺少 main 或 render 入口函数")
 
-except Exception as e:
-    st.error(f"页面加载失败: {e}")
-    # Fallback to overview page
-    st.session_state.current_page = "pages/01_overview.py"
-    st.rerun()
+def main():
+    # 从 query_params 获取当前页面，默认为 'intro'
+    query_params = st.query_params
+    active_page = query_params.get("page", "intro")
+    
+    # 校验页面合法性
+    if active_page not in page_mapping:
+        active_page = "intro"
+        st.query_params["page"] = "intro"
+    
+    # 同步到 session_state (可选，用于某些状态保持)
+    st.session_state.active_page = active_page
+    current_page_param = active_page
+    
+    logger.info(f"当前页面：{current_page_param}")
+    
+    # 移除所有对 nav_component 的调用
+    # 不再注入通用CSS，因为每个页面都有自己的CSS
+    
+    # ==================== 加载当前页面内容 ====================
+    target_module_name = page_mapping.get(current_page_param)
+    
+    if target_module_name:
+        module = load_page_module(target_module_name)
+        if module:
+            try:
+                # 使用兼容函数执行页面
+                execute_page_module(module)
+            except Exception as e:
+                logger.error(f"执行页面失败：{e}")
+                st.error(f"页面执行出错：{e}")
+        else:
+            st.error(f"无法加载模块：{target_module_name}")
+    else:
+        st.error("⛔ 无效页面配置")
+
+if __name__ == "__main__":
+    main()

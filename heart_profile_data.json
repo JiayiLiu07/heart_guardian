@@ -1,0 +1,34 @@
+{
+  "diseases": [
+    "缺血性心脏病",
+    "心律失常"
+  ],
+  "gender": "男",
+  "age": 45,
+  "height": 170,
+  "weight": 56.0,
+  "family_history": "无",
+  "late_night": 2,
+  "smoking": false,
+  "drinking": false,
+  "high_salt": true,
+  "high_sugar": false,
+  "ex_freq": 3,
+  "ex_dur": 45,
+  "stress": "中",
+  "sleep": 7.0,
+  "allergies": [
+    "海鲜"
+  ],
+  "diet_pref": [
+    "低组胺/无发酵"
+  ],
+  "systolic_bp": "90-119",
+  "total_cholesterol": "4.0-5.2",
+  "diastolic_bp": "80-89",
+  "blood_glucose": "5.6-6.9",
+  "subtype_缺血性心脏病": "未知",
+  "subtype_心律失常": "缓慢性心律失常",
+  "subtype_高血压心脏病": "未知",
+  "subtype_瓣膜性心脏病": "二尖瓣病变"
+}

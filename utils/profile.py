@@ -1,24 +1,23 @@
 # utils/profile.py
-import pandas as pd
+import json
 import os
+from typing import Dict, Any
 
-USERS_FOLDER = 'users'
-os.makedirs(USERS_FOLDER, exist_ok=True)
+def load_profile_data(user_id: str) -> Dict[str, Any]:
+    """加载用户档案"""
+    profile_path = f"data/profiles/{user_id}.json"
+    if not os.path.exists(profile_path):
+        return {}
+    try:
+        with open(profile_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"加载档案失败: {e}")
+        return {}
 
-def load_profile_data(user_id):
-    path = os.path.join(USERS_FOLDER, f"{user_id}_profile.csv")
-    if os.path.exists(path):
-        df = pd.read_csv(path, encoding='utf-8')
-        profile = df.iloc[0].to_dict()
-        # 修复所有列表字段
-        for key in ['cardio_diseases', 'allergens', 'habits']:
-            val = profile.get(key)
-            if isinstance(val, str) and val.strip():
-                try:
-                    profile[key] = eval(val)
-                except:
-                    profile[key] = []
-            elif not isinstance(val, list):
-                profile[key] = []
-        return profile
-    return {'cardio_diseases': [], 'allergens': [], 'habits': []}
+def save_profile_data(user_id: str, data: Dict[str, Any]):
+    """保存用户档案"""
+    os.makedirs("data/profiles", exist_ok=True)
+    profile_path = f"data/profiles/{user_id}.json"
+    with open(profile_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)

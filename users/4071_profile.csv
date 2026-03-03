@@ -1,2 +1,0 @@
-name,gender,birth_date,phone,height,weight,systolic,diastolic,symptoms,bmi,bmi_category,diet_habits,exercise_frequency,smoking,alcohol,completion_date,user_id,has_genetic_history,cardio_disease,cardio_subtype
-刘嘉诒,女,1990-01-01,13532328226,170.0,65.0,120,80,[],22.49134948096886,正常体重,[],几乎不运动,不吸烟,不饮酒,2025-10-06 10:35:55,4071,否,无心血管疾病,无
