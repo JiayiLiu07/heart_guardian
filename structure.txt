@@ -1,0 +1,40 @@
+CardioGuard_AI_Project/
+│
+├── 📄 app.py                      # [核心入口] Streamlit 主应用，负责页面路由与动态加载
+├── 📄 train.py                    # [模型训练] XGBoost 模型训练脚本，生成模型文件与元数据
+│
+├── 📂 pages/                      # [页面模块] 各个功能页面的具体实现
+│   ├── 📄 p00_intro.py            # 引导页/落地页 (含视频介绍、核心功能展示)
+│   ├── 📄 p00_auth.py             # 认证页 (登录/注册/忘记密码)
+│   ├── 📄 p00_home.py             # 首页 (用户登录后的仪表盘)
+│   ├── 📄 p01_profile.py          # 健康档案 (用户信息录入与编辑)
+│   ├── 📄 p01_overview.py         # 健康总览 (风险评估、SHAP 分析、AI 报告)
+│   ├── 📄 p02_nutrition.py        # 营养建议 (AI 食谱生成、购物清单)
+│   ├── 📄 p03_ai_doctor.py        # AI 医生 (智能问诊聊天机器人)
+│   ├── 📄 p04_knowledge.py        # 知识库 (数据洞察、疾病图谱、问答)
+│   └── 📄 p05_me.py               # 我的中心 (个人设置、日志管理、账户安全)
+│
+├── 📂 assets/                     # [资源与模型] 存放训练好的模型与静态资源
+│   ├── 📄 cv_risk_model.json      # [生成文件] 训练好的 XGBoost 模型 (由 train.py 生成)
+│   ├── 📄 model_metadata.json     # [生成文件] 模型元数据与特征重要性 (由 train.py 生成)
+│   └── 📄 cardio_recipes.py       # [隐含依赖] 食谱数据库模块 (被 p02_nutrition.py 调用)
+│
+├── 📂 data/                       # [数据源] 原始数据集
+│   └── 📄 cardio_train.csv        # [外部数据] 心血管疾病训练数据集 (Kaggle 来源)
+│
+├── 📂 picture/                    # [静态资源] 疾病图谱与示意图
+│   ├── 🖼️ 缺血性心脏病.avif
+│   ├── 🖼️ 高血压心脏病.avif
+│   ├── 🖼️ 心率失常.webp
+│   ├── 🖼️ 扩张型心肌病.webp
+│   ├── 🖼️ 肥厚型心肌病.webp
+│   ├── 🖼️ 瓣膜性心脏病.webp
+│   ├── 🖼️ 先天性心脏病.webp
+│   └── 🖼️ 主动脉疾病.avif
+│
+├── 📂 users/                      # [生成目录] 用户数据存储 (由 p00_auth.py 等创建)
+│   ├── 📄 user_data.json          # [生成文件] 用户账号与密码哈希
+│   ├── 📄 heart_profile_data.json # [生成文件] 用户健康档案摘要
+│   └── 📄 user_logs.json          # [生成文件] 用户健康日志记录
+│
+└── 📄 requirements.txt            # [隐含依赖] Python 依赖包列表 (streamlit, xgboost, openai 等)

@@ -1,0 +1,32 @@
+{
+    "features": [
+        "age_years",
+        "gender",
+        "height",
+        "weight",
+        "ap_hi",
+        "ap_lo",
+        "cholesterol",
+        "gluc",
+        "smoke",
+        "alco",
+        "active",
+        "bmi"
+    ],
+    "accuracy": 0.7316256731189056,
+    "feature_importances": {
+        "age_years": 0.08057265728712082,
+        "gender": 0.019118255004286766,
+        "height": 0.020488331094384193,
+        "weight": 0.02478349208831787,
+        "ap_hi": 0.4259156584739685,
+        "ap_lo": 0.11552625894546509,
+        "cholesterol": 0.15947163105010986,
+        "gluc": 0.033987775444984436,
+        "smoke": 0.03121163882315159,
+        "alco": 0.026949401944875717,
+        "active": 0.03609107807278633,
+        "bmi": 0.025883913040161133
+    },
+    "column_mapping_note": "alco corresponds to alcohol consumption"
+}
