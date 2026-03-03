@@ -27,17 +27,24 @@ def render():
         page_icon="🔑",
         layout="centered"
     )
-    # 用户数据文件夹路径（指向根目录 heart_guardian/users）
-    USERS_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "users"))
-    USER_DATA_FILE = os.path.join(USERS_FOLDER, "user_data.json")
 
+    # ================= 配置区域开始 =================
+    # 定义 users 文件夹路径 (指向根目录 heart_guardian/users)
+    USERS_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "users"))
+    
+    # 统一所有数据文件到 users 文件夹
+    USER_DATA_FILE = os.path.join(USERS_FOLDER, "user_data.json")       # 用户账号信息
+    DATA_FILE = os.path.join(USERS_FOLDER, "heart_profile_data.json")   # 心脏健康档案摘要 (我的中心展示用)
+    LOG_FILE = os.path.join(USERS_FOLDER, "user_logs.json")             # 健康日志
+    
     def ensure_users_folder():
         """确保 users 文件夹存在"""
         if not os.path.exists(USERS_FOLDER):
             os.makedirs(USERS_FOLDER)
+    # ================= 配置区域结束 =================
 
     def load_user_data():
-        """加载用户数据"""
+        """加载用户账号数据"""
         ensure_users_folder()
         if os.path.exists(USER_DATA_FILE):
             try:
@@ -49,13 +56,53 @@ def render():
         return {}
 
     def save_user_data(data):
-        """保存用户数据"""
+        """保存用户账号数据"""
         ensure_users_folder()
         try:
             with open(USER_DATA_FILE, 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
         except Exception as e:
             st.error(f"保存用户数据失败：{e}")
+
+    def load_heart_profile():
+        """加载心脏健康档案摘要数据 (我的中心用)"""
+        ensure_users_folder()
+        if os.path.exists(DATA_FILE):
+            try:
+                with open(DATA_FILE, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except Exception as e:
+                return {}
+        return {}
+
+    def save_heart_profile(data):
+        """保存心脏健康档案摘要数据"""
+        ensure_users_folder()
+        try:
+            with open(DATA_FILE, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            st.error(f"保存健康档案失败：{e}")
+
+    def load_user_logs():
+        """加载用户健康日志"""
+        ensure_users_folder()
+        if os.path.exists(LOG_FILE):
+            try:
+                with open(LOG_FILE, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except Exception as e:
+                return []
+        return []
+
+    def save_user_logs(logs):
+        """保存用户健康日志"""
+        ensure_users_folder()
+        try:
+            with open(LOG_FILE, 'w', encoding='utf-8') as f:
+                json.dump(logs, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            st.error(f"保存日志失败：{e}")
 
     def hash_password(password):
         """密码哈希处理"""

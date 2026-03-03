@@ -889,7 +889,7 @@ def main():
     <div class="top-navbar">
         <div class="nav-logo">❤️ CardioGuard AI</div>
         <div class="nav-links">
-            <a href="/">🏠 首页</a>
+             <a href="/p00_home">🏠 首页</a>
             <a href="/p01_profile">📋 健康档案</a>
             <a href="/p01_overview">📊 健康总览</a>
             <a href="/p02_nutrition" class="active">🥗 营养建议</a>

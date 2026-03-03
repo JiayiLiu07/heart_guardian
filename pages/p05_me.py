@@ -13,9 +13,21 @@ except ImportError:
 
 st.set_page_config(page_title="我的中心 · CardioGuard AI", layout="wide")
 
-DATA_FILE = "heart_profile_data.json"
-LOG_FILE = "user_logs.json"
-USERS_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "users"))
+# ==========================================
+# 【修复部分】路径配置 - 确保顺序正确
+# ==========================================
+
+# 1. 先定义 users 文件夹的路径
+current_dir = os.path.dirname(os.path.abspath(__file__))
+USERS_FOLDER = os.path.abspath(os.path.join(current_dir, "..", "users"))
+
+# 2. 确保 users 文件夹存在，不存在则创建
+if not os.path.exists(USERS_FOLDER):
+    os.makedirs(USERS_FOLDER)
+
+# 3. 再定义数据文件路径 (现在 USERS_FOLDER 已经定义了，不会报错)
+DATA_FILE = os.path.join(USERS_FOLDER, "heart_profile_data.json")
+LOG_FILE = os.path.join(USERS_FOLDER, "user_logs.json")
 USER_DATA_FILE = os.path.join(USERS_FOLDER, "user_data.json")
 
 # ==========================================
@@ -322,7 +334,7 @@ def main():
     <div class="top-navbar">
         <div class="nav-logo">❤️ CardioGuard AI</div>
         <div class="nav-links">
-            <a href="/">🏠 首页</a>
+            <a href="/p00_home">🏠 首页</a>
             <a href="p01_profile">📋 健康档案</a>
             <a href="p01_overview">📊 健康总览</a>
             <a href="p02_nutrition">🥗 营养建议</a>
@@ -340,6 +352,18 @@ def main():
         <p class="hero-sub">个人信息管理 · 健康日志 · 账户安全</p>
     </div>
     """, unsafe_allow_html=True)
+    
+    # 显示登录用户信息（如果已登录）
+    if st.session_state.get('is_logged_in', False) or st.session_state.get('username'):
+        username = st.session_state.get('username', st.session_state.get('user_id', '用户'))
+        st.markdown(f"""
+        <div style="background: #fce7f3; padding: 12px 20px; border-radius: 12px; border-left: 6px solid #ec4899; margin-bottom: 20px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 1.2rem;">👤</span>
+                <span style="font-weight: 600; color: #be185d;">当前登录用户：{username}</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
     
     # 直接显示个人信息，不检查登录状态
     tab1, tab2, tab3 = st.tabs(["📋 个人信息", "📝 健康日志", "🔒 账户安全"])
@@ -419,7 +443,6 @@ def main():
             
             if st.button("✏️ 编辑档案信息", type="primary", use_container_width=True):
                 st.switch_page("pages/p01_profile.py")
-
     # ================= 标签页 2: 健康日志 =================
     with tab2:
         st.markdown('<div class="section-title">📝 记录健康日志</div>', unsafe_allow_html=True)
@@ -461,7 +484,6 @@ def main():
                     st.rerun()
         else:
             st.info("暂无日志记录。")
-
     # ================= 标签页 3: 账户安全 =================
     with tab3:
         st.markdown('<div class="section-title">🔒 重置密码</div>', unsafe_allow_html=True)

@@ -33,17 +33,6 @@ def load_data_from_file():
             return {}
     return {}
 
-def check_login_status():
-    """检查登录状态，如果未登录则重定向"""
-    if not st.session_state.get('is_logged_in', False):
-        st.warning("🔒 请先登录后再访问此页面")
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
-            if st.button("👉 前往登录", type="primary", use_container_width=True):
-                st.switch_page("pages/p00_auth.py")
-        st.stop()
-    return True
-
 # ==========================================
 # CSS 样式 - 完全对齐 overview 框架
 # ==========================================
@@ -956,16 +945,12 @@ def parse_ai_json_response(ai_text):
             return None, None, None
 
 def main():
-    # 初始化 session_state
-    if 'is_logged_in' not in st.session_state:
-        st.session_state.is_logged_in = False
-    
     # 顶部导航栏
     st.markdown("""
     <div class="top-navbar">
         <div class="nav-logo">❤️ CardioGuard AI</div>
         <div class="nav-links">
-            <a href="/p01_overview">🏠 首页</a>
+            <a href="/p00_home">🏠 首页</a>
             <a href="/p01_profile" class="active">📋 健康档案</a>
             <a href="/p02_nutrition">🥗 营养建议</a>
             <a href="/p03_ai_doctor">🩺 AI 医生</a>
@@ -983,19 +968,17 @@ def main():
     </div>
     """, unsafe_allow_html=True)
     
-    # 检查登录状态
-    check_login_status()
-    
-    # 显示登录用户信息
-    username = st.session_state.get('username', '用户')
-    st.markdown(f"""
-    <div style="background: #e8f5e9; padding: 12px 20px; border-radius: 12px; border-left: 6px solid #2e7d32; margin-bottom: 20px;">
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 1.2rem;">👤</span>
-            <span style="font-weight: 600; color: #2e7d32;">当前登录用户：{username}</span>
+    # 显示登录用户信息（如果已登录）
+    if st.session_state.get('is_logged_in', False) or st.session_state.get('username'):
+        username = st.session_state.get('username', st.session_state.get('user_id', '用户'))
+        st.markdown(f"""
+        <div style="background: #e8f5e9; padding: 12px 20px; border-radius: 12px; border-left: 6px solid #2e7d32; margin-bottom: 20px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 1.2rem;">👤</span>
+                <span style="font-weight: 600; color: #2e7d32;">当前登录用户：{username}</span>
+            </div>
         </div>
-    </div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
     
     if 'step' not in st.session_state: st.session_state.step = 1
     if 'profile' not in st.session_state: 
