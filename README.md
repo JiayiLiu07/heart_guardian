@@ -103,7 +103,7 @@ Launch the Streamlit application:
 `【Please ensure you are using the streamlit within your virtual environment】`
 
 ```bash
-streamlit run pages/p00_intro.py
+streamlit run app.py
 ```
 
 -   **Start Experience**: From the `p00_intro.py` page, click the "Start AI Diagnosis Now" button. The system will guide you to the login/registration page.
