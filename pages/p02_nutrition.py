@@ -360,7 +360,7 @@ def categorize_ingredients(ingredients):
 # 主界面
 # ==============================================================================
 def main():
-    # ========== CSS样式 - 完全对齐 overview ==========
+    # ========== CSS样式 - 导航栏下移，布局更紧凑 ==========
     st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -387,50 +387,61 @@ def main():
             background-color: #f8fafc;
         }
         
-        .main > div { padding-top: 0 !important; }
-        .block-container { padding: 1rem 2rem 2rem !important; max-width: 1400px; margin: 0 auto; }
+        /* 移除默认padding-top */
+        .main > div { 
+            padding-top: 0 !important; 
+        }
+        
+        /* 调整主内容区域 */
+        .block-container { 
+            padding: 0 2rem 1rem !important; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+        }
         
         #MainMenu, footer, section[data-testid="stSidebar"] { display: none !important; }
         
-        /* 导航栏 - 完全对齐 overview */
+        /* 导航栏 - 位置调整 */
         .top-navbar {
             background: white;
-            padding: 0 2.5rem;
-            height: 70px;
+            padding: 0 1.5rem;
+            height: 60px;
             box-shadow: var(--shadow-sm);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
+            position: relative;
             top: 0;
             z-index: 9999;
             border-bottom: 1px solid var(--gray-200);
-            border-radius: 0 0 12px 12px;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            border-radius: 0 0 8px 8px;
         }
         
         .nav-logo { 
             font-weight: 700; 
-            font-size: 1.4rem; 
+            font-size: 1.3rem; 
             color: var(--primary);
             cursor: default; 
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         
         .nav-links { 
             display: flex; 
-            gap: 8px;
+            gap: 6px;
         }
         
         .nav-links a { 
             text-decoration: none; 
             color: var(--gray-600); 
             font-weight: 500; 
-            padding: 8px 16px; 
+            padding: 6px 14px; 
             border-radius: 20px; 
             transition: all 0.3s; 
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         
         .nav-links a:hover { 
@@ -443,14 +454,14 @@ def main():
             color: white; 
         }
         
-        /* Hero区域 - 完全对齐 overview */
+        /* Hero区域 - 更紧凑 */
         .hero-box { 
             background: linear-gradient(135deg, #10B981 0%, #047857 100%); 
-            padding: 2.5rem 2rem; 
-            border-radius: 30px; 
+            padding: 1.8rem 1.5rem; 
+            border-radius: 24px; 
             text-align: center; 
             color: white; 
-            margin: 1rem 0 2rem 0; 
+            margin: 0.5rem 0 1rem 0; 
             box-shadow: var(--shadow-lg);
             position: relative;
             overflow: hidden;
@@ -487,18 +498,18 @@ def main():
         @keyframes move { 0% { background-position: 0 0; } 100% { background-position: 30px 30px; } }
         
         .hero-title, .hero-sub { position: relative; z-index: 2; }
-        .hero-title { font-size: 2.5rem; font-weight: 700; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .hero-sub { font-size: 1.1rem; opacity: 0.95; margin-top: 0.5rem; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .hero-title { font-size: 2.2rem; font-weight: 700; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .hero-sub { font-size: 1rem; opacity: 0.95; margin-top: 0.3rem; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
         
-        /* 大标题样式 - 对齐 overview 的 section-title */
+        /* 大标题样式 */
         .section-title {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--gray-800);
-            margin: 2rem 0 1.5rem 0;
+            margin: 1.2rem 0 0.8rem 0;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
             position: relative;
         }
         
@@ -507,36 +518,36 @@ def main():
             flex: 1;
             height: 2px;
             background: linear-gradient(90deg, var(--primary), transparent);
-            margin-left: 20px;
+            margin-left: 15px;
         }
         
         /* 子标题样式 */
         .subsection-title {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: var(--gray-800);
-            margin: 1.5rem 0 1rem 0;
-            padding-left: 0.8rem;
-            border-left: 6px solid var(--primary);
+            margin: 1rem 0 0.5rem 0;
+            padding-left: 0.6rem;
+            border-left: 4px solid var(--primary);
         }
         
-        /* ===== 重新设计的健康档案 - 更紧凑 ===== */
+        /* 健康档案 - 更紧凑 */
         .profile-compact {
             background: transparent;
-            margin: 1rem 0 1.5rem 0;
+            margin: 0.5rem 0 1rem 0;
         }
         
         .profile-compact-header {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
         
         .profile-compact-header .icon {
-            font-size: 2rem;
-            width: 36px;
-            height: 36px;
+            font-size: 1.8rem;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -546,7 +557,7 @@ def main():
         }
         
         .profile-compact-header .title {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 600;
             color: var(--gray-800);
         }
@@ -554,13 +565,13 @@ def main():
         .profile-compact-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
+            gap: 0.8rem;
         }
         
         .profile-compact-section {
             background: white;
-            border-radius: 12px;
-            padding: 1rem;
+            border-radius: 10px;
+            padding: 0.8rem;
             border: 1px solid var(--gray-200);
             box-shadow: var(--shadow-sm);
         }
@@ -569,8 +580,8 @@ def main():
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 0.8rem;
-            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--gray-700);
         }
@@ -578,27 +589,27 @@ def main():
         .profile-compact-section-title .count {
             background: var(--gray-100);
             color: var(--gray-600);
-            padding: 0.15rem 0.5rem;
+            padding: 0.1rem 0.4rem;
             border-radius: 9999px;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 500;
         }
         
         .profile-compact-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.4rem;
+            gap: 0.3rem;
         }
         
-        /* 标签样式 - 更紧凑 */
+        /* 标签样式 */
         .tag-profile {
             display: inline-flex;
             align-items: center;
-            padding: 0.25rem 0.6rem;
+            padding: 0.2rem 0.5rem;
             border-radius: 9999px;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 500;
-            line-height: 1.3;
+            line-height: 1.2;
             border: 1px solid transparent;
         }
         
@@ -624,9 +635,9 @@ def main():
             background: #E0E7FF;
             color: #3730A3;
             border-color: #A5B4FC;
-            font-size: 0.75rem;
-            padding: 0.15rem 0.5rem;
-            margin-left: 0.2rem;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.4rem;
+            margin-left: 0.1rem;
         }
         
         .tag-profile.empty {
@@ -638,8 +649,8 @@ def main():
         /* 食谱卡片 */
         .recipe-card {
             background: white;
-            border-radius: 16px;
-            padding: 1.2rem;
+            border-radius: 14px;
+            padding: 0.8rem;
             box-shadow: var(--shadow-sm);
             height: 100%;
             border: 1px solid var(--gray-200);
@@ -647,7 +658,7 @@ def main():
         }
         
         .recipe-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-3px);
             box-shadow: var(--shadow-md);
             border-color: var(--primary);
         }
@@ -655,24 +666,24 @@ def main():
         .recipe-title {
             font-weight: 700;
             color: var(--primary-dark);
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
         }
         
         .recipe-meal-type {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: var(--gray-600);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
         
         .tag {
             display: inline-block;
-            padding: 0.2rem 0.6rem;
+            padding: 0.15rem 0.5rem;
             border-radius: 9999px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 500;
-            margin-right: 0.3rem;
-            margin-bottom: 0.3rem;
+            margin-right: 0.2rem;
+            margin-bottom: 0.2rem;
         }
         
         .tag-green { background-color: var(--primary-light); color: var(--primary-dark); }
@@ -687,9 +698,9 @@ def main():
             display: flex;
             justify-content: space-around;
             background: var(--primary-light);
-            padding: 0.8rem;
-            border-radius: 12px;
-            margin: 0.8rem 0;
+            padding: 0.5rem;
+            border-radius: 10px;
+            margin: 0.5rem 0;
         }
         
         .nutri-item {
@@ -699,40 +710,39 @@ def main():
         .nutri-item b {
             display: block;
             color: var(--primary-dark);
-            font-size: 1.1rem;
+            font-size: 0.9rem;
         }
         
         .nutri-item span {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: var(--gray-600);
         }
         
-        /* 按钮样式 - 统一使用主题色 */
+        /* 按钮样式 */
         .stButton > button {
             border-radius: 30px !important;
             font-weight: 500 !important;
             transition: all 0.3s !important;
-        }
-        
-        div.stButton > button:first-child {
             background: white !important;
             color: var(--primary) !important;
             border: 1px solid var(--primary) !important;
+            padding: 0.2rem 0.8rem !important;
+            font-size: 0.8rem !important;
         }
         
         div.stButton > button:first-child:hover {
             background: var(--primary) !important;
             color: white !important;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: var(--shadow-md) !important;
         }
         
-        /* 购物清单分类 - 优化设计 */
+        /* 购物清单分类 */
         .shopping-category {
             background: white;
-            border-radius: 16px;
-            padding: 1.2rem;
-            margin-bottom: 1rem;
+            border-radius: 14px;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
             border: 1px solid var(--gray-200);
             box-shadow: var(--shadow-sm);
         }
@@ -740,21 +750,21 @@ def main():
         .shopping-category-title {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 1.2rem;
+            gap: 6px;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--primary-dark);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.3rem;
             border-bottom: 2px solid var(--primary-light);
         }
         
         .shopping-category-title span {
             background: var(--primary-light);
             color: var(--primary-dark);
-            padding: 0.2rem 0.8rem;
+            padding: 0.15rem 0.6rem;
             border-radius: 9999px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 500;
             margin-left: auto;
         }
@@ -762,15 +772,15 @@ def main():
         .shopping-items {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
         }
         
         .shopping-item {
             background: var(--gray-50);
             border: 1px solid var(--gray-200);
             border-radius: 9999px;
-            padding: 0.4rem 1rem;
-            font-size: 0.9rem;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
             transition: all 0.2s;
             cursor: default;
         }
@@ -779,26 +789,26 @@ def main():
             background: var(--primary);
             color: white;
             border-color: var(--primary);
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
         
-        /* 轮播样式 - 优化 */
+        /* 轮播样式 */
         .carousel-container {
             background: white;
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin: 1rem 0;
+            border-radius: 16px;
+            padding: 1rem;
+            margin: 0.5rem 0;
             border: 1px solid var(--gray-200);
             box-shadow: var(--shadow-sm);
-            min-height: 250px;
+            min-height: 200px;
         }
         
         .carousel-title {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--primary-dark);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.3rem;
             border-bottom: 2px solid var(--primary-light);
         }
         
@@ -809,10 +819,10 @@ def main():
         }
         
         .carousel-list li {
-            padding: 6px 0 6px 1.5rem;
+            padding: 4px 0 4px 1.2rem;
             position: relative;
             color: var(--gray-600);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             border-bottom: 1px dashed var(--gray-200);
         }
         
@@ -823,40 +833,40 @@ def main():
         .carousel-list li::before {
             content: "•";
             color: var(--primary);
-            font-size: 1.2rem;
+            font-size: 1rem;
             position: absolute;
             left: 0;
-            top: 4px;
+            top: 2px;
         }
         
         .carousel-indicator {
             text-align: center;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--gray-600);
             font-weight: 500;
-            margin: 1rem 0;
+            margin: 0.5rem 0;
         }
         
         .carousel-indicator span {
             color: var(--primary);
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
         
         /* 提示框样式 */
         .tip-badge {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 1rem;
-            border-radius: 12px;
+            padding: 0.8rem;
+            border-radius: 10px;
             text-align: center;
             border: 1px solid var(--gray-200);
-            margin: 2rem 0;
+            margin: 1rem 0;
         }
         
         .tip-badge p {
             color: var(--gray-600);
             margin: 0;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
         
         .tip-badge strong {
@@ -865,7 +875,7 @@ def main():
         }
         
         .day-divider {
-            margin: 2rem 0;
+            margin: 1.5rem 0;
             border: none;
             border-top: 2px solid var(--gray-200);
         }
@@ -873,19 +883,25 @@ def main():
         /* 信息提示框 */
         .info-box {
             background: var(--primary-light);
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            border-left: 4px solid var(--primary);
-            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
         }
         
-        /* 重新生成按钮容器 - 增加上下间距 */
+        /* 重新生成按钮容器 */
         .regenerate-container {
-            margin: 1.5rem 0 1rem 0;
+            margin: 1rem 0 0.5rem 0;
+        }
+        
+        /* 调整列间距 */
+        .row-widget.stHorizontal {
+            gap: 0.8rem !important;
         }
     </style>
     
-    <!-- 导航栏 - 与 overview 完全一致 -->
+    <!-- 导航栏 -->
     <div class="top-navbar">
         <div class="nav-logo">❤️ CardioGuard AI</div>
         <div class="nav-links">
@@ -899,7 +915,7 @@ def main():
         </div>
     </div>
     
-    <!-- Hero 区域 - 与 overview 完全一致，使用营养师页面的颜色 -->
+    <!-- Hero 区域 -->
     <div class="hero-box">
         <h1 class="hero-title">🥗 AI 营养师</h1>
         <p class="hero-sub">专为心血管疾病患者设计的智能康复食谱 · 精准数据驱动 · AI 智能推导</p>
@@ -937,7 +953,7 @@ def main():
         
         st.stop()
     
-    # ========== 重新设计的健康档案 - 更紧凑 ==========
+    # ========== 健康档案 - 更紧凑 ==========
     st.markdown("""
     <div class="profile-compact">
         <div class="profile-compact-header">
@@ -1020,7 +1036,7 @@ def main():
     st.markdown('</div>', unsafe_allow_html=True)  # 关闭 profile-compact-grid
     st.markdown('</div>', unsafe_allow_html=True)  # 关闭 profile-compact
     
-    # 重新生成按钮 - 添加容器增加间距
+    # 重新生成按钮
     st.markdown('<div class="regenerate-container">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
@@ -1069,8 +1085,8 @@ def main():
                         ingredients = ingredients.split(':')[-1]
                     
                     steps = meal.get('steps', '暂无步骤信息')
-                    if len(steps) > 100:
-                        steps = steps[:100] + "..."
+                    if len(steps) > 80:
+                        steps = steps[:80] + "..."
                     
                     st.markdown(f"""
                     <div class="recipe-card">
@@ -1082,8 +1098,8 @@ def main():
                             <div class="nutri-item"><b>{pro}g</b><span>蛋白</span></div>
                             <div class="nutri-item"><b>{fat}g</b><span>脂肪</span></div>
                         </div>
-                        <div style="margin-bottom:8px; font-size:0.9rem;"><b>🛒 食材:</b> {ingredients}</div>
-                        <div style="line-height:1.5; font-size:0.9rem;"><b>👨‍🍳 做法:</b> {steps}</div>
+                        <div style="margin-bottom:5px; font-size:0.8rem;"><b>🛒 食材:</b> {ingredients}</div>
+                        <div style="line-height:1.4; font-size:0.8rem;"><b>👨‍🍳 做法:</b> {steps}</div>
                     </div>
                     """, unsafe_allow_html=True)
                     

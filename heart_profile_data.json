@@ -1,0 +1,33 @@
+{
+  "diseases": [
+    "高血压心脏病",
+    "瓣膜性心脏病"
+  ],
+  "gender": "男",
+  "age": 45,
+  "height": 170,
+  "weight": 65.0,
+  "family_history": "无",
+  "late_night": 2,
+  "smoking": false,
+  "drinking": true,
+  "high_salt": false,
+  "high_sugar": true,
+  "ex_freq": 3,
+  "ex_dur": 45,
+  "stress": "中",
+  "sleep": 7.0,
+  "allergies": [
+    "海鲜",
+    "乳制品"
+  ],
+  "diet_pref": [
+    "无亚硫酸盐"
+  ],
+  "systolic_bp": "90-119",
+  "total_cholesterol": "<4.0",
+  "diastolic_bp": "60-79",
+  "blood_glucose": "5.6-6.9",
+  "subtype_高血压心脏病": "未知",
+  "subtype_瓣膜性心脏病": "二尖瓣病变"
+}

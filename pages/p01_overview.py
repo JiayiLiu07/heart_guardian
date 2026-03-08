@@ -186,7 +186,7 @@ def format_ai_text(text, is_lifestyle=False):
     for line in lines:
         line = line.strip()
         if not line:
-            formatted_lines.append('<div style="height:0.5rem;"></div>')
+            formatted_lines.append('<div style="height:0.3rem;"></div>')
             continue
         is_heading = False
         for pattern in heading_patterns:
@@ -197,20 +197,20 @@ def format_ai_text(text, is_lifestyle=False):
             is_heading = True
         if is_heading:
             if '🏃' in line or '🥗' in line or '😴' in line or '❤️' in line or '⚠️' in line:
-                formatted_lines.append(f'<div style="font-size:1.2rem; font-weight:600; color:#1e293b; margin:1.2rem 0 0.8rem 0;">{line}</div>')
+                formatted_lines.append(f'<div style="font-size:1.1rem; font-weight:600; color:#1e293b; margin:1rem 0 0.5rem 0;">{line}</div>')
             elif '第一部分' in line or '第二部分' in line:
-                formatted_lines.append(f'<div style="font-size:1.2rem; font-weight:600; color:#1e293b; margin:1rem 0 0.5rem 0;">{line}</div>')
+                formatted_lines.append(f'<div style="font-size:1.1rem; font-weight:600; color:#1e293b; margin:0.8rem 0 0.3rem 0;">{line}</div>')
             elif '已指定亚型分析' in line or '亚型推导' in line:
-                formatted_lines.append(f'<div style="font-size:1.1rem; font-weight:600; color:#1e293b; margin:0.8rem 0 0.3rem 0; border-left:3px solid #e2e8f0; padding-left:0.8rem;">{line}</div>')
+                formatted_lines.append(f'<div style="font-size:1rem; font-weight:600; color:#1e293b; margin:0.6rem 0 0.2rem 0; border-left:3px solid #e2e8f0; padding-left:0.6rem;">{line}</div>')
             elif ':' in line and any(disease in line for disease in ['缺血性心脏病', '高血压心脏病', '心律失常', '心肌病', '瓣膜性心脏病', '先天性心脏病', '主动脉疾病', '血管疾病']):
-                formatted_lines.append(f'<div style="font-size:1rem; font-weight:600; color:#1e293b; margin:0.5rem 0 0.2rem 0;">{line}</div>')
+                formatted_lines.append(f'<div style="font-size:0.95rem; font-weight:600; color:#1e293b; margin:0.4rem 0 0.1rem 0;">{line}</div>')
             elif re.match(r'^\d+[\.、]', line):
-                formatted_lines.append(f'<div style="margin:0.4rem 0 0.4rem 1.5rem; color:#1e293b; font-weight:500;">{line}</div>')
+                formatted_lines.append(f'<div style="margin:0.3rem 0 0.3rem 1.2rem; color:#1e293b; font-weight:500;">{line}</div>')
             else:
-                formatted_lines.append(f'<div style="margin:0.3rem 0; color:#1e293b;">{line}</div>')
+                formatted_lines.append(f'<div style="margin:0.2rem 0; color:#1e293b;">{line}</div>')
         else:
             line_with_highlights = highlight_key_points(line)
-            formatted_lines.append(f'<div style="margin:0.3rem 0; color:#34495e;">{line_with_highlights}</div>')
+            formatted_lines.append(f'<div style="margin:0.2rem 0; color:#34495e;">{line_with_highlights}</div>')
     return ''.join(formatted_lines)
 
 def generate_ai_subtype_analysis(profile):
@@ -306,7 +306,7 @@ def generate_ai_lifestyle_advice(profile):
         return f"AI建议生成失败：{str(e)}"
 
 # ==========================================
-# CSS 样式 - 更新版（已按您的要求优化）
+# CSS 样式 - 导航栏下移，布局更紧凑 (已修复遮挡问题)
 # ==========================================
 st.markdown("""
 <style>
@@ -334,48 +334,61 @@ st.markdown("""
         background-color: #f8fafc;
     }
     
-    .main > div { padding-top: 0 !important; }
-    .block-container { padding: 1rem 2rem 2rem !important; max-width: 1400px; margin: 0 auto; }
+    /* 【关键修复】移除 Streamlit 默认顶部 padding，防止遮挡自定义导航栏 */
+    .main > div { 
+        padding-top: 0 !important; 
+    }
     
+    /* 调整主内容区域的上边距，给导航栏留出空间 */
+    .block-container { 
+        padding: 0 2rem 1rem !important; 
+        max-width: 1400px; 
+        margin: 0 auto; 
+    }
+    
+    /* 隐藏 Streamlit 默认菜单和页脚 */
     #MainMenu, footer, section[data-testid="stSidebar"] { display: none !important; }
     
-    /* 导航栏：间距稍微增大（原为2px，现改为8px） */
+    /* 导航栏 - 位置调整，现在位于 block-container 内部 */
     .top-navbar {
         background: white;
-        padding: 0 2.5rem;
-        height: 70px;
+        padding: 0 1.5rem;
+        height: 60px;
         box-shadow: var(--shadow-sm);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        position: sticky;
+        position: relative;  /* 使用 relative 避免与 fixed 元素冲突 */
         top: 0;
         z-index: 9999;
         border-bottom: 1px solid var(--gray-200);
+        margin-top: 0;  /* 确保无上边距 */
+        margin-bottom: 0.5rem;
+        border-radius: 0 0 8px 8px;
     }
     
     .nav-logo { 
         font-weight: 700; 
-        font-size: 1.4rem; 
+        font-size: 1.3rem; 
         color: var(--primary);
         cursor: default; 
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
     }
     
     .nav-links { 
         display: flex; 
-        gap: 8px;  /* 原为2px，现增大到8px，适中 */
+        gap: 6px;
     }
     .nav-links a { 
         text-decoration: none; 
         color: var(--gray-600); 
         font-weight: 500; 
-        padding: 8px 16px; 
+        padding: 6px 14px; 
         border-radius: 20px; 
         transition: all 0.3s; 
-        font-size: 0.95rem;
+        font-size: 0.9rem;
     }
     .nav-links a:hover { 
         background-color: var(--primary-light);
@@ -386,13 +399,14 @@ st.markdown("""
         color: white; 
     }
     
+    /* Hero 区域 - 更紧凑 */
     .hero-box { 
         background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%); 
-        padding: 2.5rem 2rem; 
-        border-radius: 30px; 
+        padding: 1.8rem 1.5rem;
+        border-radius: 24px;
         text-align: center; 
         color: white; 
-        margin: 1rem 0 2rem 0; 
+        margin: 0.5rem 0 1rem 0;
         box-shadow: var(--shadow-lg);
         position: relative;
         overflow: hidden;
@@ -429,17 +443,28 @@ st.markdown("""
     @keyframes move { 0% { background-position: 0 0; } 100% { background-position: 30px 30px; } }
     
     .hero-title, .hero-sub { position: relative; z-index: 2; }
-    .hero-title { font-size: 2.5rem; font-weight: 700; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-    .hero-sub { font-size: 1.1rem; opacity: 0.95; margin-top: 0.5rem; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+    .hero-title { 
+        font-size: 2.2rem;
+        font-weight: 700; 
+        margin: 0; 
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+    }
+    .hero-sub { 
+        font-size: 1rem; 
+        opacity: 0.95; 
+        margin-top: 0.3rem; 
+        text-shadow: 0 1px 2px rgba(0,0,0,0.1); 
+    }
     
+    /* 各部分标题 - 更紧凑 */
     .section-title {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         font-weight: 700;
         color: var(--gray-800);
-        margin: 2rem 0 1.5rem 0;
+        margin: 1.2rem 0 0.8rem 0;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
         position: relative;
     }
     .section-title::after {
@@ -447,17 +472,17 @@ st.markdown("""
         flex: 1;
         height: 2px;
         background: linear-gradient(90deg, var(--primary), transparent);
-        margin-left: 20px;
+        margin-left: 15px;
     }
     
     .subsection-title-center {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: 600;
         color: var(--gray-800);
-        margin: 2rem 0 1.5rem 0;
+        margin: 1.2rem 0 0.8rem 0;
         text-align: center;
         position: relative;
-        padding-bottom: 0.8rem;
+        padding-bottom: 0.5rem;
     }
     .subsection-title-center::after {
         content: '';
@@ -465,16 +490,17 @@ st.markdown("""
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 60px;
+        width: 50px;
         height: 3px;
         background: var(--primary);
         border-radius: 2px;
     }
     
+    /* 指标卡片 - 更紧凑 */
     .metric-card {
         background: white;
-        padding: 1.5rem;
-        border-radius: 20px;
+        padding: 1rem;
+        border-radius: 16px;
         box-shadow: var(--shadow-md);
         text-align: center;
         transition: all 0.3s ease;
@@ -482,40 +508,40 @@ st.markdown("""
         border: 1px solid var(--gray-200);
     }
     .metric-card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-3px);
         box-shadow: var(--shadow-lg);
         border-color: var(--primary-light);
     }
-    .metric-label { color: var(--gray-600); font-weight: 500; font-size: 0.95rem; margin-bottom: 0.5rem; }
-    .metric-value { font-size: 2.5rem; font-weight: 600; color: var(--primary); line-height: 1.2; margin: 0.3rem 0; }
+    .metric-label { color: var(--gray-600); font-weight: 500; font-size: 0.85rem; margin-bottom: 0.3rem; }
+    .metric-value { font-size: 2rem; font-weight: 600; color: var(--primary); line-height: 1.2; margin: 0.2rem 0; }
     
     .risk-bar-container {
         width: 100%;
-        height: 8px;
+        height: 6px;
         background: var(--gray-200);
-        border-radius: 4px;
-        margin: 0.5rem 0;
+        border-radius: 3px;
+        margin: 0.3rem 0;
         position: relative;
     }
-    .risk-bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
-    .risk-markers { display: flex; justify-content: space-between; margin-top: 0.3rem; font-size: 0.9rem; color: var(--gray-600); }
+    .risk-bar-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+    .risk-markers { display: flex; justify-content: space-between; margin-top: 0.2rem; font-size: 0.8rem; color: var(--gray-600); }
     
     .model-explanation {
-        margin-top: 0.8rem;
-        padding: 0.8rem;
+        margin-top: 0.5rem;
+        padding: 0.5rem;
         background: var(--gray-50);
-        border-radius: 8px;
-        font-size: 1.05rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
         color: var(--gray-800);
         text-align: left;
-        border-left: 4px solid var(--primary);
-        line-height: 1.6;
+        border-left: 3px solid var(--primary);
+        line-height: 1.4;
     }
     
     .analysis-card {
         background: white;
-        border-radius: 20px;
-        padding: 1.5rem;
+        border-radius: 16px;
+        padding: 1rem;
         box-shadow: var(--shadow-md);
         border: 1px solid var(--gray-200);
         height: 100%;
@@ -525,170 +551,153 @@ st.markdown("""
     
     .analysis-card-content { flex: 1; display: flex; flex-direction: column; }
     .analysis-card-header {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 600;
         color: var(--gray-800);
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
         text-align: center;
-        padding-bottom: 0.5rem;
+        padding-bottom: 0.3rem;
         border-bottom: 1px solid var(--gray-200);
     }
     
-    .clinical-metrics-container { display: flex; flex-direction: column; gap: 0.8rem; flex: 1; }
+    .clinical-metrics-container { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
     
     .clinical-metric-row {
         display: flex;
         align-items: center;
         background: white;
-        border-radius: 12px;
-        padding: 0.6rem;
+        border-radius: 10px;
+        padding: 0.4rem;
         border: 1px solid var(--gray-200);
         transition: all 0.2s ease;
     }
     .clinical-metric-row:hover { border-color: var(--primary); background: var(--gray-50); }
     
     .metric-icon-box {
-        width: 40px;
-        height: 40px;
+        width: 32px;
+        height: 32px;
         background: var(--gray-100);
-        border-radius: 10px;
+        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.3rem;
-        margin-right: 0.8rem;
+        font-size: 1.1rem;
+        margin-right: 0.5rem;
     }
     
     .metric-info { flex: 1; display: flex; flex-direction: column; }
-    .metric-name { font-size: 0.85rem; color: var(--gray-600); margin-bottom: 0.2rem; }
-    .metric-value-unit { font-size: 1.1rem; font-weight: 600; color: var(--gray-800); }
+    .metric-name { font-size: 0.75rem; color: var(--gray-600); margin-bottom: 0.1rem; }
+    .metric-value-unit { font-size: 0.95rem; font-weight: 600; color: var(--gray-800); }
     
-    .metric-status-box { display: flex; flex-direction: column; align-items: flex-end; min-width: 80px; }
-    .metric-status-badge { font-size: 0.9rem; font-weight: 500; padding: 0.2rem 0.8rem; border-radius: 20px; text-align: center; }
-    .metric-range { font-size: 0.7rem; color: var(--gray-600); margin-top: 0.2rem; }
+    .metric-status-box { display: flex; flex-direction: column; align-items: flex-end; min-width: 70px; }
+    .metric-status-badge { font-size: 0.8rem; font-weight: 500; padding: 0.15rem 0.6rem; border-radius: 16px; text-align: center; }
+    .metric-range { font-size: 0.65rem; color: var(--gray-600); margin-top: 0.1rem; }
     
     .info-box {
         background: var(--primary-light);
-        padding: 0.8rem 1.2rem;
-        border-radius: 8px;
-        border-left: 4px solid var(--primary);
+        padding: 0.5rem 0.8rem;
+        border-radius: 6px;
+        border-left: 3px solid var(--primary);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
     }
     
     .ai-card {
         background: white;
-        border-radius: 20px;
-        padding: 1.5rem;
+        border-radius: 16px;
+        padding: 1rem;
         box-shadow: var(--shadow-md);
-        margin: 1.5rem 0;
+        margin: 0.8rem 0;
         border: 1px solid var(--gray-200);
     }
-    .ai-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
-    .ai-card-title { font-size: 1.3rem; font-weight: 600; color: var(--gray-800); }
+    .ai-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+    .ai-card-title { font-size: 1.1rem; font-weight: 600; color: var(--gray-800); }
     
-    /* ===== 图表解读框 - 高度减小，更紧凑 ===== */
+    /* 图表解读框 - 更紧凑 */
     .chart-interpretation {
         background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 100%);
-        padding: 0.7rem 1.2rem;          /* 上下内边距从1.2rem减小到0.7rem */
-        border-radius: 12px;
-        margin-bottom: 1rem;               /* 下边距减小 */
+        padding: 0.6rem 1rem;
+        border-radius: 10px;
+        margin-bottom: 0.5rem;
         border: 1px solid #d4e2f0;
-        font-size: 0.95rem;                /* 字体稍微调小但保持可读 */
+        font-size: 0.85rem;
         color: var(--gray-700);
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        line-height: 1.5;
+        line-height: 1.4;
     }
     
     .chart-interpretation strong {
-        font-size: 1.2rem;                  /* 标题保持醒目 */
+        font-size: 1rem;
         color: var(--primary-dark);
         display: block;
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.2rem;
     }
     
-    /* 内部段落边距减小 */
     .chart-interpretation p {
-        margin: 0.2rem 0;
-    }
-    
-    .chart-interpretation ul {
-        margin: 0.2rem 0 0.2rem 1.2rem;
-    }
-    
-    .chart-interpretation li {
         margin: 0.1rem 0;
     }
     
-    /* 雷达图旁边的解读框 - 让Age等不换行，使用flex列表 */
+    .chart-interpretation ul {
+        margin: 0.1rem 0 0.1rem 1rem;
+    }
+    
+    .chart-interpretation li {
+        margin: 0.05rem 0;
+    }
+    
     .chart-interpretation .risk-dimensions {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5rem 1.5rem;
+        gap: 0.3rem 1rem;
         list-style: none;
         padding-left: 0;
-        margin: 0.3rem 0;
+        margin: 0.2rem 0;
     }
     
     .chart-interpretation .risk-dimensions li {
-        white-space: nowrap;        /* 强制不换行 */
+        white-space: nowrap;
         margin: 0;
     }
     
-    .chart-annotation-content {
-        padding: 1.2rem;
-        background: white;
-        border-radius: 8px;
-        line-height: 1.7;
-        border: 1px solid var(--gray-200);
-        font-family: 'Inter', sans-serif;
-        margin-top: 1rem;
-    }
+    .shap-plot-container { max-width: 550px; margin: 0 auto; }
     
-    .chart-annotation-content h4 { color: var(--primary); margin-top: 0; margin-bottom: 1rem; font-size: 1.2rem; font-weight: 600; }
-    .chart-annotation-content p { margin: 0.8rem 0; color: var(--gray-700); }
-    .chart-annotation-content ul { margin: 0.5rem 0 1rem 0; padding-left: 1.5rem; }
-    .chart-annotation-content li { margin: 0.3rem 0; color: var(--gray-700); }
+    .flex-row { display: flex; gap: 1rem; align-items: stretch; }
+    .flex-1 { flex: 1; }
     
-    .term-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.8rem 1.5rem;
-        margin: 1rem 0;
-        background: var(--gray-50);
-        padding: 1rem;
-        border-radius: 8px;
-        border: 1px solid var(--gray-200);
-    }
-    .term-label { color: var(--primary); font-weight: 600; min-width: 100px; }
-    .term-desc { color: var(--gray-600); }
+    @media (max-width: 768px) { .flex-row { flex-direction: column; } }
     
+    /* 按钮 - 更紧凑 */
     .stButton > button {
         background: white !important;
         color: var(--primary) !important;
         border: 1px solid var(--primary) !important;
         border-radius: 30px !important;
         font-weight: 500 !important;
-        padding: 0.4rem 1.2rem !important;
-        font-size: 0.9rem !important;
+        padding: 0.3rem 1rem !important;
+        font-size: 0.8rem !important;
         transition: all 0.3s !important;
     }
     .stButton > button:hover {
         background: var(--primary) !important;
         color: white !important;
-        transform: translateY(-2px);
+        transform: translateY(-1px);
         box-shadow: var(--shadow-md) !important;
     }
     
-    .shap-plot-container { max-width: 600px; margin: 0 auto; }
+    /* 调整列间距 */
+    .row-widget.stHorizontal {
+        gap: 0.8rem !important;
+    }
     
-    .flex-row { display: flex; gap: 1.5rem; align-items: stretch; }
-    .flex-1 { flex: 1; }
-    
-    @media (max-width: 768px) { .flex-row { flex-direction: column; } }
+    /* Plotly图表容器 - 减小边距 */
+    .js-plotly-plot .plotly {
+        margin: 0 !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 def main():
-    # 顶部导航栏
+    # 顶部导航栏 - 现在放在 block-container 内部
     st.markdown("""
     <div class="top-navbar">
         <div class="nav-logo">❤️ CardioGuard AI</div>
@@ -720,11 +729,11 @@ def main():
     
     if not is_complete or not profile.get('diseases') or not profile.get('diet_pref'):
         st.markdown("""
-        <div style="background:#FEF3C7; padding:2rem; border-radius:20px; text-align:center; max-width:600px; margin:2rem auto;">
-            <div style="font-size:3rem; margin-bottom:1rem;">⚠️</div>
-            <h3 style="margin:0 0 0.5rem 0; color:#92400E;">信息尚未完善</h3>
-            <p style="margin:0.5rem 0; color:#92400E;">请先在个人健康档案中填写完整的疾病信息和饮食偏好</p>
-            <a href="/p01_profile" style="display:inline-block; margin-top:1rem; padding:0.8rem 2rem; background:#2563EB; color:white; text-decoration:none; border-radius:30px; font-weight:500;">前往完善档案</a>
+        <div style="background:#FEF3C7; padding:1.5rem; border-radius:16px; text-align:center; max-width:500px; margin:1rem auto;">
+            <div style="font-size:2.5rem; margin-bottom:0.5rem;">⚠️</div>
+            <h3 style="margin:0 0 0.3rem 0; color:#92400E;">信息尚未完善</h3>
+            <p style="margin:0.3rem 0; color:#92400E;">请先在个人健康档案中填写完整的疾病信息和饮食偏好</p>
+            <a href="/p01_profile" style="display:inline-block; margin-top:0.8rem; padding:0.6rem 1.5rem; background:#2563EB; color:white; text-decoration:none; border-radius:30px; font-weight:500;">前往完善档案</a>
         </div>
         """, unsafe_allow_html=True)
         st.stop()
@@ -747,7 +756,7 @@ def main():
         <div class="metric-card">
             <div class="metric-label">身体质量指数 (BMI)</div>
             <div class="metric-value">{bmi:.1f}</div>
-            <div style="color: {bmi_color}; font-weight:500;">{bmi_status}</div>
+            <div style="color: {bmi_color}; font-weight:500; font-size:0.9rem;">{bmi_status}</div>
         </div>
         """, unsafe_allow_html=True)
     
@@ -757,7 +766,7 @@ def main():
         <div class="metric-card">
             <div class="metric-label">心血管疾病</div>
             <div class="metric-value">{disease_count}</div>
-            <div style="color: var(--primary);">种已记录</div>
+            <div style="color: var(--primary); font-size:0.9rem;">种已记录</div>
         </div>
         """, unsafe_allow_html=True)
     
@@ -769,7 +778,7 @@ def main():
         <div class="metric-card">
             <div class="metric-label">年龄</div>
             <div class="metric-value">{age}岁</div>
-            <div style="color: {age_color};">{age_status}</div>
+            <div style="color: {age_color}; font-size:0.9rem;">{age_status}</div>
         </div>
         """, unsafe_allow_html=True)
     
@@ -787,7 +796,7 @@ def main():
         <div class="metric-card">
             <div class="metric-label">血压</div>
             <div class="metric-value">{derived['ap_hi']:.0f}/{derived['ap_lo']:.0f}</div>
-            <div style="color: {bp_color};">{bp_status}</div>
+            <div style="color: {bp_color}; font-size:0.9rem;">{bp_status}</div>
         </div>
         """, unsafe_allow_html=True)
     
@@ -811,12 +820,12 @@ def main():
                     <div class="analysis-card-header">🤖 预测结果</div>
                     <div class="analysis-card-content">
                         <div style="text-align:center;">
-                            <div style="color:var(--gray-600); margin-bottom:0.5rem;">10年心血管病风险</div>
-                            <div style="font-size:3rem; font-weight:600; color:{risk_color};">{proba:.1%}</div>
-                            <div style="margin:1rem 0;">
-                                <span style="background:{risk_color}15; color:{risk_color}; padding:6px 28px; border-radius:30px; font-weight:500;">{risk_level}</span>
+                            <div style="color:var(--gray-600); margin-bottom:0.3rem; font-size:0.9rem;">10年心血管病风险</div>
+                            <div style="font-size:2.5rem; font-weight:600; color:{risk_color};">{proba:.1%}</div>
+                            <div style="margin:0.5rem 0;">
+                                <span style="background:{risk_color}15; color:{risk_color}; padding:4px 24px; border-radius:30px; font-weight:500; font-size:0.9rem;">{risk_level}</span>
                             </div>
-                            <div style="margin-top:1.5rem;">
+                            <div style="margin-top:0.8rem;">
                                 <div class="risk-bar-container">
                                     <div class="risk-bar-fill" style="width:{risk_position}%; background:{risk_color};"></div>
                                 </div>
@@ -940,11 +949,11 @@ def main():
                 st.markdown('</div></div>', unsafe_allow_html=True)
             
             # ==================== 新增：高级动态可视化图 (Plotly) ====================
-            st.markdown('<div style="margin-top: 2rem;"></div>', unsafe_allow_html=True)
+            st.markdown('<div style="margin-top: 1rem;"></div>', unsafe_allow_html=True)
             
             # 图表1：个人风险雷达图
             st.markdown("""
-            <div style="margin-top:2rem;">
+            <div style="margin-top:1rem;">
                 <div class="subsection-title-center">🕸️ 个人风险雷达</div>
             </div>
             """, unsafe_allow_html=True)
@@ -973,13 +982,13 @@ def main():
             
             fig_radar.update_layout(
                 polar=dict(
-                    radialaxis=dict(visible=True, range=[0, 1], tickfont=dict(size=10, color='#4B5563')),
-                    angularaxis=dict(tickfont=dict(size=11, weight='bold', color='#1F2937'), direction="clockwise", period=6)
+                    radialaxis=dict(visible=True, range=[0, 1], tickfont=dict(size=9, color='#4B5563')),
+                    angularaxis=dict(tickfont=dict(size=10, weight='bold', color='#1F2937'), direction="clockwise", period=6)
                 ),
                 showlegend=False,
-                height=400,
-                margin=dict(t=30, b=30, l=30, r=30),
-                title=dict(text='Multidimensional Risk Assessment', x=0.5, font=dict(size=14, weight='bold'))
+                height=350,
+                margin=dict(t=20, b=20, l=20, r=20),
+                title=dict(text='Multidimensional Risk Assessment', x=0.5, font=dict(size=12, weight='bold'))
             )
             
             col_chart1, col_note1 = st.columns([2, 1])
@@ -987,26 +996,24 @@ def main():
                 st.plotly_chart(fig_radar, use_container_width=True, config={'displayModeBar': False})
             
             with col_note1:
-                # 修改：使用flex列表让维度不换行，且整体框更紧凑
                 st.markdown("""
                 <div class="chart-interpretation" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
                     <strong>📊 图表解读</strong>
-                    <p style="margin-top:0.3rem;">雷达图展示了您在六个关键维度的风险分布。图形覆盖面积越大，表示该维度偏离理想健康状态越远。</p>
-                    <ul class="risk-dimensions" style="display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; list-style: none; padding-left: 0; margin: 0.2rem 0;">
-                        <li style="white-space: nowrap;"><strong>Age:</strong> 年龄因素（不可控）</li>
+                    <p style="margin-top:0.2rem;">雷达图展示了您在六个关键维度的风险分布。图形覆盖面积越大，表示该维度偏离理想健康状态越远。</p>
+                    <ul class="risk-dimensions" style="display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; list-style: none; padding-left: 0; margin: 0.2rem 0;">
+                        <li style="white-space: nowrap;"><strong>Age:</strong> 年龄因素</li>
                         <li style="white-space: nowrap;"><strong>BP:</strong> 血压水平</li>
-                        <li style="white-space: nowrap;"><strong>Cholesterol:</strong> 胆固醇水平</li>
+                        <li style="white-space: nowrap;"><strong>Cholesterol:</strong> 胆固醇</li>
                         <li style="white-space: nowrap;"><strong>Glucose:</strong> 血糖水平</li>
                         <li style="white-space: nowrap;"><strong>BMI:</strong> 体重指数</li>
-                        <li style="white-space: nowrap;"><strong>Lifestyle:</strong> 生活方式风险（吸烟/饮酒/缺乏运动）</li>
+                        <li style="white-space: nowrap;"><strong>Lifestyle:</strong> 生活方式风险</li>
                     </ul>
-                    <p style="margin:0.2rem 0 0;"><strong>建议：</strong> 重点关注图形突出的顶点，这些是您需要优先干预的领域。</p>
+                    <p style="margin:0.1rem 0 0;"><strong>建议：</strong> 重点关注图形突出的顶点。</p>
                 </div>
                 """, unsafe_allow_html=True)
-
             # 图表2：关键指标趋势模拟
             st.markdown("""
-            <div style="margin-top:2rem;">
+            <div style="margin-top:1rem;">
                 <div class="subsection-title-center">📈 关键指标趋势模拟</div>
             </div>
             """, unsafe_allow_html=True)
@@ -1018,12 +1025,12 @@ def main():
             fig_trend = go.Figure()
             fig_trend.add_trace(go.Scatter(
                 x=years, y=risk_no_action, mode='lines+markers', name='Without Intervention',
-                line=dict(color='#DC2626', width=2, dash='dash'), marker=dict(size=8),
+                line=dict(color='#DC2626', width=2, dash='dash'), marker=dict(size=6),
                 hovertemplate='<b>No Action</b><br>Year: %{x}<br>Risk: %{y:.2%}<extra></extra>'
             ))
             fig_trend.add_trace(go.Scatter(
                 x=years, y=risk_with_action, mode='lines+markers', name='With Intervention',
-                line=dict(color='#059669', width=3), marker=dict(size=8),
+                line=dict(color='#059669', width=2.5), marker=dict(size=6),
                 hovertemplate='<b>With Action</b><br>Year: %{x}<br>Risk: %{y:.2%}<extra></extra>'
             ))
             fig_trend.add_trace(go.Scatter(
@@ -1033,11 +1040,12 @@ def main():
             ))
             
             fig_trend.update_layout(
-                xaxis=dict(title='Years', tickmode='linear', tick0=0, dtick=1),
-                yaxis=dict(title='Risk Probability', tickformat='.0%'),
-                legend=dict(x=0.02, y=0.98, bgcolor='rgba(255,255,255,0.8)'),
-                height=400, margin=dict(t=40, b=40, l=40, r=20),
-                title=dict(text='Projected 5-Year Risk Trajectory', x=0.5, font=dict(size=14, weight='bold')),
+                xaxis=dict(title='Years', tickmode='linear', tick0=0, dtick=1, title_font=dict(size=10)),
+                yaxis=dict(title='Risk Probability', tickformat='.0%', title_font=dict(size=10)),
+                legend=dict(x=0.02, y=0.98, bgcolor='rgba(255,255,255,0.8)', font=dict(size=9)),
+                height=350,
+                margin=dict(t=30, b=30, l=40, r=20),
+                title=dict(text='Projected 5-Year Risk Trajectory', x=0.5, font=dict(size=12, weight='bold')),
                 hovermode='x unified', plot_bgcolor='rgba(243, 244, 246, 0.5)'
             )
             
@@ -1049,20 +1057,19 @@ def main():
                 st.markdown("""
                 <div class="chart-interpretation" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
                     <strong>📊 图表解读</strong>
-                    <p style="margin:0.2rem 0;">此图模拟了未来5年内您的心血管风险变化趋势。</p>
-                    <ul style="margin:0.2rem 0; padding-left:1.2rem;">
-                        <li><span style="color:#DC2626;">🔴 红色虚线</span>：若不改变现有生活习惯，风险可能随年龄增长而上升。</li>
-                        <li><span style="color:#059669;">🟢 绿色实线</span>：若采取积极干预措施，风险可显著降低。</li>
+                    <p style="margin:0.1rem 0;">此图模拟了未来5年内您的心血管风险变化趋势。</p>
+                    <ul style="margin:0.1rem 0; padding-left:1rem;">
+                        <li><span style="color:#DC2626;">🔴 红色虚线</span>：若不改变现有生活习惯</li>
+                        <li><span style="color:#059669;">🟢 绿色实线</span>：若采取积极干预措施</li>
                     </ul>
-                    <p style="margin:0.2rem 0 0;"><strong>启示：</strong> 早期干预对长期预后至关重要，阴影区域代表通过努力可避免的风险增量。</p>
+                    <p style="margin:0.1rem 0 0;"><strong>启示：</strong> 早期干预至关重要。</p>
                 </div>
                 """, unsafe_allow_html=True)
-
             # ==================== 第三部分：SHAP模型解释 ====================
             st.markdown('<div class="section-title">🌍 人群大数据洞察</div>', unsafe_allow_html=True)
             
             st.markdown("""
-            <div style="margin-top:1rem;">
+            <div style="margin-top:0.5rem;">
                 <div class="subsection-title-center">🔍 风险因素分析</div>
             </div>
             """, unsafe_allow_html=True)
@@ -1075,13 +1082,13 @@ def main():
                 
                 # SHAP解读框 - 更紧凑
                 st.markdown("""
-                <div class="chart-interpretation" style="margin-bottom:1rem;">
+                <div class="chart-interpretation" style="margin-bottom:0.5rem;">
                     <strong>📊 图表解读</strong>
-                    <p style="margin:0.2rem 0;">红色箭头表示增加风险的因素，蓝色箭头表示降低风险的因素。箭头越长，影响越大。基准值表示人群平均风险，最终值是您的个人风险。</p>
+                    <p style="margin:0.1rem 0;">红色箭头表示增加风险的因素，蓝色箭头表示降低风险的因素。箭头越长，影响越大。</p>
                 </div>
                 """, unsafe_allow_html=True)
                 
-                fig1, ax1 = plt.subplots(figsize=(7, 3.5))
+                fig1, ax1 = plt.subplots(figsize=(6, 3))
                 plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial']
                 plt.rcParams['axes.unicode_minus'] = False
                 
@@ -1089,7 +1096,7 @@ def main():
                     shap.Explanation(values=shap_values[0], base_values=explainer.expected_value, data=features, feature_names=display_feature_names),
                     show=False, max_display=12
                 )
-                plt.title("Factors Affecting Your Cardiovascular Risk", fontsize=10, fontweight='bold', pad=10)
+                plt.title("Factors Affecting Your Cardiovascular Risk", fontsize=9, fontweight='bold', pad=5)
                 plt.tight_layout()
                 
                 st.markdown('<div class="shap-plot-container">', unsafe_allow_html=True)
@@ -1100,16 +1107,16 @@ def main():
                 # 特征重要性图表
                 if metadata and 'feature_importances' in metadata:
                     st.markdown("""
-                    <div style="margin-top:2rem;">
+                    <div style="margin-top:1rem;">
                         <div class="subsection-title-center">⭐ 特征重要性排名</div>
                     </div>
                     """, unsafe_allow_html=True)
                     
                     # 特征重要性解读框 - 紧凑
                     st.markdown("""
-                    <div class="chart-interpretation" style="margin-bottom:1rem;">
+                    <div class="chart-interpretation" style="margin-bottom:0.5rem;">
                         <strong>📊 图表解读</strong>
-                        <p style="margin:0.2rem 0;">基于大规模人群数据分析，展示各因素对心血管疾病预测的总体重要性。条形越长，该特征在模型中的权重越大。</p>
+                        <p style="margin:0.1rem 0;">基于大规模人群数据分析，展示各因素对心血管疾病预测的总体重要性。</p>
                     </div>
                     """, unsafe_allow_html=True)
                     
@@ -1124,16 +1131,16 @@ def main():
                         'Importance': list(importance_dict.values())
                     }).sort_values('Importance', ascending=True)
                     
-                    fig2, ax2 = plt.subplots(figsize=(7, 3.5))
+                    fig2, ax2 = plt.subplots(figsize=(6, 3))
                     colors = ['#2563EB' for _ in range(len(imp_df))]
                     bars = ax2.barh(imp_df['Feature'], imp_df['Importance'], color=colors)
-                    ax2.set_xlabel('Importance Score', fontsize=9)
-                    ax2.set_title('Global Feature Importance', fontsize=10, fontweight='bold', pad=10)
-                    ax2.tick_params(axis='both', which='major', labelsize=8)
+                    ax2.set_xlabel('Importance Score', fontsize=8)
+                    ax2.set_title('Global Feature Importance', fontsize=9, fontweight='bold', pad=5)
+                    ax2.tick_params(axis='both', which='major', labelsize=7)
                     
                     for bar in bars:
                         width = bar.get_width()
-                        ax2.text(width + 0.01, bar.get_y() + bar.get_height()/2, f'{width:.3f}', ha='left', va='center', fontsize=7)
+                        ax2.text(width + 0.01, bar.get_y() + bar.get_height()/2, f'{width:.3f}', ha='left', va='center', fontsize=6)
                     
                     plt.tight_layout()
                     st.pyplot(fig2)
@@ -1185,7 +1192,7 @@ def main():
                     <div class="ai-card-header">
                         <div class="ai-card-title">📋 AI亚型分析报告</div>
                     </div>
-                    <div style="line-height:1.7;">
+                    <div style="line-height:1.5;">
                         {formatted_text}
                     </div>
                 </div>
@@ -1219,17 +1226,17 @@ def main():
             <div class="ai-card-header">
                 <div class="ai-card-title">📋 健康改善计划</div>
             </div>
-            <div style="line-height:1.7;">
+            <div style="line-height:1.5;">
                 {formatted_advice}
             </div>
         </div>
         """, unsafe_allow_html=True)
     
     # 免责声明
-    st.markdown("---")
+    st.markdown("<hr style='margin:1rem 0;'>", unsafe_allow_html=True)
     st.markdown("""
-    <div style="background:white; padding:1rem; border-radius:12px; text-align:center; border:1px solid #E5E7EB;">
-        <p style="color:#6B7280; margin:0; font-size:0.9rem;">
+    <div style="background:white; padding:0.8rem; border-radius:10px; text-align:center; border:1px solid #E5E7EB;">
+        <p style="color:#6B7280; margin:0; font-size:0.8rem;">
             ⚠️ 重要提示：以上分析基于AI模型推导，仅供健康管理参考，不能替代专业医疗诊断
         </p>
     </div>

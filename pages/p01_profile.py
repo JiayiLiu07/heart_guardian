@@ -952,6 +952,7 @@ def main():
         <div class="nav-links">
             <a href="/p00_home">🏠 首页</a>
             <a href="/p01_profile" class="active">📋 健康档案</a>
+            <a href="/p01_overview">📊 健康总览</a>
             <a href="/p02_nutrition">🥗 营养建议</a>
             <a href="/p03_ai_doctor">🩺 AI 医生</a>
             <a href="/p04_knowledge">📚 知识库</a>
