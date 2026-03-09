@@ -114,6 +114,8 @@ This will open the application in your web browser.
 
 ## File Structure 📂
 
+```bash
+streamlit run app.py
 ```
 CardioGuard-AI/
 ├── assets/
@@ -160,4 +162,4 @@ Please report issues or submit feature requests via GitHub Issues:
 CardioGuard AI is passionately crafted by Jiayi Liu, aiming to bring health and vitality to you! 🌟 We welcome you to experience this project and share your valuable suggestions! 😊 For any questions or ideas, feel free to contact:
 
 -   **Author**: Jiayi Liu (GitHub: [JiayiLiu07](https://github.com/JiayiLiu07))
--   **Contact**: Submit feedback via the [GitHub Issues page](https://github.com/JiayiLiu07/CardioGuard-AI/issues) or directly communicate with me on GitHub. Looking forward to hearing from you! 📬
+-   **Contact**: Provide feedback via the [GitHub Issues page](https://github.com/JiayiLiu07/CardioGuard-AI/issues) or connect with me directly on GitHub. I look forward to hearing from you! 📬

@@ -114,6 +114,8 @@ streamlit run app.py
 
 ## 文件结构 📂
 
+```bash
+streamlit run app.py
 ```
 CardioGuard-AI/
 ├── assets/
@@ -161,4 +163,3 @@ CardioGuard AI 由 Jiayi Liu 倾情打造，希望为您带来健康与活力！
 
 -   **作者**：Jiayi Liu (GitHub: [JiayiLiu07](https://github.com/JiayiLiu07))
 -   **联系方式**：通过 [GitHub Issues 页面](https://github.com/JiayiLiu07/CardioGuard-AI/issues) 提交反馈，或在 GitHub 上与我直接交流。期待听到您的声音！📬
-
