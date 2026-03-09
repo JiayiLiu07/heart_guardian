@@ -4,16 +4,21 @@ from openai import OpenAI
 from datetime import datetime
 import uuid
 
+# 【修改点】设置页面配置，使用 Emoji 作为图标
+st.set_page_config(
+    page_title="AI 医生 · CardioGuard AI", 
+    layout="wide",
+    page_icon="🩺"  # 听诊器 Emoji
+)
+
 # 配置 DashScope API
 client = OpenAI(
     api_key="sk-e200005b066942eebc8c5426df92a6d5",
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
 )
 
-st.set_page_config(page_title="AI 医生 · CardioGuard AI", layout="wide")
-
 # ==========================================
-# CSS 样式 - 导航栏下移，布局更紧凑
+# CSS 样式 - 已同步 overview 的导航栏参数
 # ==========================================
 st.markdown("""
 <style>
@@ -38,60 +43,61 @@ st.markdown("""
         background-color: #f8fafc;
     }
     
-    /* 移除默认padding-top */
+    /* 移除默认 padding-top */
     .main > div { 
         padding-top: 0 !important; 
     }
     
     /* 调整主内容区域 */
     .block-container { 
-        padding: 0 2rem 1rem !important; 
+        padding: 1rem 2rem 2rem !important; 
         max-width: 1400px; 
         margin: 0 auto; 
     }
     
     #MainMenu, footer, section[data-testid="stSidebar"] { display: none !important; }
     
-    /* 导航栏 - 位置调整 */
+    /* 【关键修改】导航栏 - 完全同步 overview 参数 */
     .top-navbar {
         background: white;
         padding: 0 1.5rem;
-        height: 60px;
+        height: 75px;              /* 同步：75px */
         box-shadow: var(--shadow-sm);
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        position: relative;
-        top: 0;
+        align-items: center;       /* 同步：居中 */
+        position: relative; 
         z-index: 9999;
         border-bottom: 1px solid var(--gray-200);
-        margin-top: 0;
-        margin-bottom: 0.5rem;
+        
+        margin-top: 50px;          /* 同步：50px，紧贴默认头部 */
+        margin-bottom: 0rem;
         border-radius: 0 0 8px 8px;
     }
     
     .nav-logo { 
         font-weight: 700; 
-        font-size: 1.3rem; 
+        font-size: 1.8rem;         /* 同步：1.8rem */
         color: var(--primary);
         cursor: default; 
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
     }
     
     .nav-links { 
         display: flex; 
-        gap: 6px;
+        gap: 10px;                 /* 同步：10px */
     }
     .nav-links a { 
+        font-size: 1.5rem; 
         text-decoration: none; 
         color: var(--gray-600); 
         font-weight: 500; 
-        padding: 6px 14px; 
+        padding: 8px 18px;         /* 同步：8px 18px */
         border-radius: 20px; 
         transition: all 0.3s; 
-        font-size: 0.9rem;
+        font-size: 1.1rem;         /* 同步：调整为 1.1rem 以匹配视觉比例 */
     }
     .nav-links a:hover { 
         background-color: var(--primary-light);
@@ -102,7 +108,7 @@ st.markdown("""
         color: white; 
     }
     
-    /* Hero 区域 - 更紧凑 */
+    /* Hero 区域 */
     .hero-box { 
         background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
         padding: 1.8rem 1.5rem;
@@ -208,7 +214,6 @@ st.markdown("""
     }
     .history-row:hover { background-color: var(--gray-50); }
     .history-row.active { background-color: var(--primary-light); }
-
     .col-action { flex: 0 0 25px; display: flex; justify-content: flex-start; align-items: center; }
     .col-time {
         flex: 0 0 50px;
@@ -221,7 +226,6 @@ st.markdown("""
         padding-top: 2px;
     }
     .history-row.active .col-time { color: var(--primary); }
-
     .col-content { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
     
     .mini-delete-btn {
@@ -239,7 +243,6 @@ st.markdown("""
         width: 100%;
     }
     .mini-delete-btn:hover { color: #EF4444 !important; transform: scale(1.1); }
-
     .history-preview-text {
         font-size: 0.8rem;
         color: var(--gray-800);
@@ -251,7 +254,7 @@ st.markdown("""
         padding: 2px 0;
     }
     .history-row.active .history-preview-text { color: var(--primary); font-weight: 600; }
-
+    
     /* 按钮样式 */
     .stButton > button {
         background: white !important;
@@ -283,7 +286,7 @@ st.markdown("""
         line-height: 1.3;
     }
     .disclaimer-title { font-weight: 700; margin-bottom: 0.3rem; font-size: 0.8rem; display: flex; align-items: center; gap: 4px; }
-
+    
     /* 布局 */
     .flex-row { display: flex; gap: 1.5rem; }
     .flex-1 { flex: 1; }
@@ -298,7 +301,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ================= 逻辑部分 =================
-
 def init_session_state():
     if 'chat_sessions' not in st.session_state:
         st.session_state.chat_sessions = {}
@@ -368,7 +370,7 @@ def main():
     st.markdown("""
     <div class="hero-box">
         <h1 class="hero-title">🩺 AI 医生</h1>
-        <p class="hero-sub">24小时心血管健康咨询，专业解答您的健康疑问</p>
+        <p class="hero-sub">24 小时心血管健康咨询，专业解答您的健康疑问</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -421,7 +423,7 @@ def main():
                     st.session_state.chat_sessions[st.session_state.current_session_id]['timestamp'] = now
                 except Exception as e:
                     st.error(f"Error: {e}")
-
+    
     with col2:
         # 免责声明
         st.markdown("""
@@ -443,7 +445,7 @@ def main():
         
         st.markdown("<div style='height:1px; background:#E5E7EB; margin: 1rem 0;'></div>", unsafe_allow_html=True)
         st.markdown("<div style='font-size:0.75rem; color:#9CA3AF; margin-bottom:0.3rem;'>历史记录</div>", unsafe_allow_html=True)
-
+        
         # 历史记录列表
         if st.session_state.chat_sessions:
             sorted_sessions = sorted(st.session_state.chat_sessions.values(), key=lambda x: x['timestamp'], reverse=True)
@@ -457,34 +459,32 @@ def main():
                 
                 time_str = session['timestamp'].strftime("%H:%M")
                 date_str = session['timestamp'].strftime("%m-%d")
-
-                with st.container():
-                    col_action, col_time, col_content = st.columns([0.15, 0.2, 0.65])
-                    
-                    with col_action:
-                        if st.button("🗑️", key=f"del_{session['id']}", help="删除此对话"):
-                            delete_session(session['id'])
-                            st.rerun()
-                    
-                    with col_time:
-                        st.markdown(f"""
-                        <div style="text-align:right; font-size:0.7rem; color:{'#8B5CF6' if is_active else '#9CA3AF'}; font-weight:600; font-family:monospace; padding-top:2px;">
-                            {time_str}<br><span style="font-size:0.6rem; opacity:0.7">{date_str}</span>
-                        </div>
-                        """, unsafe_allow_html=True)
-                    
-                    with col_content:
-                        if st.button(
-                            preview_text, 
-                            key=f"load_{session['id']}", 
-                            use_container_width=True,
-                            type="primary" if is_active else "secondary"
-                        ):
-                            st.session_state.current_session_id = session['id']
-                            st.rerun()
-                    
-                    st.markdown("<div style='height:1px;'></div>", unsafe_allow_html=True)
-
+                
+                c_action, c_time, c_content = st.columns([0.15, 0.2, 0.65])
+                
+                with c_action:
+                    if st.button("🗑️", key=f"del_{session['id']}", help="删除此对话"):
+                        delete_session(session['id'])
+                        st.rerun()
+                
+                with c_time:
+                    st.markdown(f"""
+                    <div style="text-align:right; font-size:0.7rem; color:{'#8B5CF6' if is_active else '#9CA3AF'}; font-weight:600; font-family:monospace; padding-top:2px;">
+                        {time_str}<br><span style="font-size:0.6rem; opacity:0.7">{date_str}</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                with c_content:
+                    if st.button(
+                        preview_text, 
+                        key=f"load_{session['id']}", 
+                        use_container_width=True,
+                        type="primary" if is_active else "secondary"
+                    ):
+                        st.session_state.current_session_id = session['id']
+                        st.rerun()
+                
+                st.markdown("<div style='height:1px;'></div>", unsafe_allow_html=True)
         else:
             st.markdown("""
             <div style="text-align:center; padding:1.5rem; color:#9CA3AF;">
