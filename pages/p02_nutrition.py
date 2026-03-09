@@ -6,8 +6,10 @@ import random
 import sys
 import os
 import json
+import base64  # ★★★ 新增导入
 import time
 from collections import Counter
+
 # --- 路径配置 ---
 root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if root_dir not in sys.path:
@@ -21,28 +23,62 @@ except ImportError as e:
 
 st.set_page_config(page_title="AI 营养师 · CardioGuard AI", page_icon="🥗", layout="wide", initial_sidebar_state="collapsed")
 
-DATA_FILE = "heart_profile_data.json"
-
-def load_data_from_file():
-    if os.path.exists(DATA_FILE):
+# ==============================================================================
+# ★★★ 核心改动：跨页面数据恢复逻辑 ★★★
+# ==============================================================================
+def load_profile():
+    """
+    优先级：query_params > session_state > 本地文件
+    用于解决 Streamlit 云端部署后 Session 断开导致数据丢失的问题
+    """
+    # 1. 优先从 URL query params 恢复
+    if 'profile_data' in st.query_params:
         try:
-            with open(DATA_FILE, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        except Exception as e:
-            st.error(f"加载数据失败：{e}")
-            return {}
+            b64_str = st.query_params['profile_data']
+            # 补齐 padding
+            b64_str += '=' * ((4 - len(b64_str) % 4) % 4)
+            json_str = base64.urlsafe_b64decode(b64_str).decode('utf-8')
+            data = json.loads(json_str)
+            st.session_state['profile'] = data
+            return data
+        except Exception:
+            pass
+
+    # 2. 其次从 session_state 取
+    if 'profile' in st.session_state:
+        return st.session_state['profile']
+
+    # 3. 最后尝试从本地文件读 (云端环境通常无效，但本地开发有用)
+    try:
+        # 假设文件在同级 users 文件夹或根目录，根据实际情况调整路径
+        possible_paths = [
+            "users/heart_profile_data.json",
+            "heart_profile_data.json",
+            os.path.join(os.path.dirname(__file__), "..", "users", "heart_profile_data.json")
+        ]
+        for path in possible_paths:
+            if os.path.exists(path):
+                with open(path, encoding="utf-8") as f:
+                    data = json.load(f)
+                    st.session_state['profile'] = data
+                    return data
+    except Exception:
+        pass
+    
     return {}
 
-def sync_profile_from_file():
-    file_data = load_data_from_file()
-    if file_data:
-        st.session_state['profile'] = file_data
-        return True
-    return False
+# 在页面加载时执行恢复
+if 'profile' not in st.session_state:
+    st.session_state['profile'] = load_profile()
+
+# 全局快捷访问
+profile = st.session_state['profile']
 
 # ==============================================================================
-# 常量定义
+# 原有常量与逻辑定义
 # ==============================================================================
+DATA_FILE = "heart_profile_data.json" # 保留变量以防旧逻辑引用，但主要逻辑已切换
+
 CARDIO_DISEASES = {
     "缺血性心脏病 🫀": ["慢性冠脉综合征", "稳定型心绞痛", "缺血性心肌病", "无症状心肌缺血", "急性冠脉综合征", "不稳定性心绞痛", "STEMI", "NSTEMI"],
     "高血压心脏病 🩸": ["高血压性左心室肥厚", "高血压性心力衰竭", "高血压性肾功能损害"],
@@ -67,7 +103,7 @@ DIET_TIPS = [
 ]
 
 # ==============================================================================
-# 逻辑函数
+# 逻辑函数 (适配新的 profile 获取方式)
 # ==============================================================================
 def get_tag_color(tag_name):
     tag_colors = {
@@ -79,14 +115,21 @@ def get_tag_color(tag_name):
     return tag_colors.get(tag_name, "gray")
 
 def check_profile_sync():
-    file_data = load_data_from_file()
-    if file_data: st.session_state['profile'] = file_data
-    if 'profile' not in st.session_state: return False, {}, [], [], []
-    profile = st.session_state['profile']
+    """
+    检查 profile 是否完整。
+    现在直接使用全局 profile 变量 (来自 session_state)
+    """
+    # 如果 profile 为空字典，视为未同步
+    if not profile: 
+        return False, {}, [], [], []
+    
     current_dis = profile.get('diseases', [])
     current_allergens = profile.get('allergies', [])
     current_prefs = profile.get('diet_pref', [])
-    if not current_dis or not current_prefs: return False, profile, current_dis, current_allergens, current_prefs
+    
+    if not current_dis or not current_prefs: 
+        return False, profile, current_dis, current_allergens, current_prefs
+    
     return True, profile, current_dis, current_allergens, current_prefs
 
 def filter_candidates(meal_type, allergens, prefs, exclude_names=None):
@@ -166,8 +209,9 @@ def swap_recipe(day_idx, meal_type_key, current_plan, allergens, prefs):
                         return current_plan
     return current_plan
 
-def get_disease_subtype(profile, disease_name):
-    for key, value in profile.items():
+def get_disease_subtype(profile_data, disease_name):
+    """注意：这里传入的是 profile 字典"""
+    for key, value in profile_data.items():
         if key.startswith('subtype_') and disease_name in key:
             return value if value and value != "未知" else "待确认"
     return "待确认"
@@ -213,17 +257,12 @@ def categorize_ingredients(ingredients):
 # ==============================================================================
 def main():
     # ========== 1. 处理原生动态效果 ==========
-    
-    # 检查是否需要播放庆祝特效
     if st.session_state.get('trigger_celebration', False):
-        # 立即重置标志，防止死循环
         st.session_state['trigger_celebration'] = False
-        st.session_state['is_generating'] = False  # 重置生成锁
-        
-        # 播放特效
+        st.session_state['is_generating'] = False
         st.balloons()
         st.toast("🎉 生成成功！您的专属 7 天食谱已就绪", icon="🥗")
-        
+    
     # ========== 2. CSS 样式 ==========
     st.markdown("""
     <style>
@@ -332,7 +371,8 @@ def main():
         st.error("数据库加载失败。")
         return
     
-    is_ready, profile, default_dis, default_allergens, default_prefs = check_profile_sync()
+    # 使用更新后的检查逻辑
+    is_ready, profile_data, default_dis, default_allergens, default_prefs = check_profile_sync()
     
     if not is_ready:
         missing_parts = []
@@ -344,15 +384,10 @@ def main():
         with col2:
             if st.button("📝 前往完善档案", use_container_width=True):
                 st.switch_page("pages/p01_profile.py")
-        if st.button("🔄 手动同步数据", use_container_width=True):
-            if sync_profile_from_file():
-                st.success("数据同步成功！")
-                st.rerun()
-            else:
-                st.warning("未找到已保存的档案数据，请先前往健康档案页面填写。")
+        # 移除旧的文件同步按钮，因为现在主要依赖 session_state/query_params
         st.stop()
     
-    # ========== 健康档案 ==========
+    # ========== 健康档案展示 ==========
     st.markdown("""
     <div class="profile-compact">
         <div class="profile-compact-header">
@@ -367,7 +402,8 @@ def main():
     if default_dis:
         for disease in default_dis:
             icon = disease_icons.get(disease, "❤️")
-            subtype = get_disease_subtype(profile, disease)
+            # 传入 profile_data 而不是全局 profile 变量，虽然它们是一样的，但保持函数签名一致
+            subtype = get_disease_subtype(profile_data, disease)
             disease_html += f'<span class="tag-profile disease">{icon} {disease} <span class="tag-profile subtype">🔹 {subtype}</span></span>'
     else:
         disease_html += '<span class="tag-profile empty">暂无疾病记录</span>'
@@ -392,17 +428,13 @@ def main():
     st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
-    # ========== 智能生成/重新生成按钮 (已修复 Bug + 优化文案) ==========
+    # ========== 智能生成/重新生成按钮 ==========
     st.markdown('<div class="regenerate-container">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        # 1. 检查是否正在生成 (用于禁用按钮)
         is_generating = st.session_state.get('is_generating', False)
-        
-        # 2. 检查是否已有食谱 (用于决定按钮文案)
         has_plan = 'plan' in st.session_state and st.session_state['plan']
         
-        # 3. 动态决定按钮文案
         if is_generating:
             btn_label = "⏳ 正在生成..."
         elif has_plan:
@@ -410,7 +442,6 @@ def main():
         else:
             btn_label = "🚀 生成 7 天食谱"
         
-        # 4. 渲染按钮 (固定 Key + 动态禁用)
         if st.button(
             btn_label, 
             use_container_width=True, 

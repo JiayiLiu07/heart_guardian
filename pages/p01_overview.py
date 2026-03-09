@@ -1,5 +1,6 @@
 import streamlit as st
 import json
+import base64
 import os
 import pandas as pd
 import numpy as np
@@ -18,7 +19,8 @@ client = OpenAI(
 
 st.set_page_config(page_title="健康总览 · CardioGuard AI", page_icon="📊" ,layout="wide")
 
-DATA_FILE = "heart_profile_data.json"
+# 定义文件路径
+DATA_FILE = "users/heart_profile_data.json"  # 修正路径以匹配 users 文件夹
 MODEL_PATH = "assets/cv_risk_model.json"
 META_PATH = "assets/model_metadata.json"
 
@@ -26,7 +28,49 @@ META_PATH = "assets/model_metadata.json"
 plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial', 'Helvetica']
 plt.rcParams['axes.unicode_minus'] = False
 
+# ─── 统一恢复用户档案 (核心修复逻辑) ────────────────────────────────────────
+def load_profile():
+    """
+    优先级：query_params > session_state > 本地文件
+    解决云端部署后跨页面数据丢失问题
+    """
+    # 1. 优先从 URL query params 恢复 (跨页面最可靠)
+    if 'profile_data' in st.query_params:
+        try:
+            b64_str = st.query_params['profile_data']
+            # 补齐可能的 padding
+            b64_str += '=' * ((4 - len(b64_str) % 4) % 4)
+            json_str = base64.urlsafe_b64decode(b64_str).decode('utf-8')
+            profile = json.loads(json_str)
+            # 同步到 session_state
+            st.session_state['profile'] = profile
+            return profile
+        except Exception as e:
+            pass
+
+    # 2. 其次从 session_state 取
+    if 'profile' in st.session_state:
+        return st.session_state['profile']
+
+    # 3. 最后尝试从文件读 (云端基本无效，仅作为本地调试备用)
+    try:
+        if os.path.exists(DATA_FILE):
+            with open(DATA_FILE, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                st.session_state['profile'] = data
+                return data
+    except Exception as e:
+        pass
+    
+    # 如果都没有，返回空字典
+    return {}
+
+# 在页面加载时执行一次全局恢复
+if 'profile' not in st.session_state:
+    st.session_state['profile'] = load_profile()
+
 def load_data_from_file():
+    """保留原有函数作为备用，但主要逻辑已移至 load_profile"""
     if os.path.exists(DATA_FILE):
         try:
             with open(DATA_FILE, 'r', encoding='utf-8') as f:
@@ -797,9 +841,15 @@ def main():
     </div>
     """, unsafe_allow_html=True)
     
-    # 加载数据
-    profile = load_data_from_file()
+    # ★★★★★ 关键修改：使用统一恢复的 profile 数据 ★★★★★
+    profile = st.session_state.get('profile', {})
     
+    # 如果 profile 为空，尝试最后一次从文件加载（兼容旧逻辑）
+    if not profile:
+        profile = load_data_from_file()
+        if profile:
+            st.session_state['profile'] = profile
+
     required_fields = ['gender', 'age', 'height', 'weight', 'diseases', 'diet_pref']
     is_complete = all(profile.get(field) for field in required_fields)
     
