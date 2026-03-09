@@ -117,31 +117,28 @@ This will open the application in your web browser.
 ```bash
 streamlit run app.py
 ```
-CardioGuard-AI/
-├── assets/
-│   ├── cardio_recipes.py         # Recipe database
-│   ├── cv_risk_model.json        # Cardiovascular risk prediction model
-│   └── model_metadata.json       # Model metadata (feature importance, etc.)
-├── data/
-│   └── cardio_train.csv          # Cardiovascular disease training data (Kaggle)
-├── pages/
-│   ├── p00_auth.py               # User authentication (login/register/reset password)
-│   ├── p00_home.py               # Homepage (with animations and info display)
-│   ├── p00_intro.py              # Landing page (redirects to auth or home)
-│   ├── p01_overview.py           # Health Overview (risk prediction, SHAP, AI recommendations)
-│   ├── p01_profile.py            # Health Profile (user data input)
-│   ├── p02_nutrition.py          # AI Nutritionist (meal plan generation)
-│   ├── p03_ai_doctor.py          # AI Doctor (chatbot)
-│   ├── p04_knowledge.py          # Knowledge Base (data insights, disease map, smart Q&A)
-│   └── p05_me.py                 # My Center (personal info, health logs, account management)
-├── picture/                      # Image resources (e.g., GIFs, diagrams)
-│   ├── 血管堵塞动图.gif          # (Vessel blockage animation)
-│   ├── 心脏电击动过程动图.gif      # (Cardiac defibrillation animation)
-│   ├── 胸痛主要原因.jpg          # (Main causes of chest pain)
-│   └── 超声下的心脏跳动图.gif      # (Heartbeat under ultrasound)
-├── requirements.txt              # Project dependencies
-└── README.md                     # Project description (the file you are reading)
-```
+| Path                                        | Description                                                 |
+| ------------------------------------------- | ----------------------------------------------------------- |
+| `CardioGuard-AI/assets/cardio_recipes.py`   | Recipe database                                             |
+| `CardioGuard-AI/assets/cv_risk_model.json`  | Cardiovascular risk prediction model                        |
+| `CardioGuard-AI/assets/model_metadata.json` | Model metadata (feature importance, etc.)                   |
+| `CardioGuard-AI/data/cardio_train.csv`      | Cardiovascular disease training data (Kaggle)               |
+| `CardioGuard-AI/pages/p00_auth.py`          | User authentication (login/register/reset password)         |
+| `CardioGuard-AI/pages/p00_home.py`          | Homepage (with animations and info display)                 |
+| `CardioGuard-AI/pages/p00_intro.py`         | Landing page (redirects to auth or home)                    |
+| `CardioGuard-AI/pages/p01_overview.py`      | Health Overview (risk prediction, SHAP, AI recommendations) |
+| `CardioGuard-AI/pages/p01_profile.py`       | Health Profile (user data input)                            |
+| `CardioGuard-AI/pages/p02_nutrition.py`     | AI Nutritionist (meal plan generation)                      |
+| `CardioGuard-AI/pages/p03_ai_doctor.py`     | AI Doctor (chatbot)                                         |
+| `CardioGuard-AI/pages/p04_knowledge.py`     | Knowledge Base (data insights, disease map, smart Q\&A)     |
+| `CardioGuard-AI/pages/p05_me.py`            | My Center (personal info, health logs, account management)  |
+| `CardioGuard-AI/picture/血管堵塞动图.gif`         | Vessel blockage animation                                   |
+| `CardioGuard-AI/picture/心脏电击动过程动图.gif`      | Cardiac defibrillation animation                            |
+| `CardioGuard-AI/picture/胸痛主要原因.jpg`         | Main causes of chest pain                                   |
+| `CardioGuard-AI/picture/超声下的心脏跳动图.gif`      | Heartbeat under ultrasound                                  |
+| `CardioGuard-AI/requirements.txt`           | Project dependencies                                        |
+| `CardioGuard-AI/README.md`                  | Project description                                         |
+
 
 ## Important Notes & Disclaimer ⚠️
 
