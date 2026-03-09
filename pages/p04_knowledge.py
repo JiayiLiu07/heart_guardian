@@ -4,13 +4,46 @@ import pandas as pd
 import plotly.express as px
 from openai import OpenAI
 import re
+import json
+import base64
+
+# ─── 统一恢复用户档案 ────────────────────────────────────────
+def load_profile():
+    # 优先从 query params
+    if 'profile_data' in st.query_params:
+        try:
+            b64 = st.query_params['profile_data']
+            b64 += '=' * ((4 - len(b64) % 4) % 4)
+            json_str = base64.urlsafe_b64decode(b64).decode('utf-8')
+            return json.loads(json_str)
+        except:
+            pass
+
+    # 其次从 session_state
+    if 'profile' in st.session_state:
+        return st.session_state['profile']
+
+    # 最后尝试文件（云端基本无效）
+    try:
+        with open("users/heart_profile_data.json", encoding="utf-8") as f:
+            data = json.load(f)
+            st.session_state['profile'] = data
+            return data
+    except:
+        return {}
+
+# 在页面加载时执行
+if 'profile' not in st.session_state:
+    st.session_state['profile'] = load_profile()
+
+# 下面就可以安全使用 st.session_state.profile 了
+profile = st.session_state['profile']
 
 # ─── 配置 ────────────────────────────────────────────────
 client = OpenAI(
     api_key="sk-e200005b066942eebc8c5426df92a6d5",
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
 )
-
 # 【关键修改】同时设置 page_title (带 emoji) 和 page_icon (单独 emoji)
 # 这样浏览器标签页会显示 📚，页面标题也会显示 📚
 st.set_page_config(
@@ -19,7 +52,6 @@ st.set_page_config(
     layout="wide", 
     initial_sidebar_state="collapsed"
 )
-
 # ==========================================
 # CSS 样式 - 完全同步 p02_nutrition.py 的导航栏和布局风格
 # ==========================================
@@ -466,7 +498,6 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-
 # ─── 后面的 main 函数 ──────────────────────────────────────────
 def main():
     # 渲染顶部导航栏 - 完全同步 nutrition.py 的结构
@@ -751,6 +782,5 @@ def main():
                         st.markdown(answer)
                 except Exception as e:
                     st.error(f"抱歉，回答失败：{str(e)}")
-
 if __name__ == "__main__":
     main()

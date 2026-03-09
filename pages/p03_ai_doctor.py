@@ -3,12 +3,15 @@ import streamlit as st
 from openai import OpenAI
 from datetime import datetime
 import uuid
+import json
+import base64  # ★★★ 新增导入
+import os
 
-# 【修改点】设置页面配置，使用 Emoji 作为图标
+# 【修改点】设置页面配置
 st.set_page_config(
     page_title="AI 医生 · CardioGuard AI", 
     layout="wide",
-    page_icon="🩺"  # 听诊器 Emoji
+    page_icon="🩺"
 )
 
 # 配置 DashScope API
@@ -17,8 +20,53 @@ client = OpenAI(
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
 )
 
+# ==============================================================================
+# ★★★ 核心改动：跨页面数据恢复逻辑 ★★★
+# ==============================================================================
+def load_profile():
+    """
+    优先级：query_params > session_state > 本地文件
+    """
+    # 1. 优先从 URL query params 恢复
+    if 'profile_data' in st.query_params:
+        try:
+            b64_str = st.query_params['profile_data']
+            b64_str += '=' * ((4 - len(b64_str) % 4) % 4)
+            json_str = base64.urlsafe_b64decode(b64_str).decode('utf-8')
+            data = json.loads(json_str)
+            st.session_state['profile'] = data
+            return data
+        except Exception:
+            pass
+
+    # 2. 其次从 session_state 取
+    if 'profile' in st.session_state:
+        return st.session_state['profile']
+
+    # 3. 最后尝试从本地文件读
+    try:
+        possible_paths = [
+            "users/heart_profile_data.json",
+            "heart_profile_data.json",
+            os.path.join(os.path.dirname(__file__), "..", "users", "heart_profile_data.json")
+        ]
+        for path in possible_paths:
+            if os.path.exists(path):
+                with open(path, encoding="utf-8") as f:
+                    data = json.load(f)
+                    st.session_state['profile'] = data
+                    return data
+    except Exception:
+        pass
+    
+    return {}
+
+# 在页面加载时执行恢复
+if 'profile' not in st.session_state:
+    st.session_state['profile'] = load_profile()
+
 # ==========================================
-# CSS 样式 - 已同步 overview 的导航栏参数
+# CSS 样式
 # ==========================================
 st.markdown("""
 <style>
@@ -43,12 +91,10 @@ st.markdown("""
         background-color: #f8fafc;
     }
     
-    /* 移除默认 padding-top */
     .main > div { 
         padding-top: 0 !important; 
     }
     
-    /* 调整主内容区域 */
     .block-container { 
         padding: 1rem 2rem 2rem !important; 
         max-width: 1400px; 
@@ -57,27 +103,25 @@ st.markdown("""
     
     #MainMenu, footer, section[data-testid="stSidebar"] { display: none !important; }
     
-    /* 【关键修改】导航栏 - 完全同步 overview 参数 */
     .top-navbar {
         background: white;
         padding: 0 1.5rem;
-        height: 75px;              /* 同步：75px */
+        height: 75px;
         box-shadow: var(--shadow-sm);
         display: flex;
         justify-content: space-between;
-        align-items: center;       /* 同步：居中 */
+        align-items: center;
         position: relative; 
         z-index: 9999;
         border-bottom: 1px solid var(--gray-200);
-        
-        margin-top: 50px;          /* 同步：50px，紧贴默认头部 */
+        margin-top: 50px;
         margin-bottom: 0rem;
         border-radius: 0 0 8px 8px;
     }
     
     .nav-logo { 
         font-weight: 700; 
-        font-size: 1.8rem;         /* 同步：1.8rem */
+        font-size: 1.8rem;
         color: var(--primary);
         cursor: default; 
         display: flex;
@@ -87,17 +131,17 @@ st.markdown("""
     
     .nav-links { 
         display: flex; 
-        gap: 10px;                 /* 同步：10px */
+        gap: 10px;
     }
     .nav-links a { 
         font-size: 1.5rem; 
         text-decoration: none; 
         color: var(--gray-600); 
         font-weight: 500; 
-        padding: 8px 18px;         /* 同步：8px 18px */
+        padding: 8px 18px;
         border-radius: 20px; 
         transition: all 0.3s; 
-        font-size: 1.1rem;         /* 同步：调整为 1.1rem 以匹配视觉比例 */
+        font-size: 1.1rem;
     }
     .nav-links a:hover { 
         background-color: var(--primary-light);
@@ -108,7 +152,6 @@ st.markdown("""
         color: white; 
     }
     
-    /* Hero 区域 */
     .hero-box { 
         background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
         padding: 1.8rem 1.5rem;
@@ -165,7 +208,6 @@ st.markdown("""
         text-shadow: 0 1px 2px rgba(0,0,0,0.1); 
     }
     
-    /* 示例问题区域 */
     .example-section {
         margin: 1rem 0 0.5rem 0;
     }
@@ -175,7 +217,6 @@ st.markdown("""
         margin-bottom: 0.5rem;
     }
     
-    /* 聊天消息容器 */
     .stChatMessageContainer { 
         max-height: calc(100vh - 280px);
         overflow-y: auto;
@@ -186,7 +227,6 @@ st.markdown("""
         border: 1px solid var(--gray-200);
     }
     
-    /* 聊天输入框 */
     [data-testid="stChatInput"] {
         position: fixed !important;
         bottom: 1rem !important;
@@ -202,7 +242,6 @@ st.markdown("""
         padding: 0.2rem 0.8rem !important;
     }
     
-    /* --- 历史记录三列布局 --- */
     .history-row {
         display: flex;
         align-items: center;
@@ -255,7 +294,6 @@ st.markdown("""
     }
     .history-row.active .history-preview-text { color: var(--primary); font-weight: 600; }
     
-    /* 按钮样式 */
     .stButton > button {
         background: white !important;
         color: var(--primary) !important;
@@ -274,7 +312,6 @@ st.markdown("""
         box-shadow: var(--shadow-md) !important;
     }
     
-    /* 免责声明框 */
     .disclaimer-box {
         background-color: #FFFBEB;
         border-left: 4px solid #FCD34D;
@@ -287,11 +324,9 @@ st.markdown("""
     }
     .disclaimer-title { font-weight: 700; margin-bottom: 0.3rem; font-size: 0.8rem; display: flex; align-items: center; gap: 4px; }
     
-    /* 布局 */
     .flex-row { display: flex; gap: 1.5rem; }
     .flex-1 { flex: 1; }
     
-    /* 调整列间距 */
     .row-widget.stHorizontal {
         gap: 0.8rem !important;
     }
@@ -348,6 +383,10 @@ def update_session_title(session_id, first_message):
         st.session_state.chat_sessions[session_id]['timestamp'] = now
 
 def main():
+    # 确保 profile 已加载 (已在文件顶部处理，此处仅为保险)
+    if 'profile' not in st.session_state:
+        st.session_state['profile'] = load_profile()
+        
     init_session_state()
     
     # 顶部导航
@@ -414,6 +453,8 @@ def main():
             
             with st.spinner("AI 医生正在思考..."):
                 try:
+                    # 可以在这里注入 profile 信息作为系统提示词，增强回答针对性
+                    # system_context = f"用户患有：{profile.get('diseases', [])}，过敏源：{profile.get('allergies', [])}"
                     response = client.chat.completions.create(model="qwen-max", messages=messages)
                     ai_resp = response.choices[0].message.content
                     messages.append({"role": "assistant", "content": ai_resp})

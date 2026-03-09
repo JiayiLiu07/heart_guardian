@@ -117,31 +117,27 @@ streamlit run app.py
 ```bash
 streamlit run app.py
 ```
-CardioGuard-AI/
-├── assets/
-│   ├── cardio_recipes.py         # 食谱数据库
-│   ├── cv_risk_model.json        # 心血管风险预测模型
-│   └── model_metadata.json       # 模型元数据 (特征重要性等)
-├── data/
-│   └── cardio_train.csv          # 心血管疾病训练数据 (Kaggle)
-├── pages/
-│   ├── p00_auth.py               # 用户认证 (登录/注册/重置密码)
-│   ├── p00_home.py               # 首页 (带动画和信息展示)
-│   ├── p00_intro.py              # 引导页 (重定向到 auth 或 home)
-│   ├── p01_overview.py           # 健康总览 (风险预测、SHAP、AI 建议)
-│   ├── p01_profile.py            # 健康档案 (用户数据输入)
-│   ├── p02_nutrition.py          # AI 营养师 (食谱生成)
-│   ├── p03_ai_doctor.py          # AI 医生 (聊天机器人)
-│   ├── p04_knowledge.py          # 知识库 (数据洞察、疾病图谱、智能问答)
-│   └── p05_me.py                 # 我的中心 (个人信息、健康日志、账户管理)
-├── picture/                      # 存放图片资源 (如动图、示意图)
-│   ├── 血管堵塞动图.gif
-│   ├── 心脏电击动过程动图.gif
-│   ├── 胸痛主要原因.jpg
-│   └── 超声下的心脏跳动图.gif
-├── requirements.txt              # 项目依赖
-└── README.md                     # 项目说明 (您正在阅读的这份文件)
-```
+| 路径 | 说明 |
+|------|------|
+| `CardioGuard-AI/assets/cardio_recipes.py` | 食谱数据库 |
+| `CardioGuard-AI/assets/cv_risk_model.json` | 心血管风险预测模型 |
+| `CardioGuard-AI/assets/model_metadata.json` | 模型元数据（特征重要性等） |
+| `CardioGuard-AI/data/cardio_train.csv` | 心血管疾病训练数据（Kaggle） |
+| `CardioGuard-AI/pages/p00_auth.py` | 用户认证（登录/注册/重置密码） |
+| `CardioGuard-AI/pages/p00_home.py` | 首页（带动画和信息展示） |
+| `CardioGuard-AI/pages/p00_intro.py` | 落地页（重定向到认证或首页） |
+| `CardioGuard-AI/pages/p01_overview.py` | 健康概览（风险预测、SHAP、AI建议） |
+| `CardioGuard-AI/pages/p01_profile.py` | 健康档案（用户数据输入） |
+| `CardioGuard-AI/pages/p02_nutrition.py` | AI营养师（膳食计划生成） |
+| `CardioGuard-AI/pages/p03_ai_doctor.py` | AI医生（聊天机器人） |
+| `CardioGuard-AI/pages/p04_knowledge.py` | 知识库（数据洞察、疾病图谱、智能问答） |
+| `CardioGuard-AI/pages/p05_me.py` | 个人中心（个人信息、健康日志、账户管理） |
+| `CardioGuard-AI/picture/血管堵塞动图.gif` | 血管堵塞动画 |
+| `CardioGuard-AI/picture/心脏电击动过程动图.gif` | 心脏电击过程动画 |
+| `CardioGuard-AI/picture/胸痛主要原因.jpg` | 胸痛主要原因 |
+| `CardioGuard-AI/picture/超声下的心脏跳动图.gif` | 超声下的心脏跳动图 |
+| `CardioGuard-AI/requirements.txt` | 项目依赖 |
+| `CardioGuard-AI/README.md` | 项目说明 |
 
 ## 注意事项与免责声明 ⚠️
 

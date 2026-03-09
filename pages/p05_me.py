@@ -4,6 +4,39 @@ import json
 import os
 import time
 from datetime import datetime
+import base64
+
+# ─── 统一恢复用户档案 ────────────────────────────────────────
+def load_profile():
+    # 优先从 query params
+    if 'profile_data' in st.query_params:
+        try:
+            b64 = st.query_params['profile_data']
+            b64 += '=' * ((4 - len(b64) % 4) % 4)
+            json_str = base64.urlsafe_b64decode(b64).decode('utf-8')
+            return json.loads(json_str)
+        except:
+            pass
+
+    # 其次从 session_state
+    if 'profile' in st.session_state:
+        return st.session_state['profile']
+
+    # 最后尝试文件（云端基本无效）
+    try:
+        with open("users/heart_profile_data.json", encoding="utf-8") as f:
+            data = json.load(f)
+            st.session_state['profile'] = data
+            return data
+    except:
+        return {}
+
+# 在页面加载时执行
+if 'profile' not in st.session_state:
+    st.session_state['profile'] = load_profile()
+
+# 下面就可以安全使用 st.session_state.profile 了
+profile = st.session_state['profile']
 
 # 尝试导入组件 (如果存在)
 try:
@@ -11,14 +44,12 @@ try:
 except ImportError:
     def render_navbar(key): pass
     def render_hero(title, sub, c1, c2): st.title(title)
-
 # 【修改点】设置页面配置，使用 Emoji 作为图标
 st.set_page_config(
     page_title="我的中心 · CardioGuard AI", 
     layout="wide",
     page_icon="👤"  # 用户 Emoji
 )
-
 # ==========================================
 # 【修复部分】路径配置 - 确保顺序正确
 # ==========================================
@@ -32,7 +63,6 @@ if not os.path.exists(USERS_FOLDER):
 DATA_FILE = os.path.join(USERS_FOLDER, "heart_profile_data.json")
 LOG_FILE = os.path.join(USERS_FOLDER, "user_logs.json")
 USER_DATA_FILE = os.path.join(USERS_FOLDER, "user_data.json")
-
 # ==========================================
 # CSS 样式 - 已同步 nutrition.py 的导航栏参数 (紧贴顶部)
 # ==========================================
@@ -297,7 +327,6 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-
 def load_data_from_file():
     if os.path.exists(DATA_FILE):
         try:
@@ -306,7 +335,6 @@ def load_data_from_file():
         except:
             return {}
     return {}
-
 def load_logs():
     if os.path.exists(LOG_FILE):
         try:
@@ -315,7 +343,6 @@ def load_logs():
         except:
             return []
     return []
-
 def save_logs(logs):
     try:
         with open(LOG_FILE, 'w', encoding='utf-8') as f:
@@ -324,14 +351,12 @@ def save_logs(logs):
     except Exception as e:
         st.error(f"保存日志失败：{e}")
         return False
-
 def save_log(content):
     logs = load_logs()
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     new_log = {"time": timestamp, "content": content}
     logs.insert(0, new_log)
     return save_logs(logs)
-
 def get_selected_subtypes(profile):
     subtypes = {}
     for key, value in profile.items():
@@ -339,7 +364,6 @@ def get_selected_subtypes(profile):
             disease_name = key.replace("subtype_", "")
             subtypes[disease_name] = value if value else "未知"
     return subtypes
-
 def delete_user_account():
     username = st.session_state.get('username')
     if not username:
@@ -362,7 +386,6 @@ def delete_user_account():
         return True, "账户已注销"
     except Exception as e:
         return False, str(e)
-
 def main():
     # 顶部导航栏
     st.markdown("""
@@ -406,7 +429,8 @@ def main():
     # ================= 标签页 1: 个人信息 =================
     with tab1:
         st.markdown('<div class="section-title">📋 您的健康档案摘要</div>', unsafe_allow_html=True)
-        profile = load_data_from_file()
+        # 使用 session_state 中的 profile，而不是重新从文件加载
+        profile = st.session_state['profile']
         
         if not profile or not profile.get('gender'):
             st.info("📭 暂无数据，请先前往 [健康档案] 填写信息。")
@@ -608,6 +632,5 @@ def main():
         <p>🔐 <strong>CardioGuard AI</strong> 采用银行级加密技术保护您的健康数据，所有信息仅在您的设备本地存储和处理，确保个人隐私的绝对安全。我们承诺不收集、不分析、不共享任何可识别您身份的个人信息。</p>
     </div>
     """, unsafe_allow_html=True)
-
 if __name__ == "__main__":
     main()

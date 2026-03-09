@@ -2,6 +2,7 @@
 import streamlit as st
 import re
 import json
+import base64
 import os
 from openai import OpenAI
 
@@ -12,20 +13,33 @@ client = OpenAI(
 )
 
 st.set_page_config(page_title="健康档案 · CardioGuard AI", 
-                   page_icon="📋" ,
+                   page_icon="📋",
                    layout="wide")
-
 
 USERS_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "users"))
 DATA_FILE = os.path.join(USERS_FOLDER, "heart_profile_data.json")
 USER_DATA_FILE = os.path.join(USERS_FOLDER, "user_data.json")
 
 def save_data_to_file(data):
+    # ───────────── 保留原来的文件写入逻辑 ─────────────
     try:
+        os.makedirs(USERS_FOLDER, exist_ok=True)
         with open(DATA_FILE, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
     except Exception as e:
-        st.error(f"保存数据失败：{e}")
+        st.warning(f"云端文件写入失败（正常现象）：{e}")
+
+    # ★★★ 最重要的改动：同时存入 session_state ★★★
+    st.session_state['profile'] = data.copy()
+
+    # 做 base64 编码存入 query params（跨页面持久化）
+    try:
+        profile_json = json.dumps(data, ensure_ascii=False)
+        profile_b64 = base64.urlsafe_b64encode(profile_json.encode('utf-8')).decode('utf-8')
+        # 存一个较短的 key，避免 URL 超长
+        st.query_params['profile_data'] = profile_b64[:1000]  # 截断保护（实际够用）
+    except:
+        pass
 
 def load_data_from_file():
     if os.path.exists(DATA_FILE):
@@ -488,7 +502,6 @@ st.markdown("""
         background: var(--primary-light) !important;
         color: var(--primary-dark) !important;
     }
-
     /* ========== AI 报告卡片 ========== */
     .ai-report {
         background: white;
@@ -1009,6 +1022,36 @@ def parse_ai_json_response(ai_text):
             return None, None, None
 
 def main():
+    # ─── 优先级：query_params > session_state > 文件 ───
+    profile = None
+
+    # 1. 从 URL query params 恢复（跨页面最可靠的方式之一）
+    if 'profile_data' in st.query_params:
+        try:
+            b64_str = st.query_params['profile_data']
+            # 补齐可能的 padding
+            b64_str += '=' * ((4 - len(b64_str) % 4) % 4)
+            json_str = base64.urlsafe_b64decode(b64_str).decode('utf-8')
+            profile = json.loads(json_str)
+            st.session_state['profile'] = profile
+        except:
+            pass
+
+    # 2. 如果 query_params 没有，从 session_state 取
+    if profile is None and 'profile' in st.session_state:
+        profile = st.session_state['profile']
+
+    # 3. 最后才尝试从文件读（云端基本不会成功持久化）
+    if profile is None:
+        profile = load_data_from_file()
+        if profile:
+            st.session_state['profile'] = profile
+
+    # 如果还是没有数据，就初始化空字典
+    if profile is None:
+        profile = {}
+        st.session_state['profile'] = profile
+
     # 顶部导航栏
     st.markdown("""
     <div class="top-navbar">
@@ -1045,11 +1088,8 @@ def main():
         """, unsafe_allow_html=True)
     
     if 'step' not in st.session_state: st.session_state.step = 1
-    if 'profile' not in st.session_state: 
-        saved_data = load_data_from_file()
-        st.session_state.profile = saved_data if saved_data else {}
     
-    profile = st.session_state.profile
+    # profile 已经在上面恢复好了
     if isinstance(profile.get('diseases'), (set, tuple)): profile['diseases'] = list(profile['diseases'])
     if 'diseases' not in profile: profile['diseases'] = []
     
@@ -1241,7 +1281,7 @@ def main():
         if profile['diseases']:
             st.markdown('<div class="section-title" style="font-size:1.8rem; margin:1rem 0 0.6rem 0;">🔬 亚型确认</div>', unsafe_allow_html=True)
             
-            # 使用grid布局包裹所有疾病卡片
+            # 使用 grid 布局包裹所有疾病卡片
             st.markdown('<div class="disease-grid">', unsafe_allow_html=True)
             
             for d in profile['diseases']:
@@ -1250,7 +1290,7 @@ def main():
                 if key not in profile or profile[key] not in opts: 
                     profile[key] = "未知"
                 
-                # 创建唯一的选择框key
+                # 创建唯一的选择框 key
                 select_key = f"sel_{d}_{abs(hash(d)) % 10000}"
                 
                 # 疾病卡片开始
@@ -1267,7 +1307,7 @@ def main():
                         </div>
                 ''', unsafe_allow_html=True)
                 
-                # Streamlit选择框
+                # Streamlit 选择框
                 selected_subtype = st.selectbox(
                     f"选择{d}的亚型", 
                     opts, 
@@ -1284,7 +1324,7 @@ def main():
                             <div class="subtype-status-icon">💡</div>
                             <div class="subtype-status-text">
                                 AI 智能推导
-                                <div class="subtype-status-subtext">根据您的健康数据，AI将自动分析最可能的亚型</div>
+                                <div class="subtype-status-subtext">根据您的健康数据，AI 将自动分析最可能的亚型</div>
                             </div>
                         </div>
                     ''', unsafe_allow_html=True)
@@ -1294,15 +1334,15 @@ def main():
                             <div class="subtype-status-icon">✅</div>
                             <div class="subtype-status-text">
                                 已确认：{profile[key]}
-                                <div class="subtype-status-subtext">AI将在报告中深入分析该亚型特征</div>
+                                <div class="subtype-status-subtext">AI 将在报告中深入分析该亚型特征</div>
                             </div>
                         </div>
                     ''', unsafe_allow_html=True)
                 
-                # 关闭subtype-section和disease-card
+                # 关闭 subtype-section 和 disease-card
                 st.markdown('</div></div>', unsafe_allow_html=True)
             
-            # 关闭disease-grid
+            # 关闭 disease-grid
             st.markdown('</div>', unsafe_allow_html=True)
         
         c1, c2 = st.columns([1, 3])
