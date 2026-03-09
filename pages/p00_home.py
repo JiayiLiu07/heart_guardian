@@ -116,7 +116,7 @@ def render():
             align-items: center;
             position: relative;
             z-index: 9999;
-            margin-top: 0;
+            margin-top: 2.5rem;
             margin-bottom: 0rem;
             border-radius: 0 0 12px 12px;
             width: 100%;
@@ -166,7 +166,7 @@ def render():
         /* 标题区域 */
         .hero-section {
             text-align: center;
-            padding: 1.5rem 0 0.5rem 0;
+            padding: 0.2rem 0 0.5rem 0;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -174,7 +174,7 @@ def render():
             justify-content: center;
             position: relative;
             overflow: hidden;
-            margin-top: 1rem;
+            margin-top: rem;
         }
         .hero-bg-grid {
             position: absolute;
@@ -710,7 +710,7 @@ def render():
         .tip-item:last-child { border-bottom: none; }
         
         .footer-section {
-            margin-top: 3rem;
+            margin-top: 1rem;
             padding: 2.5rem 0 1.5rem 0;
             background: linear-gradient(145deg, #1A237E, #0D47A1);
             width: 100%;
@@ -901,7 +901,7 @@ def render():
     """, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
-    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+
     
     # 了解心血管疾病（视频）- 标题现在会居中显示
     st.markdown('<h2 class="section-title">📺 了解心血管疾病</h2>', unsafe_allow_html=True)
