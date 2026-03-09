@@ -15,8 +15,9 @@ st.set_page_config(page_title="健康档案 · CardioGuard AI",
                    page_icon="📋" ,
                    layout="wide")
 
-DATA_FILE = "heart_profile_data.json"
+
 USERS_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "users"))
+DATA_FILE = os.path.join(USERS_FOLDER, "heart_profile_data.json")
 USER_DATA_FILE = os.path.join(USERS_FOLDER, "user_data.json")
 
 def save_data_to_file(data):

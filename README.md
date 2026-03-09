@@ -1,183 +1,163 @@
-# CardioGuard AI: AI-Powered Cardiovascular Health Guardian 🚀
+# CardioGuard AI - Smart Cardiovascular Health Management Platform 💖
 
-![Python](https://img.shields.io/badge/python-3.9+-blue.svg)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.50+-FF4B4B.svg)
-![Cardiovascular AI](https://img.shields.io/badge/Cardiovascular%20AI-Deep%20Learning-9C27B0.svg)
+## Introduction 📝
 
+CardioGuard AI is an intelligent cardiovascular health management application built with Streamlit. It aims to provide users with comprehensive cardiovascular health insights and personalized management solutions by integrating personal health data, AI-assisted analysis, nutrition advice, smart Q&A, and a professional knowledge base. This platform leverages advanced machine learning models to predict cardiovascular disease risk and utilizes large language models (DashScope Qwen) to offer professional medical consultation and lifestyle recommendations.
 
-## Project Overview 📖
+## Core Features ✨
 
-CardioGuard AI is an interactive web application developed using the Streamlit framework, dedicated to **intelligent diagnosis and personalized health management of cardiovascular diseases**. Leveraging deep learning and large language model (LLM) technologies, the platform provides users with comprehensive cardiovascular risk assessment, health profile management, intelligent nutritional advice, AI doctor consultations, and a rich disease knowledge base. We are committed to safeguarding your heart health and helping you foresee and manage your health future through data-driven insights and convenient interactive experiences.
+1.  **Health Profile 📋**
+    *   Record and manage user's basic physiological indicators (age, gender, height, weight, blood pressure, blood lipids, blood glucose).
+    *   Detailed cardiovascular disease history (major categories and subtypes).
+    *   Lifestyle and risk factor assessment (smoking, alcohol, late nights, exercise, dietary preferences, allergies, etc.).
+    *   Data stored locally to ensure privacy and security.
 
-The project is structured within the `heart_guardian` folder, containing the following sub-folders:
+2.  **Health Overview 📊**
+    *   Predicts 10-year cardiovascular disease risk using an XGBoost machine learning model based on the user's health profile.
+    *   Provides multi-dimensional personal risk radar charts and key indicator trend simulations.
+    *   Utilizes SHAP values to explain model predictions, revealing the contribution of each factor to individual risk.
+    *   AI intelligently infers unspecified disease subtypes and deeply analyzes selected subtypes.
+    *   AI generates personalized lifestyle optimization suggestions (exercise, diet, routine, mental health, warning signs).
 
--   `pages`: Stores Python scripts for various functional modules.
--   `assets`: Stores machine learning models (`cv_risk_model.json`), model metadata (`model_metadata.json`), a cardiovascular disease recipe database (`cardio_recipes.py`), and related image resources.
--   `users`: Stores local user data such as user accounts (`user_data.json`), health profiles (`heart_profile_data.json`), and health logs (`user_logs.json`).
+3.  **AI Nutritionist 🥗**
+    *   Intelligently generates customized 7-day cardiovascular recovery meal plans based on user's health profile (diseases, allergies, dietary preferences).
+    *   Provides detailed recipe information, including dish names, ingredients, cooking steps, and nutritional values.
+    *   Supports a "swap recipe" feature for flexible adjustments.
+    *   Automatically generates a weekly shopping list, categorized by ingredients.
+    *   Offers practical dietary health tips.
 
-The project repository is located at: [https://github.com/JiayiLiu07/CardioGuard-AI](https://github.com/JiayiLiu07/CardioGuard-AI) (Please replace with your actual repository URL).
+4.  **AI Doctor 🩺**
+    *   24/7 intelligent Q&A, allowing users to consult on cardiovascular health issues anytime.
+    *   Supports multi-turn conversations, providing professional medical answers and advice.
+    *   Saves chat history for easy review and management.
 
-## Feature Modules 📂
+5.  **Knowledge Base 📚**
+    *   Provides cardiovascular disease data insights, displaying relationships between age, blood pressure, risk factors through interactive charts.
+    *   Detailed knowledge map of seven major cardiovascular disease categories, including causes, symptoms, subtypes, treatment, and prevention.
+    *   Includes a smart Q&A module to answer professional questions about diseases.
 
--   `p00_intro.py`: Project introduction page, showcasing the CardioGuard AI platform's vision, core advantages, and diagnosable disease types.
--   `p00_home.py`: Homepage, offering a project overview, core feature highlights, health tips, and navigation entry points.
--   `p00_auth.py`: User authentication module, supporting account registration, login, password reset, etc.
--   `p01_profile.py`: **Health Profile**, allowing users to record detailed basic physiological data, medical history, lifestyle habits, and generating AI-driven health analysis reports, preventive advice, and disease subtype derivations.
--   `p01_overview.py`: **Health Overview**, integrating AI-predicted cardiovascular risk assessment (based on an XGBoost model), key clinical indicator evaluation, multi-dimensional risk radar charts, 5-year risk trend simulation, and SHAP model explanations. It also provides AI-driven disease subtype analysis and lifestyle optimization suggestions.
--   `p02_nutrition.py`: **Nutrition Advisor**, intelligently generating a 7-day recovery meal plan based on user health profiles (diseases, allergies, preferences), supporting meal replacement and grocery list export.
--   `p03_ai_doctor.py`: **AI Doctor**, providing 24/7 cardiovascular health consultation, supporting multi-turn conversations, history management, and including important medical disclaimers.
--   `p04_knowledge.py`: **Knowledge Base**, offering cardiovascular disease data insights (based on a Kaggle dataset), detailed interpretations of seven major disease spectrums, and an intelligent Q&A system.
--   `p05_me.py`: **My Account**, where users can view a summary of their health profile, manage health logs, change passwords, and log out.
+6.  **My Center 👤**
+    *   View and edit a summary of personal health records.
+    *   Record and manage personal health logs.
+    *   Supports password reset and account deletion functions.
+    *   Emphasizes data security and privacy protection.
 
-## Core Features 🔍
+## Technology Stack 💻
 
--   **AI-Powered Smart Diagnosis** 🤖: Utilizes a deep learning model to assess cardiovascular disease risk based on user-input health data, identifying **8 major types** of cardiovascular diseases with up to **95% accuracy**, and providing personalized subtype derivations.
--   **Personalized Health Profile** 📋: Comprehensively records user physiological indicators, medical history, family history, and lifestyle habits, generating professional AI health analysis reports including key conclusions, preventive advice, and disease subtype analysis.
--   **Intelligent Nutritionist** 🥗: Dynamically generates a **7-day recovery meal plan** based on the user's cardiovascular condition, allergies, and dietary preferences, offering nutritional analysis, meal replacement options, and grocery list functionality to promote scientific eating habits.
--   **AI Doctor Consultation** 🩺: Provides 24-hour online AI health consultation services, supporting multi-turn interactions and conversation history management, helping users quickly obtain cardiovascular health knowledge and preliminary advice.
--   **Professional Knowledge Base** 📚: Enhances user disease awareness through interactive data insights (e.g., age-blood pressure relationship, risk factor correlations), detailed interpretations of seven major cardiovascular disease spectrums (overview, causes, symptoms, subtypes, treatments), and an intelligent Q&A system.
--   **Cardiovascular Risk Prediction** 📈: Leverages an XGBoost machine learning model to comprehensively analyze 12 clinical indicators, predicting 10-year cardiovascular event risk, and providing intuitive insights through radar charts, trend simulations, and SHAP explanations.
--   **Data Security and Privacy** 🔒: Employs bank-grade encryption technology, with user data primarily stored locally in JSON files within the `users` folder, ensuring the absolute security and privacy of personal information.
+*   **Frontend Framework**: Streamlit
+*   **AI/ML**:
+    *   Large Language Model (LLM): DashScope (Qwen-turbo, Qwen-max)
+    *   Machine Learning: XGBoost, SHAP (for risk prediction and model interpretability)
+*   **Data Processing**: Pandas, NumPy
+*   **Data Visualization**: Plotly, Matplotlib
+*   **Authentication & Security**: File-based user authentication and password hashing
+*   **Other**: `json`, `os`, `re`, `datetime`, `uuid`
 
-## Development Methodology 🛠️
+## Installation and Setup 🚀
 
-CardioGuard AI aims to develop a user-friendly, intelligent, and efficient cardiovascular health management platform, combining big data analytics with artificial intelligence technologies. The project uses Python and the Streamlit framework, ensuring rapid prototyping and an interactive user experience. Key technology choices include:
-
--   **Streamlit**: For building intuitive and responsive web interfaces.
--   **DashScope API (Qwen model)**: Powers natural language processing, AI Doctor consultations, health profile analysis, and nutrition advice generation.
--   **XGBoost & Scikit-learn**: Used for the cardiovascular risk prediction model in `p01_overview.py`, providing high-accuracy assessments.
--   **SHAP**: Provides explainability analysis for the machine learning model, helping users understand the basis of risk predictions.
--   **Pandas & NumPy**: For efficient processing and analysis of health data.
--   **Plotly & Matplotlib**: For interactive data visualization, enhancing user understanding of health data.
--   **JSON file local storage**: For user accounts, health profiles, and log data, emphasizing data privacy.
-
-During development, the cardiovascular risk prediction model (XGBoost) was trained on an external dataset and saved as `assets/cv_risk_model.json`, and recipe data is integrated into `assets/cardio_recipes.py`. The project adopts a modular design to ensure independent and extensible functionalities.
-
-## Installation ⚙️
-
-1.  **Clone the Repository**:
-
-    ```bash
-    git clone https://github.com/JiayiLiu07/CardioGuard-AI.git
-    cd CardioGuard-AI
-    ```
-
-2.  **Set Up Python Environment**:
-    -   Ensure Python 3.9 or higher is installed:
-        ```bash
-        python --version
-        ```
-    -   It is recommended to use a virtual environment to avoid dependency conflicts:
-        ```bash
-        python -m venv venv
-        source venv/bin/activate  # Linux/Mac
-        venv\Scripts\activate     # Windows
-        ```
-
-3.  **Install Dependencies**:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4.  **Prepare Data and Models**:
-    -   Ensure the `assets` folder contains the following files:
-        -   `cv_risk_model.json` (XGBoost model file)
-        -   `model_metadata.json` (model metadata)
-        -   `cardio_recipes.py` (cardiovascular recipe data)
-        -   `picture` folder (containing image resources for disease spectrums).
-    -   The `users` folder will be automatically created upon first run to store user account information (`user_data.json`), health profiles (`heart_profile_data.json`), and health logs (`user_logs.json`).
-
-5.  **Configure DashScope API Key**:
-    -   In `p01_profile.py`, `p03_ai_doctor.py`, `p04_knowledge.py`, and `p01_overview.py`, AI functionalities rely on the DashScope API. Please configure your DashScope API Key as an environment variable `OPENAI_API_KEY`, or directly replace the `api_key` value in the code.
-    -   **Recommended using environment variables**:
-        ```bash
-        export OPENAI_API_KEY='sk-YOUR_DASH_SCOPE_API_KEY'  # Linux/Mac
-        set OPENAI_API_KEY=sk-YOUR_DASH_SCOPE_API_KEY       # Windows
-        ```
-
-## How to Run 🚀
-
-Launch the Streamlit application:
-
-`【Please ensure you are using the streamlit within your virtual environment】`
-
+### 1. Clone the repository
 ```bash
-streamlit run pages/p00_intro.py
+git clone https://github.com/JiayiLiu07/CardioGuard-AI.git
+cd CardioGuard-AI
 ```
 
--   **Start Experience**: From the `p00_intro.py` page, click the "Start AI Diagnosis Now" button. The system will guide you to the login/registration page.
--   **User Registration**: After completing registration and logging in, navigate to the "Health Profile" module to fill in your personal information, medical history, and lifestyle habits. This information will be used for subsequent AI analysis and personalized recommendations.
--   **Feature Navigation**: Access various functional modules via the top navigation bar or in-page guide buttons.
--   **Health Advice**: In different modules (e.g., "Health Overview", "Nutrition Advisor"), you will receive AI-driven health analysis reports, customized advice, and real-time data insights.
-
-## System Requirements 📋
-
-The following Python packages and their versions are required, as detailed in `requirements.txt`:
-
-```text
-streamlit==1.50.0
-streamlit-autorefresh==1.0.1
-streamlit-option-menu==0.4.0
-openai==1.108.1
-dashscope==1.24.5
-tenacity==9.1.2
-pandas==2.3.2
-pandasql==0.7.3 # Not directly used in CardioGuard AI, but included in original list.
-pyspark==4.0.0 # Not directly used in CardioGuard AI, but included in original list. May increase installation complexity.
-numpy==2.0.2
-scipy==1.15.3
-scikit-learn==1.6.1
-xgboost==2.1.4
-joblib==1.5.2
-plotly==6.3.0
-altair==5.5.0 # Not directly used in CardioGuard AI, but included in original list.
-matplotlib==3.9.4
-seaborn==0.13.2
-pydeck==0.9.1 # Not directly used in CardioGuard AI.
-requests==2.32.5
-python-dotenv==1.1.1
-pytz==2025.2
-python-dateutil==2.9.0.post0
-jsonschema==4.25.0
-pdfkit==1.0.0 # Not directly used in CardioGuard AI.
-tqdm==4.67.1
-pillow==11.3.0
+### 2. Create and activate a virtual environment (recommended)
+```bash
+python -m venv venv
+# On Windows
+.\venv\Scripts\activate
+# On macOS/Linux
+source venv/bin/activate
 ```
 
-### Verify Dependency Versions
+### 3. Install dependencies 📦
+```bash
+pip install -r requirements.txt
+```
+**Note**: The `dashscope` library listed in `requirements.txt` is an SDK provided by Alibaba Cloud that is compatible with the OpenAI API. Please ensure it is installed.
 
--   Check current environment package versions:
-    ```bash
-    pip list
-    ```
--   Export dependencies to `requirements.txt`:
-    ```bash
-    pip freeze > requirements.txt
-    ```
--   Check Python version (3.9 or higher recommended):
-    ```bash
-    python --version
-    ```
+### 4. Configure API Key 🔑
+This project uses **DashScope (Alibaba Cloud Qwen)** as the LLM backend.
+Please replace your DashScope API key in the following files:
+*   `p01_profile.py`
+*   `p03_ai_doctor.py`
+*   `p04_knowledge.py`
+  
+Set the `api_key` to your actual key (please note that the example key `sk-e200005b066942eebc8c5426df92a6d5` is a placeholder):
+```python
+client = OpenAI(
+    api_key="sk-YOUR_DASHSCOPE_API_KEY", # <-- Replace with your key
+    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
+)
+```
+If you wish to use the official OpenAI API, simply change or remove `base_url` and ensure your API key is correct.
 
-**Note**: Dependency versions may need to be adjusted based on your specific environment. You can confirm the latest versions via PyPI (https://pypi.org/). Packages like `pandasql`, `pyspark`, `altair`, `pydeck`, `pdfkit` are not directly used in the `CardioGuard AI` project and can be considered for removal from `requirements.txt` to simplify installation.
+### 5. Prepare Model Files (Train if missing) ⚙️
+The project relies on `assets/cv_risk_model.json` (XGBoost model) and `assets/model_metadata.json` (model metadata) for cardiovascular risk prediction.
+Please ensure these files exist in the `assets/` directory. If they are missing, you might need to run a model training script (not provided in this repository, but can be developed based on `data/cardio_train.csv`).
 
-## Known Issues ⚠️
+### 6. Run the Streamlit Application ▶️
+```bash
+streamlit run app.py
+```
+This will open the application in your web browser.
 
--   **API Key Configuration**: If the DashScope API key (`OPENAI_API_KEY`) is not correctly set, AI Doctor consultations, health profile analysis, and nutrition advice features may fail. Please ensure the key is valid and correctly configured.
--   **Missing Data/Model Files**: The project relies on model and data files in the `assets` folder. If files are missing or paths are incorrect, related functionalities may not work properly.
--   **Local File Storage**: User data (e.g., health profiles, logs) is stored in local JSON files within the `users` folder. If these files are deleted, user data will be lost and cannot be recovered.
--   **Dependency Conflicts**: Certain dependency versions might cause compatibility issues in specific environments; using a virtual environment is recommended.
--   **Model Limitations**: The cardiovascular risk prediction model is trained on a public dataset; its prediction results are for reference only and should not replace professional clinical diagnosis.
+## Usage Guide 📖
+
+1.  **Homepage (p00_intro.py) / Login & Registration (p00_auth.py)**: If you're a first-time user, please register an account and log in. Upon successful login, you will be automatically redirected to the Health Profile page.
+2.  **Health Profile (p01_profile.py)**: It is crucial to fill in your personal health information in detail, including physiological indicators, disease history (with subtypes), and lifestyle habits. This forms the foundation for all AI analyses and recommendations.
+3.  **Health Overview (p01_overview.py)**: Once your profile is complete, this section will display your cardiovascular risk predictions, AI subtype analysis, and lifestyle recommendations.
+4.  **AI Nutritionist (p02_nutrition.py)**: Generates personalized meal plans based on your health data.
+5.  **AI Doctor (p03_ai_doctor.py)**: Ask questions anytime to receive health consultations.
+6.  **Knowledge Base (p04_knowledge.py)**: Explore cardiovascular disease knowledge and data insights.
+7.  **My Center (p05_me.py)**: Manage your personal information, view health logs, and account settings.
+
+## File Structure 📂
+
+```
+CardioGuard-AI/
+├── assets/
+│   ├── cardio_recipes.py         # Recipe database
+│   ├── cv_risk_model.json        # Cardiovascular risk prediction model
+│   └── model_metadata.json       # Model metadata (feature importance, etc.)
+├── data/
+│   └── cardio_train.csv          # Cardiovascular disease training data (Kaggle)
+├── pages/
+│   ├── p00_auth.py               # User authentication (login/register/reset password)
+│   ├── p00_home.py               # Homepage (with animations and info display)
+│   ├── p00_intro.py              # Landing page (redirects to auth or home)
+│   ├── p01_overview.py           # Health Overview (risk prediction, SHAP, AI recommendations)
+│   ├── p01_profile.py            # Health Profile (user data input)
+│   ├── p02_nutrition.py          # AI Nutritionist (meal plan generation)
+│   ├── p03_ai_doctor.py          # AI Doctor (chatbot)
+│   ├── p04_knowledge.py          # Knowledge Base (data insights, disease map, smart Q&A)
+│   └── p05_me.py                 # My Center (personal info, health logs, account management)
+├── picture/                      # Image resources (e.g., GIFs, diagrams)
+│   ├── 血管堵塞动图.gif          # (Vessel blockage animation)
+│   ├── 心脏电击动过程动图.gif      # (Cardiac defibrillation animation)
+│   ├── 胸痛主要原因.jpg          # (Main causes of chest pain)
+│   └── 超声下的心脏跳动图.gif      # (Heartbeat under ultrasound)
+├── requirements.txt              # Project dependencies
+└── README.md                     # Project description (the file you are reading)
+```
+
+## Important Notes & Disclaimer ⚠️
+
+*   **Data Security**: User health profiles and log data are stored locally by default (`users/heart_profile_data.json`, `users/user_logs.json`) to ensure personal privacy.
+*   **Model Limitations**: The AI risk prediction model is trained on public datasets, and its results are for reference only, not a substitute for professional medical diagnosis.
+*   **AI Advice**: Advice provided by the AI Doctor and Nutritionist is generated based on general medical knowledge and your input data, and does not constitute a formal medical prescription or treatment plan.
+*   **Always**: Consult a professional doctor or medical institution before making any health decisions.
+
+---
 
 ## Bug Tracker 🐞
 
 Please report issues or submit feature requests via GitHub Issues:
-[https://github.com/JiayiLiu07/CardioGuard-AI/issues](https://github.com/JiayiLiu07/CardioGuard-AI) 
+[https://github.com/JiayiLiu07/CardioGuard-AI/issues](https://github.com/JiayiLiu07/CardioGuard-AI/issues)
 
-## Author and Contact 📧
+## Author & Contact 📧
 
-CardioGuard AI is proudly developed by Jiayi Liu, hoping to bring you health and vitality! 🌟 We welcome you to try out this project and share your valuable suggestions! 😊 For any questions or ideas, feel free to reach out:
+CardioGuard AI is passionately crafted by Jiayi Liu, aiming to bring health and vitality to you! 🌟 We welcome you to experience this project and share your valuable suggestions! 😊 For any questions or ideas, feel free to contact:
 
 -   **Author**: Jiayi Liu (GitHub: [JiayiLiu07](https://github.com/JiayiLiu07))
--   **Contact**: Provide feedback via the [GitHub Issues page](https://github.com/JiayiLiu07/CardioGuard-AI/issues) or connect with me directly on GitHub. I look forward to hearing from you! 📬
+-   **Contact**: Submit feedback via the [GitHub Issues page](https://github.com/JiayiLiu07/CardioGuard-AI/issues) or directly communicate with me on GitHub. Looking forward to hearing from you! 📬
