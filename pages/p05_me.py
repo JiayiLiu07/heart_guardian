@@ -17,11 +17,9 @@ def load_profile():
             return json.loads(json_str)
         except:
             pass
-
     # 其次从 session_state
     if 'profile' in st.session_state:
         return st.session_state['profile']
-
     # 最后尝试文件（云端基本无效）
     try:
         with open("users/heart_profile_data.json", encoding="utf-8") as f:
@@ -44,25 +42,30 @@ try:
 except ImportError:
     def render_navbar(key): pass
     def render_hero(title, sub, c1, c2): st.title(title)
+
 # 【修改点】设置页面配置，使用 Emoji 作为图标
 st.set_page_config(
     page_title="我的中心 · CardioGuard AI", 
     layout="wide",
     page_icon="👤"  # 用户 Emoji
 )
+
 # ==========================================
 # 【修复部分】路径配置 - 确保顺序正确
 # ==========================================
 # 1. 先定义 users 文件夹的路径
 current_dir = os.path.dirname(os.path.abspath(__file__))
 USERS_FOLDER = os.path.abspath(os.path.join(current_dir, "..", "users"))
+
 # 2. 确保 users 文件夹存在，不存在则创建
 if not os.path.exists(USERS_FOLDER):
     os.makedirs(USERS_FOLDER)
+
 # 3. 再定义数据文件路径 (现在 USERS_FOLDER 已经定义了，不会报错)
 DATA_FILE = os.path.join(USERS_FOLDER, "heart_profile_data.json")
 LOG_FILE = os.path.join(USERS_FOLDER, "user_logs.json")
 USER_DATA_FILE = os.path.join(USERS_FOLDER, "user_data.json")
+
 # ==========================================
 # CSS 样式 - 已同步 nutrition.py 的导航栏参数 (紧贴顶部)
 # ==========================================
@@ -327,6 +330,7 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
 def load_data_from_file():
     if os.path.exists(DATA_FILE):
         try:
@@ -335,6 +339,7 @@ def load_data_from_file():
         except:
             return {}
     return {}
+
 def load_logs():
     if os.path.exists(LOG_FILE):
         try:
@@ -343,6 +348,7 @@ def load_logs():
         except:
             return []
     return []
+
 def save_logs(logs):
     try:
         with open(LOG_FILE, 'w', encoding='utf-8') as f:
@@ -351,19 +357,29 @@ def save_logs(logs):
     except Exception as e:
         st.error(f"保存日志失败：{e}")
         return False
+
 def save_log(content):
     logs = load_logs()
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     new_log = {"time": timestamp, "content": content}
     logs.insert(0, new_log)
     return save_logs(logs)
+
 def get_selected_subtypes(profile):
+    """
+    优化：只返回当前 profile['diseases'] 中存在的疾病对应的亚型
+    防止显示之前选择过但已被删除的疾病的亚型
+    """
     subtypes = {}
-    for key, value in profile.items():
-        if key.startswith("subtype_"):
-            disease_name = key.replace("subtype_", "")
-            subtypes[disease_name] = value if value else "未知"
+    current_diseases = profile.get('diseases', [])
+    
+    for disease in current_diseases:
+        key = f"subtype_{disease}"
+        value = profile.get(key, "未知")
+        subtypes[disease] = value if value else "未知"
+    
     return subtypes
+
 def delete_user_account():
     username = st.session_state.get('username')
     if not username:
@@ -386,6 +402,7 @@ def delete_user_account():
         return True, "账户已注销"
     except Exception as e:
         return False, str(e)
+
 def main():
     # 顶部导航栏
     st.markdown("""
@@ -430,8 +447,15 @@ def main():
     with tab1:
         st.markdown('<div class="section-title">📋 您的健康档案摘要</div>', unsafe_allow_html=True)
         # 使用 session_state 中的 profile，而不是重新从文件加载
+        # 确保 profile 是最新的引用
         profile = st.session_state['profile']
         
+        # 【关键修复】确保 diseases 字段存在且为列表，防止类型错误
+        if 'diseases' not in profile:
+            profile['diseases'] = []
+        elif isinstance(profile['diseases'], (set, tuple)):
+            profile['diseases'] = list(profile['diseases'])
+            
         if not profile or not profile.get('gender'):
             st.info("📭 暂无数据，请先前往 [健康档案] 填写信息。")
             if st.button("前往填写", type="primary", use_container_width=True):
@@ -454,32 +478,48 @@ def main():
                 st.markdown(f"**👨‍👩‍👧‍👦 家族史**: {profile.get('family_history', '无')}")
             st.markdown("---")
             
-            # 2. 疾病大类与亚型
+            # 2. 疾病大类与亚型诊断 (核心修改部分)
             st.markdown("### 2️⃣ 疾病大类与亚型诊断")
             diseases = profile.get('diseases', [])
+            
             if diseases:
-                st.markdown(f"**确诊/疑似疾病大类**: {', '.join(diseases)}")
+                # 显示确诊/疑似疾病大类
+                st.markdown(f"**✅ 确诊/疑似疾病大类**: {', '.join(diseases)}")
+                
+                # 获取并过滤亚型数据，确保只显示当前选中疾病的亚型
                 subtypes = get_selected_subtypes(profile)
+                
                 if subtypes:
-                    cols = st.columns(3)
+                    # 计算列数，最多3列
+                    col_count = min(len(subtypes), 3)
+                    cols = st.columns(col_count)
+                    
                     idx = 0
                     for disease, subtype in subtypes.items():
-                        with cols[idx % 3]:
-                            badge_color = "#ef5350" if subtype == "未知" else "#ec4899"
-                            bg_color = "#ffebee" if subtype == "未知" else "#fce7f3"
+                        with cols[idx % col_count]:
+                            # 根据亚型是否未知设置颜色
+                            is_unknown = subtype == "未知"
+                            badge_color = "#ef5350" if is_unknown else "#ec4899"
+                            bg_color = "#ffebee" if is_unknown else "#fce7f3"
+                            icon = "❓" if is_unknown else "✅"
+                            
                             st.markdown(f"""
-                            <div style="border: 1px solid #ddd; padding: 12px; border-radius: 8px; margin-bottom: 10px; background: {bg_color};">
-                                <div style="font-weight: bold; color: #555; font-size: 0.9em;">{disease}</div>
-                                <div style="color: {badge_color}; font-weight: 800; font-size: 1.1em; margin-top: 4px;">
+                            <div style="border: 1px solid #ddd; padding: 12px; border-radius: 8px; margin-bottom: 10px; background: {bg_color}; transition: transform 0.2s;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                                    <span style="font-weight: bold; color: #555; font-size: 0.9em;">{disease}</span>
+                                    <span style="font-size:1.2em;">{icon}</span>
+                                </div>
+                                <div style="color: {badge_color}; font-weight: 800; font-size: 1.1em; border-top:1px dashed #ccc; padding-top:4px; margin-top:4px;">
                                     {subtype}
                                 </div>
                             </div>
                             """, unsafe_allow_html=True)
                         idx += 1
                 else:
-                    st.warning("暂未选择具体亚型。")
+                    st.warning("⚠️ 暂未选择具体亚型，请前往健康档案完善。")
             else:
-                st.info("暂未选择疾病大类。")
+                st.info("ℹ️ 暂未选择疾病大类，请前往健康档案进行筛查。")
+            
             st.markdown("---")
             
             # 3. 生活习惯与风险因素
@@ -502,6 +542,7 @@ def main():
             
             if st.button("✏️ 编辑档案信息", type="primary", use_container_width=True):
                 st.switch_page("pages/p01_profile.py")
+                
     # ================= 标签页 2: 健康日志 =================
     with tab2:
         st.markdown('<div class="section-title">📝 记录健康日志</div>', unsafe_allow_html=True)
@@ -543,6 +584,7 @@ def main():
                     st.rerun()
         else:
             st.info("暂无日志记录。")
+            
     # ================= 标签页 3: 账户安全 =================
     with tab3:
         st.markdown('<div class="section-title">🔒 重置密码</div>', unsafe_allow_html=True)
@@ -632,5 +674,6 @@ def main():
         <p>🔐 <strong>CardioGuard AI</strong> 采用银行级加密技术保护您的健康数据，所有信息仅在您的设备本地存储和处理，确保个人隐私的绝对安全。我们承诺不收集、不分析、不共享任何可识别您身份的个人信息。</p>
     </div>
     """, unsafe_allow_html=True)
+
 if __name__ == "__main__":
     main()
