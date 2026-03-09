@@ -11,10 +11,13 @@ client = OpenAI(
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
 )
 
-st.set_page_config(page_title="健康档案 · CardioGuard AI", layout="wide")
+st.set_page_config(page_title="健康档案 · CardioGuard AI", 
+                   page_icon="📋" ,
+                   layout="wide")
 
-DATA_FILE = "heart_profile_data.json"
+
 USERS_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "users"))
+DATA_FILE = os.path.join(USERS_FOLDER, "heart_profile_data.json")
 USER_DATA_FILE = os.path.join(USERS_FOLDER, "user_data.json")
 
 def save_data_to_file(data):
@@ -34,16 +37,16 @@ def load_data_from_file():
     return {}
 
 # ==========================================
-# CSS 样式 - 完全对齐 overview 框架
+# CSS 样式 - 全新设计：疾病大类框住亚型选择
 # ==========================================
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     
     :root {
-        --primary: #0D9488;      /* teal 600 - 健康档案主色 */
-        --primary-dark: #115E59;  /* teal 800 - 深色 */
-        --primary-light: #CCFBF1; /* teal 50 - 浅色背景 */
+        --primary: #10B981;
+        --primary-dark: #047857;
+        --primary-light: #D1FAE5;
         --gray-50: #F9FAFB;
         --gray-100: #F3F4F6;
         --gray-200: #E5E7EB;
@@ -52,39 +55,51 @@ st.markdown("""
         --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
         --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        
+        /* 亚型卡片新配色 */
+        --card-border: #E5E7EB;
+        --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        --hint-bg: #F3E8FF;
+        --hint-border: #D8B4FE;
+        --hint-text: #6D28D9;
+        --confirm-bg: #E8F5E9;
+        --confirm-border: #A5D6A7;
+        --confirm-text: #1B5E20;
+        --select-bg: #FFFFFF;
     }
     
     .stApp {
         font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
         background-color: #f8fafc;
+        font-size: 16px;
     }
     
     .main > div { padding-top: 0 !important; }
-    .block-container { padding: 1rem 2rem 2rem !important; max-width: 1400px; margin: 0 auto; }
+    .block-container { padding: 0 2rem 1rem !important; max-width: 1400px; margin: 0 auto; }
     
     /* 隐藏默认元素 */
     #MainMenu, footer, section[data-testid="stSidebar"] { display: none !important; }
     
-    /* ========== 导航栏 - 完全对齐 overview ========== */
+    /* ========== 导航栏 ========== */
     .top-navbar {
         background: white;
-        padding: 0 2.5rem;
-        height: 70px;
+        padding: 0 1.5rem;
+        height: 75px;
         box-shadow: var(--shadow-sm);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        position: sticky;
-        top: 0;
+        position: relative; 
         z-index: 9999;
         border-bottom: 1px solid var(--gray-200);
-        border-radius: 0 0 12px 12px;
-        margin-bottom: 1rem;
+        margin-top: 50px;
+        margin-bottom: 0rem;
+        border-radius: 0 0 8px 8px;
     }
     
     .nav-logo { 
         font-weight: 700; 
-        font-size: 1.4rem; 
+        font-size: 1.8rem;
         color: var(--primary);
         cursor: default; 
         display: flex;
@@ -94,16 +109,16 @@ st.markdown("""
     
     .nav-links { 
         display: flex; 
-        gap: 8px;
+        gap: 10px;
     }
     .nav-links a { 
         text-decoration: none; 
         color: var(--gray-600); 
         font-weight: 500; 
-        padding: 8px 16px; 
+        padding: 8px 18px;
         border-radius: 20px; 
         transition: all 0.3s; 
-        font-size: 0.95rem;
+        font-size: 1.1rem;
     }
     .nav-links a:hover { 
         background-color: var(--primary-light);
@@ -114,14 +129,14 @@ st.markdown("""
         color: white; 
     }
     
-    /* ========== Hero 区域 - 完全对齐 overview ========== */
+    /* ========== Hero 区域 ========== */
     .hero-box { 
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); 
-        padding: 2.5rem 2rem; 
-        border-radius: 30px; 
+        background: linear-gradient(135deg, #10B981 0%, #047857 100%); 
+        padding: 1.8rem 1.5rem; 
+        border-radius: 24px; 
         text-align: center; 
         color: white; 
-        margin: 1rem 0 2rem 0; 
+        margin: 0.5rem 0 1rem 0; 
         box-shadow: var(--shadow-lg);
         position: relative;
         overflow: hidden;
@@ -158,18 +173,18 @@ st.markdown("""
     @keyframes move { 0% { background-position: 0 0; } 100% { background-position: 30px 30px; } }
     
     .hero-title, .hero-sub { position: relative; z-index: 2; }
-    .hero-title { font-size: 2.5rem; font-weight: 700; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-    .hero-sub { font-size: 1.1rem; opacity: 0.95; margin-top: 0.5rem; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+    .hero-title { font-size: 2.2rem; font-weight: 700; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    .hero-sub { font-size: 1.1rem; opacity: 0.95; margin-top: 0.3rem; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
     
-    /* ========== 大标题样式 - 对齐 overview ========== */
+    /* ========== 大标题样式 ========== */
     .section-title {
         font-size: 1.8rem;
         font-weight: 700;
         color: var(--gray-800);
-        margin: 1rem 0 0.8rem 0;  /* 减小上下边距 */
+        margin: 1.0rem 0 0.6rem 0;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
         position: relative;
     }
     
@@ -178,16 +193,16 @@ st.markdown("""
         flex: 1;
         height: 2px;
         background: linear-gradient(90deg, var(--primary), transparent);
-        margin-left: 20px;
+        margin-left: 15px;
     }
     
     .subsection-title {
         font-size: 1.4rem;
         font-weight: 600;
         color: var(--gray-800);
-        margin: 1.5rem 0 1rem 0;
-        padding-left: 0.8rem;
-        border-left: 6px solid var(--primary);
+        margin: 0.8rem 0 0.4rem 0;
+        padding-left: 0.6rem;
+        border-left: 4px solid var(--primary);
     }
     
     /* ========== 进度条 ========== */
@@ -199,31 +214,31 @@ st.markdown("""
         box-shadow: var(--shadow-md);
         border: 1px solid var(--gray-200);
     }
-    .progress-text { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--gray-600); margin-bottom: 8px; font-weight: 500; }
-    .progress-bar-bg { background: var(--gray-200); height: 8px; border-radius: 4px; overflow: hidden; }
-    .progress-bar-fill { background: var(--primary); height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+    .progress-text { display: flex; justify-content: space-between; font-size: 1rem; color: var(--gray-600); margin-bottom: 8px; font-weight: 500; }
+    .progress-bar-bg { background: var(--gray-200); height: 10px; border-radius: 5px; overflow: hidden; }
+    .progress-bar-fill { background: var(--primary); height: 100%; border-radius: 5px; transition: width 0.8s ease; }
     
     /* ========== 表单标签 ========== */
     .field-label { 
-        font-size: 1rem; 
+        font-size: 1.1rem;
         font-weight: 600; 
         display: flex; 
         align-items: center; 
-        margin-bottom: 0.8rem;
+        margin-bottom: 0.6rem;
         color: var(--gray-800); 
     }
     .field-label.required {
         color: var(--primary) !important;
     }
-    .field-label .field-icon { margin-right: 8px; color: var(--primary); }
+    .field-label .field-icon { margin-right: 8px; color: var(--primary); font-size: 1.2rem; }
     
     /* ========== 高级 BMI 卡片 ========== */
     .bmi-premium {
         background: linear-gradient(145deg, #ffffff 0%, #f9fdfc 100%);
         border-radius: 20px;
         padding: 1.2rem 1.5rem;
-        box-shadow: 0 4px 15px -5px rgba(13, 148, 136, 0.15);
-        border: 1px solid rgba(13, 148, 136, 0.15);
+        box-shadow: 0 4px 15px -5px rgba(16, 185, 129, 0.15);
+        border: 1px solid rgba(16, 185, 129, 0.15);
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -232,7 +247,7 @@ st.markdown("""
     }
     .bmi-premium-left { display: flex; flex-direction: column; }
     .bmi-premium-label {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         font-weight: 600;
@@ -245,132 +260,236 @@ st.markdown("""
         align-self: flex-start;
     }
     .bmi-premium-value {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
         font-weight: 800;
         color: var(--primary);
         line-height: 1;
         margin-bottom: 0.2rem;
     }
-    .bmi-premium-status-badge.normal { background: #D1FAE5; color: #065F46; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600; display: inline-block; }
-    .bmi-premium-status-badge.underweight { background: #FEF3C7; color: #92400E; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600; display: inline-block; }
-    .bmi-premium-status-badge.overweight { background: #FEE2E2; color: #991B1B; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600; display: inline-block; }
+    .bmi-premium-status-badge.normal { background: #D1FAE5; color: #065F46; padding: 0.3rem 0.9rem; border-radius: 20px; font-size: 1rem; font-weight: 600; display: inline-block; }
+    .bmi-premium-status-badge.underweight { background: #FEF3C7; color: #92400E; padding: 0.3rem 0.9rem; border-radius: 20px; font-size: 1rem; font-weight: 600; display: inline-block; }
+    .bmi-premium-status-badge.overweight { background: #FEE2E2; color: #991B1B; padding: 0.3rem 0.9rem; border-radius: 20px; font-size: 1rem; font-weight: 600; display: inline-block; }
     
-    /* ========== 重新设计的亚型卡片 - 更简洁 ========== */
-    .subtype-grid {
+    /* ========== 【全新设计】疾病大类卡片 ========== */
+    .disease-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 1.2rem;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 1.8rem;
         margin: 1.5rem 0;
     }
     
-    .subtype-card {
+    .disease-card {
         background: white;
-        border-radius: 12px;
-        padding: 1.2rem;
-        border: 1px solid var(--gray-200);
-        transition: all 0.2s ease;
-        display: flex;
-        flex-direction: column;
-        gap: 0.8rem;
+        border-radius: 24px;
+        border: 2px solid var(--card-border);
+        box-shadow: var(--card-shadow);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        position: relative;
     }
     
-    .subtype-card:hover {
+    .disease-card:hover {
+        box-shadow: 0 12px 28px rgba(16, 185, 129, 0.15);
+        transform: translateY(-3px);
         border-color: var(--primary);
-        box-shadow: var(--shadow-sm);
     }
     
-    .subtype-header {
+    /* 疾病大类头部 - 醒目设计 */
+    .disease-header {
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        padding: 1.2rem 1.5rem;
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin-bottom: 0.2rem;
+        gap: 12px;
+        border-bottom: 3px solid var(--primary-dark);
+        position: relative;
     }
     
-    .subtype-icon {
-        font-size: 1.2rem;
-        color: var(--primary);
+    .disease-header::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, white, transparent);
     }
     
-    .subtype-title {
-        font-weight: 600;
-        color: var(--gray-800);
+    .disease-icon {
+        width: 52px;
+        height: 52px;
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(4px);
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+    
+    .disease-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        flex: 1;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        letter-spacing: 0.5px;
+    }
+    
+    /* 亚型选择区域 - 被疾病大类框住 */
+    .subtype-section {
+        padding: 1.5rem;
+        background: white;
+        border-top: 1px solid var(--gray-100);
+    }
+    
+    .subtype-label {
         font-size: 1rem;
-    }
-    
-    /* 亚型选择器 - 无边框包裹 */
-    .subtype-selector {
-        width: 100%;
-        margin: 0.2rem 0;
-    }
-    
-    .subtype-selector .stSelectbox {
-        width: 100%;
-    }
-    
-    .subtype-selector .stSelectbox > div {
-        width: 100%;
-    }
-    
-    .subtype-selector .stSelectbox > div > div {
-        width: 100%;
-        border: 1px solid var(--gray-200);
-        border-radius: 8px;
-    }
-    
-    /* 提示信息 - 更醒目的设计 */
-    .subtype-hint {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.9rem;
-        color: #7B1FA2;
-        background: #F3E5F5;
-        padding: 0.6rem 1rem;
-        border-radius: 8px;
-        margin-top: 0.3rem;
-        font-weight: 500;
-        border-left: 4px solid #9C27B0;
-        animation: gentlePulse 2s infinite;
-    }
-    
-    @keyframes gentlePulse {
-        0% { opacity: 0.9; }
-        50% { opacity: 1; background: #EDE7F6; }
-        100% { opacity: 0.9; }
-    }
-    
-    .subtype-hint-icon {
-        font-size: 1.2rem;
-    }
-    
-    /* 已知亚型分析框 - 更简洁 */
-    .subtype-analysis {
-        background: #E8F5E9;
-        padding: 0.8rem 1rem;
-        border-radius: 8px;
-        margin-top: 0.3rem;
-        border-left: 4px solid #4CAF50;
-        font-size: 0.9rem;
-        color: #2E7D32;
-    }
-    
-    .subtype-analysis-title {
-        font-size: 0.85rem;
         font-weight: 600;
-        color: #1B5E20;
-        margin-bottom: 0.2rem;
+        color: var(--gray-600);
+        margin-bottom: 0.8rem;
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
-    .subtype-analysis-text {
+    .subtype-label span {
+        background: var(--gray-100);
+        padding: 0.2rem 0.8rem;
+        border-radius: 30px;
         font-size: 0.85rem;
-        color: #2E7D32;
-        line-height: 1.4;
+        color: var(--gray-600);
     }
     
-    /* ========== 重新设计的 AI 报告卡片 ========== */
+    /* 自定义 Selectbox 样式 - 与卡片完美融合 */
+    .subtype-section .stSelectbox {
+        margin: 0 0 1rem 0 !important;
+    }
+    
+    .subtype-section .stSelectbox > div {
+        margin: 0 !important;
+    }
+    
+    .subtype-section .stSelectbox > div > div {
+        background: var(--gray-50) !important;
+        border: 2px solid var(--gray-200) !important;
+        border-radius: 16px !important;
+        padding: 0.5rem 1rem !important;
+        font-size: 1.1rem !important;
+        font-weight: 500 !important;
+        transition: all 0.2s ease !important;
+        min-height: 56px !important;
+    }
+    
+    .subtype-section .stSelectbox > div > div:hover {
+        border-color: var(--primary) !important;
+        background: white !important;
+    }
+    
+    .subtype-section .stSelectbox > div > div:focus-within {
+        border-color: var(--primary) !important;
+        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1) !important;
+    }
+    
+    /* 状态提示区域 - 在卡片内部 */
+    .subtype-status {
+        border-radius: 16px;
+        padding: 1rem 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        margin-top: 0.5rem;
+    }
+    
+    /* 未确认状态 */
+    .subtype-status.hint {
+        background: var(--hint-bg);
+        color: var(--hint-text);
+        border: 2px solid var(--hint-border);
+        animation: softGlow 2s infinite;
+    }
+    
+    @keyframes softGlow {
+        0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.2); }
+        50% { box-shadow: 0 0 0 8px rgba(139, 92, 246, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+    }
+    
+    /* 已确认状态 */
+    .subtype-status.confirmed {
+        background: var(--confirm-bg);
+        color: var(--confirm-text);
+        border: 2px solid var(--confirm-border);
+    }
+    
+    .subtype-status-icon {
+        font-size: 1.5rem;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .subtype-status-text {
+        flex: 1;
+    }
+    
+    .subtype-status-subtext {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-top: 4px;
+        font-weight: 500;
+    }
+    
+    /* 已选中的亚型标签 */
+    .selected-subtype-badge {
+        background: rgba(76, 175, 80, 0.2);
+        padding: 0.4rem 1rem;
+        border-radius: 30px;
+        display: inline-block;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--confirm-text);
+        border: 1px solid var(--confirm-border);
+    }
+    
+    /* ========== 组合按钮 ========== */
+    .combo-buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem;
+        margin: 0.5rem 0 1rem 0;
+    }
+    
+    .combo-buttons .stButton > button {
+        padding: 0.5rem 0.6rem !important;
+        font-size: 0.95rem !important;
+        min-height: 48px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: 600 !important;
+        border-radius: 16px !important;
+        background: white !important;
+        border: 2px solid var(--gray-200) !important;
+        color: var(--gray-800) !important;
+    }
+    
+    .combo-buttons .stButton > button:hover {
+        border-color: var(--primary) !important;
+        background: var(--primary-light) !important;
+        color: var(--primary-dark) !important;
+    }
+
+    /* ========== AI 报告卡片 ========== */
     .ai-report {
         background: white;
         border-radius: 24px;
@@ -440,7 +559,6 @@ st.markdown("""
         border: 1px solid var(--primary);
     }
     
-    /* 分析网格 - 三列布局 */
     .analysis-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -506,7 +624,7 @@ st.markdown("""
         padding: 1rem;
         border-radius: 12px;
         border-left: 4px solid var(--primary);
-        font-size: 0.95rem;
+        font-size: 1rem;
         color: var(--gray-700);
         line-height: 1.6;
     }
@@ -515,10 +633,9 @@ st.markdown("""
         color: var(--primary-dark);
         display: block;
         margin-bottom: 0.3rem;
-        font-size: 1rem;
+        font-size: 1.05rem;
     }
     
-    /* 预防建议列表 */
     .prevent-list {
         display: flex;
         flex-direction: column;
@@ -559,18 +676,17 @@ st.markdown("""
     .prevent-text {
         color: var(--gray-700);
         line-height: 1.5;
-        font-size: 0.95rem;
+        font-size: 1rem;
         flex: 1;
     }
     
-    /* 逻辑推导步骤 - 用于未知亚型 */
-    .logic-flow {
+    .logic-flow, .analysis-flow {
         display: flex;
         flex-direction: column;
         gap: 1rem;
     }
     
-    .logic-step {
+    .logic-step, .analysis-step {
         background: var(--gray-50);
         padding: 1.2rem 1.2rem 1.2rem 3rem;
         border-radius: 16px;
@@ -578,11 +694,11 @@ st.markdown("""
         position: relative;
         color: var(--gray-700);
         line-height: 1.6;
-        font-size: 0.95rem;
+        font-size: 1rem;
         transition: all 0.2s;
     }
     
-    .logic-step:hover {
+    .logic-step:hover, .analysis-step:hover {
         border-color: var(--primary);
         background: white;
         transform: translateX(5px);
@@ -597,31 +713,6 @@ st.markdown("""
         font-weight: bold;
         font-size: 1.2rem;
     }
-    
-    /* 亚型分析步骤 - 用于已知亚型 */
-    .analysis-flow {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .analysis-step {
-        background: #F0F9FF;
-        padding: 1.2rem 1.2rem 1.2rem 3rem;
-        border-radius: 16px;
-        border: 1px solid #BAE6FD;
-        position: relative;
-        color: var(--gray-700);
-        line-height: 1.6;
-        font-size: 0.95rem;
-        transition: all 0.2s;
-    }
-    
-    .analysis-step:hover {
-        border-color: #0284C7;
-        background: #E0F2FE;
-    }
-    
     .analysis-step::before {
         content: '🔍';
         position: absolute;
@@ -630,7 +721,6 @@ st.markdown("""
         font-size: 1.2rem;
     }
     
-    /* 饮食详情折叠框 */
     .diet-details {
         background: white;
         border-radius: 20px;
@@ -709,14 +799,14 @@ st.markdown("""
     }
     
     .diet-desc {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         color: var(--gray-600);
         margin-bottom: 0.5rem;
         line-height: 1.4;
     }
     
     .diet-suit {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         color: var(--primary-dark);
         background: var(--primary-light);
         padding: 0.2rem 0.8rem;
@@ -729,8 +819,8 @@ st.markdown("""
     .stButton > button {
         border-radius: 30px !important;
         font-weight: 600 !important;
-        padding: 0.5rem 1.5rem !important;
-        font-size: 0.95rem !important;
+        padding: 0.6rem 1.5rem !important;
+        font-size: 1rem !important;
         transition: all 0.3s !important;
         min-height: 48px !important;
         box-shadow: var(--shadow-sm) !important;
@@ -741,7 +831,6 @@ st.markdown("""
         color: var(--primary) !important;
         border: 2px solid var(--primary) !important;
     }
-
     div.stButton > button:first-child:hover {
         background: var(--primary-light) !important;
         color: var(--primary-dark) !important;
@@ -749,14 +838,12 @@ st.markdown("""
         box-shadow: var(--shadow-md) !important;
     }
     
-    /* 下一步和AI生成按钮样式 - 绿色背景 */
     .stButton > button[kind="primary"],
     .stButton > button[type="primary"] {
         background: #059669 !important;
         color: white !important;
         border: 2px solid #059669 !important;
     }
-
     .stButton > button[kind="primary"]:hover,
     .stButton > button[type="primary"]:hover {
         background: #047857 !important;
@@ -764,16 +851,15 @@ st.markdown("""
         box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3) !important;
     }
     
-    /* 信息框 */
     .info-box {
         background: var(--primary-light);
-        padding: 1rem 1.5rem;
+        padding: 1rem 1.2rem;
         border-radius: 12px;
         border-left: 4px solid var(--primary);
-        margin: 1rem 0;
+        margin: 0.8rem 0;
         color: var(--primary-dark);
-        font-weight: 500;
-        font-size: 1rem;
+        font-weight: 600;
+        font-size: 1.05rem;
     }
     
     .warning-box {
@@ -782,20 +868,11 @@ st.markdown("""
         border-radius: 12px;
         border-left: 4px solid #F59E0B;
         color: #92400E;
-        font-size: 0.95rem;
+        font-size: 1rem;
         margin: 1rem 0;
-        font-weight: 500;
+        font-weight: 600;
     }
     
-    /* 组合按钮区域 */
-    .combo-buttons {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 0.8rem;
-        margin: 1rem 0 1.5rem 0;
-    }
-    
-    /* 免责声明 */
     .disclaimer {
         background: white;
         padding: 1rem;
@@ -803,7 +880,7 @@ st.markdown("""
         text-align: center;
         border: 1px solid var(--gray-200);
         color: var(--gray-600);
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         margin: 2rem 0;
         display: flex;
         align-items: center;
@@ -817,7 +894,6 @@ st.markdown("""
         border-top: 2px solid var(--gray-200);
     }
     
-    /* 修复 Streamlit 组件宽度问题 */
     .stSelectbox {
         width: 100%;
     }
@@ -828,13 +904,13 @@ st.markdown("""
     
     .stSelectbox > div > div {
         width: 100%;
+        font-size: 1rem !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
 def clean_ai_text(text):
     if not text: return ""
-    # 移除所有markdown和代码标记
     text = re.sub(r'```[\s\S]*?```', '', text)
     text = re.sub(r'```\w*\n?', '', text)
     text = re.sub(r'^#{1,6}\s*', '', text, flags=re.MULTILINE)
@@ -846,17 +922,14 @@ def clean_ai_text(text):
     text = re.sub(r'^\s*\d+\.\s+', '', text, flags=re.MULTILINE)
     text = re.sub(r'\*+', '', text)
     text = re.sub(r'_+', '', text)
-    # 移除HTML标签
     text = re.sub(r'<[^>]+>', '', text)
     text = re.sub(r'&[a-zA-Z]+;', '', text)
     lines = [line.strip() for line in text.split('\n') if line.strip()]
     return '\n'.join(lines)
 
 def generate_structured_prompt(profile):
-    """生成AI分析提示词，根据亚型是否已知调整分析方向"""
-    diseases_text = "、".join(profile.get('diseases', [])) if profile.get('diseases') else "无"
+    diseases_text = ",".join(profile.get('diseases', [])) if profile.get('diseases') else "无"
     
-    # 分类已知和未知亚型
     known_subtypes = []
     unknown_subtypes = []
     for d in profile.get('diseases', []):
@@ -866,11 +939,10 @@ def generate_structured_prompt(profile):
         else:
             known_subtypes.append(f"{d}: {subtype}")
     
-    known_text = "、".join(known_subtypes) if known_subtypes else "无"
-    unknown_text = "、".join(unknown_subtypes) if unknown_subtypes else "无"
+    known_text = ",".join(known_subtypes) if known_subtypes else "无"
+    unknown_text = ",".join(unknown_subtypes) if unknown_subtypes else "无"
     
     return f"""你是一位资深心血管专科医生，请基于以下患者数据生成一份专业的健康分析报告。
-
 【患者数据】
 - 基本信息：{profile.get('gender', '未知')}，{profile.get('age', '未知')}岁，身高{profile.get('height', '未知')}cm，体重{profile.get('weight', '未知')}kg
 - 血压：收缩压{profile.get('systolic_bp', '未知')} mmHg，舒张压{profile.get('diastolic_bp', '未知')} mmHg
@@ -882,42 +954,37 @@ def generate_structured_prompt(profile):
 - 未确认亚型：{unknown_text}
 - 生活方式：吸烟{'是' if profile.get('smoking') else '否'}，每周熬夜{profile.get('late_night', 0)}次
 - 其他：运动{profile.get('ex_freq', 0)}次/周，每次{profile.get('ex_dur', 0)}分钟，压力水平{profile.get('stress', '中')}
-
 【输出要求】
-你必须且只能输出一个有效的JSON对象，不要包含任何其他文字、Markdown、HTML标签或代码块。
-
-【JSON结构】
+你必须且只能输出一个有效的 JSON 对象，不要包含任何其他文字、Markdown、HTML 标签或代码块。
+【JSON 结构】
 {{
     "analysis": [
-        "重点结论1：对疾病状态的核心分析，约30-50字",
-        "重点结论2：对风险因素的核心分析，约30-50字",
-        "重点结论3：对预后的核心分析，约30-50字"
+        "重点结论 1：对疾病状态的核心分析，约 30-50 字",
+        "重点结论 2：对风险因素的核心分析，约 30-50 字",
+        "重点结论 3：对预后的核心分析，约 30-50 字"
     ],
     "prevent": [
-        "建议1：针对具体情况的可行建议，约20-30字",
-        "建议2：针对具体情况的可行建议，约20-30字",
-        "建议3：针对具体情况的可行建议，约20-30字",
-        "建议4：针对具体情况的可行建议，约20-30字"
+        "建议 1：针对具体情况的可行建议，约 20-30 字",
+        "建议 2：针对具体情况的可行建议，约 20-30 字",
+        "建议 3：针对具体情况的可行建议，约 20-30 字",
+        "建议 4：针对具体情况的可行建议，约 20-30 字"
     ],
     "subtype": [
         "对于已确认亚型：分析该亚型的病理特点、常见诱因、潜在并发症风险",
         "对于未确认亚型：基于患者数据推导最可能的亚型，并说明依据",
-        "根据疾病数量，可包含多条分析，每条30-50字"
+        "根据疾病数量，可包含多条分析，每条 30-50 字"
     ]
 }}
-
-请严格只输出JSON：
+请严格只输出 JSON：
 """
 
 def parse_ai_json_response(ai_text):
     if not ai_text or ai_text.startswith("Error"): return None, None, None
     
-    # 清理文本，只保留JSON部分
     clean_text = re.sub(r'```json\s*', '', ai_text)
     clean_text = re.sub(r'```\s*', '', clean_text)
     clean_text = clean_text.strip()
     
-    # 提取JSON对象
     json_match = re.search(r'(\{[\s\S]*\})', clean_text)
     if json_match:
         clean_text = json_match.group(1).strip()
@@ -929,11 +996,8 @@ def parse_ai_json_response(ai_text):
         subtype = [clean_ai_text(item) for item in data.get('subtype', [])]
         return analysis, prevent, subtype
     except json.JSONDecodeError:
-        # 尝试修复常见JSON错误
         try:
-            # 替换单引号为双引号
             clean_text = clean_text.replace("'", '"')
-            # 修复缺少引号的键
             clean_text = re.sub(r'([{,])\s*([a-zA-Z_]+)\s*:', r'\1"\2":', clean_text)
             data = json.loads(clean_text)
             analysis = [clean_ai_text(item) for item in data.get('analysis', [])]
@@ -941,7 +1005,7 @@ def parse_ai_json_response(ai_text):
             subtype = [clean_ai_text(item) for item in data.get('subtype', [])]
             return analysis, prevent, subtype
         except:
-            st.warning("AI返回格式有误，请重试")
+            st.warning("AI 返回格式有误，请重试")
             return None, None, None
 
 def main():
@@ -950,8 +1014,9 @@ def main():
     <div class="top-navbar">
         <div class="nav-logo">❤️ CardioGuard AI</div>
         <div class="nav-links">
-            <a href="/p00_home">🏠 首页</a>
+             <a href="/p00_home">🏠 首页</a>
             <a href="/p01_profile" class="active">📋 健康档案</a>
+            <a href="/p01_overview">📊 健康总览</a>
             <a href="/p02_nutrition">🥗 营养建议</a>
             <a href="/p03_ai_doctor">🩺 AI 医生</a>
             <a href="/p04_knowledge">📚 知识库</a>
@@ -968,7 +1033,6 @@ def main():
     </div>
     """, unsafe_allow_html=True)
     
-    # 显示登录用户信息（如果已登录）
     if st.session_state.get('is_logged_in', False) or st.session_state.get('username'):
         username = st.session_state.get('username', st.session_state.get('user_id', '用户'))
         st.markdown(f"""
@@ -1044,7 +1108,6 @@ def main():
             st.markdown('<div class="field-label required"><span class="field-icon">⚖️</span>体重 (必填)</div>', unsafe_allow_html=True)
             profile['weight'] = st.number_input("kg", 30.0, 200.0, float(profile.get('weight', 65)), step=0.5, key="inp_weight", label_visibility="collapsed")
         
-        # BMI 展示区
         if profile.get('height') and profile.get('weight') and profile['height'] > 0:
             h_m = profile['height'] / 100
             bmi = profile['weight'] / (h_m ** 2)
@@ -1065,12 +1128,12 @@ def main():
                     <div class="bmi-premium-value">{bmi:.1f}</div>
                     <div>
                         <span class="bmi-premium-status-badge {badge_class}">{status}</span>
-                        <span style="font-size:0.8rem; color:var(--gray-600); margin-left:8px;">根据身高体重计算</span>
+                        <span style="font-size:0.9rem; color:var(--gray-600); margin-left:8px;">根据身高体重计算</span>
                     </div>
                 </div>
                 <div class="bmi-premium-right" style="text-align:right; background:var(--gray-50); padding:0.8rem 1.2rem; border-radius:16px; border:1px dashed var(--primary);">
-                    <div style="font-size:0.75rem; color:var(--gray-600); font-weight:500;">健康参考范围</div>
-                    <div><span style="font-size:1.4rem; font-weight:700; color:var(--primary-dark);">18.5 - 24.9</span><span style="font-size:0.8rem; color:var(--gray-600);">kg/m²</span></div>
+                    <div style="font-size:0.8rem; color:var(--gray-600); font-weight:500;">健康参考范围</div>
+                    <div><span style="font-size:1.4rem; font-weight:700; color:var(--primary-dark);">18.5 - 24.9</span><span style="font-size:0.9rem; color:var(--gray-600);">kg/m²</span></div>
                 </div>
             </div>
             ''', unsafe_allow_html=True)
@@ -1115,29 +1178,28 @@ def main():
             st.session_state.step = 2
             st.rerun()
             
-    # ====================== 步骤 2 ======================
+    # ====================== 步骤 2 (疾病大类框住亚型选择) ======================
     elif st.session_state.step == 2:
-        st.markdown('<div class="section-title" style="margin: 0.5rem 0 0.8rem 0;">❤️ 疾病史与共病选择</div>', unsafe_allow_html=True)
-        st.markdown('<div class="info-box">📊 心血管疾病共病率 >60%，请选择所有符合情况的大类</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title" style="margin: 0.5rem 0 0.5rem 0;">❤️ 疾病史与共病选择</div>', unsafe_allow_html=True)
+        st.markdown('<div class="info-box" style="margin-top:0.5rem; margin-bottom:0.8rem;">📊 心血管疾病共病率 >60%，请选择所有符合情况的大类</div>', unsafe_allow_html=True)
         
         if 'diseases_multiselect' not in st.session_state or set(st.session_state['diseases_multiselect']) != set(profile.get('diseases', [])):
             st.session_state['diseases_multiselect'] = profile.get('diseases', []).copy()
         
-        # 常用组合按钮
         st.markdown('<div class="combo-buttons">', unsafe_allow_html=True)
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            if st.button("🫀 高血压+冠心病", use_container_width=True):
+            if st.button("🫀 高血压 + 冠心病", use_container_width=True):
                 st.session_state['diseases_multiselect'] = ["高血压心脏病", "缺血性心脏病"]
                 profile['diseases'] = ["高血压心脏病", "缺血性心脏病"]
                 st.rerun()
         with col2:
-            if st.button("⚡ 冠心病+心律失常", use_container_width=True):
+            if st.button("⚡ 冠心病 + 心律失常", use_container_width=True):
                 st.session_state['diseases_multiselect'] = ["缺血性心脏病", "心律失常"]
                 profile['diseases'] = ["缺血性心脏病", "心律失常"]
                 st.rerun()
         with col3:
-            if st.button("❤️ 高血压+瓣膜病", use_container_width=True):
+            if st.button("❤️ 高血压 + 瓣膜病", use_container_width=True):
                 st.session_state['diseases_multiselect'] = ["高血压心脏病", "瓣膜性心脏病"]
                 profile['diseases'] = ["高血压心脏病", "瓣膜性心脏病"]
                 st.rerun()
@@ -1148,7 +1210,7 @@ def main():
                 st.rerun()
         st.markdown('</div>', unsafe_allow_html=True)
         
-        st.markdown('<div class="subsection-title">📋 或手动选择疾病大类</div>', unsafe_allow_html=True)
+        st.markdown('<div class="subsection-title" style="margin-top:0.8rem;">📋 或手动选择疾病大类</div>', unsafe_allow_html=True)
         
         all_diseases = ["缺血性心脏病", "高血压心脏病", "心律失常", "心肌病", "瓣膜性心脏病", "先天性心脏病", "主动脉疾病", "血管疾病"]
         selected = st.multiselect("选择", all_diseases, key="diseases_multiselect", label_visibility="collapsed")
@@ -1165,67 +1227,84 @@ def main():
             "血管疾病": ["未知", "脑血管疾病", "外周动脉疾病"]
         }
         
+        disease_icons = {
+            "心肌病": "💪",
+            "缺血性心脏病": "❤️‍🔥",
+            "高血压心脏病": "📈",
+            "心律失常": "⚡",
+            "瓣膜性心脏病": "🚪",
+            "先天性心脏病": "👶",
+            "主动脉疾病": "🔄",
+            "血管疾病": "🩸"
+        }
+        
         if profile['diseases']:
-            st.markdown('<div class="section-title" style="font-size:1.6rem; margin:0.5rem 0 0.8rem 0;">🔬 亚型确认</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-title" style="font-size:1.8rem; margin:1rem 0 0.6rem 0;">🔬 亚型确认</div>', unsafe_allow_html=True)
             
-            st.markdown('<div class="subtype-grid">', unsafe_allow_html=True)
-            
-            disease_icons = {
-                "心肌病": "💪",
-                "缺血性心脏病": "❤️‍🔥",
-                "高血压心脏病": "📈",
-                "心律失常": "⚡",
-                "瓣膜性心脏病": "🚪",
-                "先天性心脏病": "👶",
-                "主动脉疾病": "🔄",
-                "血管疾病": "🩸"
-            }
+            # 使用grid布局包裹所有疾病卡片
+            st.markdown('<div class="disease-grid">', unsafe_allow_html=True)
             
             for d in profile['diseases']:
                 opts = subtypes_map.get(d, ["未知"])
                 key = f"subtype_{d}"
-                if key not in profile or profile[key] not in opts: profile[key] = "未知"
-                try: idx = opts.index(profile[key]) if profile[key] in opts else 0
-                except: idx = 0; profile[key] = opts[0]
+                if key not in profile or profile[key] not in opts: 
+                    profile[key] = "未知"
                 
-                icon = disease_icons.get(d, "🔬")
+                # 创建唯一的选择框key
+                select_key = f"sel_{d}_{abs(hash(d)) % 10000}"
                 
-                # 简洁的亚型卡片
+                # 疾病卡片开始
                 st.markdown(f'''
-                <div class="subtype-card">
-                    <div class="subtype-header">
-                        <span class="subtype-icon">{icon}</span>
-                        <span class="subtype-title">{d}</span>
+                <div class="disease-card">
+                    <div class="disease-header">
+                        <div class="disease-icon">{disease_icons.get(d, "🔬")}</div>
+                        <div class="disease-name">{d}</div>
                     </div>
+                    <div class="subtype-section">
+                        <div class="subtype-label">
+                            📌 选择亚型
+                            <span>必填</span>
+                        </div>
                 ''', unsafe_allow_html=True)
                 
-                # 亚型选择器
-                st.markdown('<div class="subtype-selector">', unsafe_allow_html=True)
-                select_key = f"sel_{d}_{hash(d)}"
-                selected_subtype = st.selectbox(f"选择亚型", opts, index=idx, key=select_key, label_visibility="collapsed")
+                # Streamlit选择框
+                selected_subtype = st.selectbox(
+                    f"选择{d}的亚型", 
+                    opts, 
+                    index=opts.index(profile[key]) if profile[key] in opts else 0,
+                    key=select_key,
+                    label_visibility="collapsed"
+                )
                 profile[key] = selected_subtype
-                st.markdown('</div>', unsafe_allow_html=True)
                 
-                # 提示信息
+                # 根据选择状态显示不同的提示区域
                 if profile[key] == "未知":
-                    st.markdown('''
-                    <div class="subtype-hint">
-                        <span class="subtype-hint-icon">💡</span>
-                        <span>AI将根据您的数据智能推导最可能的亚型</span>
-                    </div>
+                    st.markdown(f'''
+                        <div class="subtype-status hint">
+                            <div class="subtype-status-icon">💡</div>
+                            <div class="subtype-status-text">
+                                AI 智能推导
+                                <div class="subtype-status-subtext">根据您的健康数据，AI将自动分析最可能的亚型</div>
+                            </div>
+                        </div>
                     ''', unsafe_allow_html=True)
                 else:
                     st.markdown(f'''
-                    <div class="subtype-analysis">
-                        <div class="subtype-analysis-title">📊 已确认亚型</div>
-                        <div class="subtype-analysis-text">{profile[key]}</div>
-                    </div>
+                        <div class="subtype-status confirmed">
+                            <div class="subtype-status-icon">✅</div>
+                            <div class="subtype-status-text">
+                                已确认：{profile[key]}
+                                <div class="subtype-status-subtext">AI将在报告中深入分析该亚型特征</div>
+                            </div>
+                        </div>
                     ''', unsafe_allow_html=True)
                 
-                st.markdown('</div>', unsafe_allow_html=True)  # 关闭 subtype-card
+                # 关闭subtype-section和disease-card
+                st.markdown('</div></div>', unsafe_allow_html=True)
             
-            st.markdown('</div>', unsafe_allow_html=True)            
-            
+            # 关闭disease-grid
+            st.markdown('</div>', unsafe_allow_html=True)
+        
         c1, c2 = st.columns([1, 3])
         with c1:
             if st.button("← 上一步", use_container_width=True, key="btn_back2"): 
@@ -1347,7 +1426,6 @@ def main():
             analysis_list, prevent_list, subtype_list = parse_ai_json_response(st.session_state.ai_result)
             
             if analysis_list or prevent_list or subtype_list:
-                # 身体健康分析 - 三列布局
                 if analysis_list:
                     st.markdown("""
                     <div class="ai-report">
@@ -1363,8 +1441,8 @@ def main():
                     """, unsafe_allow_html=True)
                     
                     for item in analysis_list:
-                        if '：' in item or ':' in item:
-                            sep = '：' if '：' in item else ':'
+                        if ':' in item or ':' in item:
+                            sep = ':' if ':' in item else ':'
                             parts = item.split(sep, 1)
                             title = parts[0].strip()
                             desc = parts[1].strip()
@@ -1390,7 +1468,6 @@ def main():
                     
                     st.markdown('</div></div>', unsafe_allow_html=True)
                 
-                # 预防建议
                 if prevent_list:
                     st.markdown("""
                     <div class="ai-report">
@@ -1415,9 +1492,8 @@ def main():
                     
                     st.markdown('</div></div>', unsafe_allow_html=True)
                 
-                # 亚型分析/推导
                 if subtype_list:
-                    has_unknown = any("未知" in str(d) for d in profile.get('diseases', []))
+                    has_unknown = any(profile.get(f"subtype_{d}") == "未知" for d in profile.get('diseases', []))
                     icon = "🔬" if has_unknown else "📋"
                     title = "亚型智能推导" if has_unknown else "亚型分析"
                     badge = f"{len(subtype_list)} 条分析"

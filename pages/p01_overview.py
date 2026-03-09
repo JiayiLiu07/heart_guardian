@@ -10,19 +10,19 @@ import plotly.graph_objects as go
 from openai import OpenAI
 import re
 
-# 初始化OpenAI客户端
+# 初始化 OpenAI 客户端
 client = OpenAI(
     api_key="sk-e200005b066942eebc8c5426df92a6d5",
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
 )
 
-st.set_page_config(page_title="健康总览 · CardioGuard AI", layout="wide")
+st.set_page_config(page_title="健康总览 · CardioGuard AI", page_icon="📊" ,layout="wide")
 
 DATA_FILE = "heart_profile_data.json"
 MODEL_PATH = "assets/cv_risk_model.json"
 META_PATH = "assets/model_metadata.json"
 
-# 设置matplotlib英文显示
+# 设置 matplotlib 英文显示
 plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial', 'Helvetica']
 plt.rcParams['axes.unicode_minus'] = False
 
@@ -36,7 +36,7 @@ def load_data_from_file():
     return {}
 
 def load_model():
-    """加载XGBoost模型和元数据"""
+    """加载 XGBoost 模型和元数据"""
     if os.path.exists(MODEL_PATH) and os.path.exists(META_PATH):
         try:
             model = xgb.XGBClassifier()
@@ -145,7 +145,7 @@ def get_risk_level(probability):
         return "高风险", "#c62828"
 
 def clean_ai_text(text):
-    """清理AI生成的文本，移除markdown标记"""
+    """清理 AI 生成的文本，移除 markdown 标记"""
     if not text:
         return ""
     text = re.sub(r'\*\*(.*?)\*\*', r'\1', text)
@@ -172,7 +172,7 @@ def highlight_key_points(text):
     return text
 
 def format_ai_text(text, is_lifestyle=False):
-    """格式化AI生成的文本，美化显示"""
+    """格式化 AI 生成的文本，美化显示"""
     if not text:
         return ""
     text = clean_ai_text(text)
@@ -186,7 +186,7 @@ def format_ai_text(text, is_lifestyle=False):
     for line in lines:
         line = line.strip()
         if not line:
-            formatted_lines.append('<div style="height:0.5rem;"></div>')
+            formatted_lines.append('<div style="height:0.3rem;"></div>')
             continue
         is_heading = False
         for pattern in heading_patterns:
@@ -197,24 +197,24 @@ def format_ai_text(text, is_lifestyle=False):
             is_heading = True
         if is_heading:
             if '🏃' in line or '🥗' in line or '😴' in line or '❤️' in line or '⚠️' in line:
-                formatted_lines.append(f'<div style="font-size:1.2rem; font-weight:600; color:#1e293b; margin:1.2rem 0 0.8rem 0;">{line}</div>')
+                formatted_lines.append(f'<div style="font-size:1.1rem; font-weight:600; color:#1e293b; margin:1rem 0 0.5rem 0;">{line}</div>')
             elif '第一部分' in line or '第二部分' in line:
-                formatted_lines.append(f'<div style="font-size:1.2rem; font-weight:600; color:#1e293b; margin:1rem 0 0.5rem 0;">{line}</div>')
+                formatted_lines.append(f'<div style="font-size:1.1rem; font-weight:600; color:#1e293b; margin:0.8rem 0 0.3rem 0;">{line}</div>')
             elif '已指定亚型分析' in line or '亚型推导' in line:
-                formatted_lines.append(f'<div style="font-size:1.1rem; font-weight:600; color:#1e293b; margin:0.8rem 0 0.3rem 0; border-left:3px solid #e2e8f0; padding-left:0.8rem;">{line}</div>')
+                formatted_lines.append(f'<div style="font-size:1rem; font-weight:600; color:#1e293b; margin:0.6rem 0 0.2rem 0; border-left:3px solid #e2e8f0; padding-left:0.6rem;">{line}</div>')
             elif ':' in line and any(disease in line for disease in ['缺血性心脏病', '高血压心脏病', '心律失常', '心肌病', '瓣膜性心脏病', '先天性心脏病', '主动脉疾病', '血管疾病']):
-                formatted_lines.append(f'<div style="font-size:1rem; font-weight:600; color:#1e293b; margin:0.5rem 0 0.2rem 0;">{line}</div>')
+                formatted_lines.append(f'<div style="font-size:0.95rem; font-weight:600; color:#1e293b; margin:0.4rem 0 0.1rem 0;">{line}</div>')
             elif re.match(r'^\d+[\.、]', line):
-                formatted_lines.append(f'<div style="margin:0.4rem 0 0.4rem 1.5rem; color:#1e293b; font-weight:500;">{line}</div>')
+                formatted_lines.append(f'<div style="margin:0.3rem 0 0.3rem 1.2rem; color:#1e293b; font-weight:500;">{line}</div>')
             else:
-                formatted_lines.append(f'<div style="margin:0.3rem 0; color:#1e293b;">{line}</div>')
+                formatted_lines.append(f'<div style="margin:0.2rem 0; color:#1e293b;">{line}</div>')
         else:
             line_with_highlights = highlight_key_points(line)
-            formatted_lines.append(f'<div style="margin:0.3rem 0; color:#34495e;">{line_with_highlights}</div>')
+            formatted_lines.append(f'<div style="margin:0.2rem 0; color:#34495e;">{line_with_highlights}</div>')
     return ''.join(formatted_lines)
 
 def generate_ai_subtype_analysis(profile):
-    """生成AI亚型推导分析"""
+    """生成 AI 亚型推导分析"""
     diseases = profile.get('diseases', [])
     specified_subtypes = []
     unknown_subtypes = []
@@ -224,6 +224,7 @@ def generate_ai_subtype_analysis(profile):
             unknown_subtypes.append(disease)
         else:
             specified_subtypes.append(f"{disease}: {subtype}")
+    
     prompt = f"""你是一位资深心血管专科医生。请根据以下患者数据，对疾病亚型进行专业分析。
 患者数据：
 - 年龄：{profile.get('age')}岁
@@ -244,7 +245,7 @@ def generate_ai_subtype_analysis(profile):
 要求：
 1. 语气专业严谨，体现医学专业性
 2. 每个疾病单独分析，用数字编号
-3. 避免使用markdown标记符号
+3. 避免使用 markdown 标记符号
 4. 重要的医学结论可以用普通文字表达，不需要特殊标记
 请开始分析："""
     try:
@@ -256,14 +257,15 @@ def generate_ai_subtype_analysis(profile):
         )
         return resp.choices[0].message.content
     except Exception as e:
-        return f"AI分析生成失败：{str(e)}"
+        return f"AI 分析生成失败：{str(e)}"
 
 def generate_ai_lifestyle_advice(profile):
-    """生成AI生活方式优化建议"""
+    """生成 AI 生活方式优化建议"""
     smoking_status = "吸烟" if profile.get('smoking') else "不吸烟"
     drinking_status = "饮酒" if profile.get('drinking') else "不饮酒"
     salt_status = "高盐饮食" if profile.get('high_salt') else "盐摄入适中"
     sugar_status = "高糖饮食" if profile.get('high_sugar') else "糖摄入适中"
+    
     prompt = f"""你是一位资深心血管健康管理专家。请根据以下患者数据，生成一份专业、科学的生活方式优化建议。
 患者数据：
 - 年龄：{profile.get('age')}岁
@@ -281,7 +283,7 @@ def generate_ai_lifestyle_advice(profile):
   * 睡眠时间：{profile.get('sleep', 7)}小时/天
 - 饮食偏好：{', '.join(profile.get('diet_pref', ['无']))}
 - 食物过敏：{', '.join(profile.get('allergies', ['无']))}
-请提供以下五个方面的专业建议，每个方面用对应emoji开头：
+请提供以下五个方面的专业建议，每个方面用对应 emoji 开头：
 🏃 运动康复建议
 🥗 饮食调整建议
 😴 作息优化建议
@@ -291,8 +293,8 @@ def generate_ai_lifestyle_advice(profile):
 - 基于循证医学证据
 - 建议具体、可执行
 - 语气专业、严谨，保持温和关怀
-- 避免使用markdown标记符号
-- 每个方面3-5条建议，用数字编号
+- 避免使用 markdown 标记符号
+- 每个方面 3-5 条建议，用数字编号
 请开始生成："""
     try:
         resp = client.chat.completions.create(
@@ -303,10 +305,10 @@ def generate_ai_lifestyle_advice(profile):
         )
         return resp.choices[0].message.content
     except Exception as e:
-        return f"AI建议生成失败：{str(e)}"
+        return f"AI 建议生成失败：{str(e)}"
 
 # ==========================================
-# CSS 样式 - 更新版（已按您的要求优化）
+# CSS 样式 - 已同步 nutrition.py 的导航栏样式
 # ==========================================
 st.markdown("""
 <style>
@@ -327,6 +329,7 @@ st.markdown("""
         --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
         --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        --shadow-hover: 0 10px 20px -5px rgba(37, 99, 235, 0.15);
     }
     
     .stApp {
@@ -334,29 +337,42 @@ st.markdown("""
         background-color: #f8fafc;
     }
     
-    .main > div { padding-top: 0 !important; }
-    .block-container { padding: 1rem 2rem 2rem !important; max-width: 1400px; margin: 0 auto; }
+    /* 隐藏左侧默认侧边栏 */
+    section[data-testid="stSidebar"] {
+        display: none !important;
+    }
     
-    #MainMenu, footer, section[data-testid="stSidebar"] { display: none !important; }
+    .block-container { 
+        padding: 0 2rem 1rem !important; 
+        max-width: 1400px; 
+        margin: 0 auto; 
+    }
     
-    /* 导航栏：间距稍微增大（原为2px，现改为8px） */
+    /* 隐藏默认菜单和页脚 */
+    #MainMenu { visibility: hidden; }
+    footer { visibility: hidden; }
+    
+    /* 【关键修改】导航栏 - 完全同步 nutrition.py 参数 */
     .top-navbar {
         background: white;
-        padding: 0 2.5rem;
-        height: 70px;
+        padding: 0 1.5rem;           /* 同步：1.5rem */
+        height: 75px;                /* 同步：75px */
         box-shadow: var(--shadow-sm);
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        position: sticky;
-        top: 0;
+        align-items: center;         /* 同步：居中 */
+        position: relative; 
         z-index: 9999;
         border-bottom: 1px solid var(--gray-200);
+        
+        margin-top: 50px;            /* 同步：50px，紧贴默认头部 */
+        margin-bottom: 0rem;
+        border-radius: 0 0 8px 8px;
     }
     
     .nav-logo { 
         font-weight: 700; 
-        font-size: 1.4rem; 
+        font-size: 1.8rem;           /* 同步：1.8rem */
         color: var(--primary);
         cursor: default; 
         display: flex;
@@ -366,16 +382,16 @@ st.markdown("""
     
     .nav-links { 
         display: flex; 
-        gap: 8px;  /* 原为2px，现增大到8px，适中 */
+        gap: 10px;                   /* 同步：10px */
     }
     .nav-links a { 
         text-decoration: none; 
         color: var(--gray-600); 
         font-weight: 500; 
-        padding: 8px 16px; 
+        padding: 8px 18px;           /* 同步：8px 18px */
         border-radius: 20px; 
         transition: all 0.3s; 
-        font-size: 0.95rem;
+        font-size: 1.1rem;           /* 同步：调整为 1.1rem */
     }
     .nav-links a:hover { 
         background-color: var(--primary-light);
@@ -386,13 +402,14 @@ st.markdown("""
         color: white; 
     }
     
+    /* Hero 区域 - 更紧凑 */
     .hero-box { 
         background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%); 
-        padding: 2.5rem 2rem; 
-        border-radius: 30px; 
+        padding: 1.8rem 1.5rem; 
+        border-radius: 24px; 
         text-align: center; 
         color: white; 
-        margin: 1rem 0 2rem 0; 
+        margin: 0.5rem 0 1rem 0; 
         box-shadow: var(--shadow-lg);
         position: relative;
         overflow: hidden;
@@ -429,17 +446,18 @@ st.markdown("""
     @keyframes move { 0% { background-position: 0 0; } 100% { background-position: 30px 30px; } }
     
     .hero-title, .hero-sub { position: relative; z-index: 2; }
-    .hero-title { font-size: 2.5rem; font-weight: 700; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-    .hero-sub { font-size: 1.1rem; opacity: 0.95; margin-top: 0.5rem; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+    .hero-title { font-size: 2.2rem; font-weight: 700; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    .hero-sub { font-size: 1rem; opacity: 0.95; margin-top: 0.3rem; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
     
+    /* 各部分标题 */
     .section-title {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         font-weight: 700;
         color: var(--gray-800);
-        margin: 2rem 0 1.5rem 0;
+        margin: 1.2rem 0 0.8rem 0;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
         position: relative;
     }
     .section-title::after {
@@ -447,17 +465,17 @@ st.markdown("""
         flex: 1;
         height: 2px;
         background: linear-gradient(90deg, var(--primary), transparent);
-        margin-left: 20px;
+        margin-left: 15px;
     }
     
     .subsection-title-center {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: 600;
         color: var(--gray-800);
-        margin: 2rem 0 1.5rem 0;
+        margin: 1.2rem 0 0.8rem 0;
         text-align: center;
         position: relative;
-        padding-bottom: 0.8rem;
+        padding-bottom: 0.5rem;
     }
     .subsection-title-center::after {
         content: '';
@@ -465,230 +483,299 @@ st.markdown("""
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 60px;
+        width: 50px;
         height: 3px;
         background: var(--primary);
         border-radius: 2px;
     }
     
+    /* 指标卡片 - 添加悬浮效果 */
     .metric-card {
         background: white;
-        padding: 1.5rem;
-        border-radius: 20px;
+        padding: 1rem;
+        border-radius: 16px;
         box-shadow: var(--shadow-md);
         text-align: center;
-        transition: all 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         height: 100%;
         border: 1px solid var(--gray-200);
+        cursor: default;
     }
     .metric-card:hover {
         transform: translateY(-5px);
-        box-shadow: var(--shadow-lg);
+        box-shadow: var(--shadow-hover);
         border-color: var(--primary-light);
     }
-    .metric-label { color: var(--gray-600); font-weight: 500; font-size: 0.95rem; margin-bottom: 0.5rem; }
-    .metric-value { font-size: 2.5rem; font-weight: 600; color: var(--primary); line-height: 1.2; margin: 0.3rem 0; }
+    .metric-label { color: var(--gray-600); font-weight: 500; font-size: 0.85rem; margin-bottom: 0.3rem; }
+    .metric-value { font-size: 2rem; font-weight: 600; color: var(--primary); line-height: 1.2; margin: 0.2rem 0; }
     
     .risk-bar-container {
         width: 100%;
-        height: 8px;
+        height: 6px;
         background: var(--gray-200);
-        border-radius: 4px;
-        margin: 0.5rem 0;
+        border-radius: 3px;
+        margin: 0.3rem 0;
         position: relative;
     }
-    .risk-bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
-    .risk-markers { display: flex; justify-content: space-between; margin-top: 0.3rem; font-size: 0.9rem; color: var(--gray-600); }
+    .risk-bar-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+    .risk-markers { display: flex; justify-content: space-between; margin-top: 0.2rem; font-size: 0.8rem; color: var(--gray-600); }
     
     .model-explanation {
-        margin-top: 0.8rem;
-        padding: 0.8rem;
+        margin-top: 0.5rem;
+        padding: 0.5rem;
         background: var(--gray-50);
-        border-radius: 8px;
-        font-size: 1.05rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
         color: var(--gray-800);
         text-align: left;
-        border-left: 4px solid var(--primary);
-        line-height: 1.6;
+        border-left: 3px solid var(--primary);
+        line-height: 1.4;
     }
     
+    /* 分析卡片 - 添加悬浮效果 */
     .analysis-card {
         background: white;
-        border-radius: 20px;
-        padding: 1.5rem;
+        border-radius: 16px;
+        padding: 1rem;
         box-shadow: var(--shadow-md);
         border: 1px solid var(--gray-200);
         height: 100%;
         display: flex;
         flex-direction: column;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .analysis-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-hover);
+        border-color: var(--primary-light);
     }
     
     .analysis-card-content { flex: 1; display: flex; flex-direction: column; }
     .analysis-card-header {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 600;
         color: var(--gray-800);
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
         text-align: center;
-        padding-bottom: 0.5rem;
+        padding-bottom: 0.3rem;
         border-bottom: 1px solid var(--gray-200);
     }
     
-    .clinical-metrics-container { display: flex; flex-direction: column; gap: 0.8rem; flex: 1; }
+    .clinical-metrics-container { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
     
     .clinical-metric-row {
         display: flex;
         align-items: center;
         background: white;
-        border-radius: 12px;
-        padding: 0.6rem;
+        border-radius: 10px;
+        padding: 0.4rem;
         border: 1px solid var(--gray-200);
         transition: all 0.2s ease;
     }
     .clinical-metric-row:hover { border-color: var(--primary); background: var(--gray-50); }
     
     .metric-icon-box {
-        width: 40px;
-        height: 40px;
+        width: 32px;
+        height: 32px;
         background: var(--gray-100);
-        border-radius: 10px;
+        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.3rem;
-        margin-right: 0.8rem;
+        font-size: 1.1rem;
+        margin-right: 0.5rem;
     }
     
     .metric-info { flex: 1; display: flex; flex-direction: column; }
-    .metric-name { font-size: 0.85rem; color: var(--gray-600); margin-bottom: 0.2rem; }
-    .metric-value-unit { font-size: 1.1rem; font-weight: 600; color: var(--gray-800); }
+    .metric-name { font-size: 0.75rem; color: var(--gray-600); margin-bottom: 0.1rem; }
+    .metric-value-unit { font-size: 0.95rem; font-weight: 600; color: var(--gray-800); }
     
-    .metric-status-box { display: flex; flex-direction: column; align-items: flex-end; min-width: 80px; }
-    .metric-status-badge { font-size: 0.9rem; font-weight: 500; padding: 0.2rem 0.8rem; border-radius: 20px; text-align: center; }
-    .metric-range { font-size: 0.7rem; color: var(--gray-600); margin-top: 0.2rem; }
+    .metric-status-box { display: flex; flex-direction: column; align-items: flex-end; min-width: 70px; }
+    .metric-status-badge { font-size: 0.8rem; font-weight: 500; padding: 0.15rem 0.6rem; border-radius: 16px; text-align: center; }
+    .metric-range { font-size: 0.65rem; color: var(--gray-600); margin-top: 0.1rem; }
     
     .info-box {
         background: var(--primary-light);
-        padding: 0.8rem 1.2rem;
-        border-radius: 8px;
-        border-left: 4px solid var(--primary);
+        padding: 0.5rem 0.8rem;
+        border-radius: 6px;
+        border-left: 3px solid var(--primary);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
     }
     
     .ai-card {
         background: white;
-        border-radius: 20px;
-        padding: 1.5rem;
+        border-radius: 16px;
+        padding: 1rem;
         box-shadow: var(--shadow-md);
-        margin: 1.5rem 0;
+        margin: 0.8rem 0;
         border: 1px solid var(--gray-200);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .ai-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
-    .ai-card-title { font-size: 1.3rem; font-weight: 600; color: var(--gray-800); }
+    .ai-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-hover);
+        border-color: var(--primary-light);
+    }
+    .ai-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+    .ai-card-title { font-size: 1.1rem; font-weight: 600; color: var(--gray-800); }
     
-    /* ===== 图表解读框 - 高度减小，更紧凑 ===== */
+    /* 图表解读框 - 优化版 (添加悬浮效果) */
     .chart-interpretation {
-        background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 100%);
-        padding: 0.7rem 1.2rem;          /* 上下内边距从1.2rem减小到0.7rem */
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        padding: 1rem 1.25rem;
         border-radius: 12px;
-        margin-bottom: 1rem;               /* 下边距减小 */
-        border: 1px solid #d4e2f0;
-        font-size: 0.95rem;                /* 字体稍微调小但保持可读 */
-        color: var(--gray-700);
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        line-height: 1.5;
+        margin-bottom: 0.75rem;
+        border: 1px solid #e2e8f0;
+        font-size: 0.9rem;
+        color: #334155;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        line-height: 1.6;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .chart-interpretation:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-hover);
+        border-color: #bfdbfe;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
     }
     
     .chart-interpretation strong {
-        font-size: 1.2rem;                  /* 标题保持醒目 */
-        color: var(--primary-dark);
+        font-size: 1.05rem;
+        color: #1e293b;
         display: block;
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
     }
     
-    /* 内部段落边距减小 */
     .chart-interpretation p {
-        margin: 0.2rem 0;
+        margin: 0.4rem 0;
     }
     
     .chart-interpretation ul {
-        margin: 0.2rem 0 0.2rem 1.2rem;
+        margin: 0.4rem 0 0.4rem 1.2rem;
+        padding-left: 0.5rem;
     }
     
     .chart-interpretation li {
-        margin: 0.1rem 0;
+        margin: 0.25rem 0;
     }
     
-    /* 雷达图旁边的解读框 - 让Age等不换行，使用flex列表 */
+    .chart-interpretation .insight-box {
+        background: #eff6ff;
+        border-left: 3px solid #2563eb;
+        padding: 0.6rem 0.8rem;
+        border-radius: 6px;
+        margin-top: 0.6rem;
+        font-size: 0.85rem;
+    }
+    
+    .chart-interpretation .insight-box strong {
+        color: #1e40af;
+        margin-bottom: 0.2rem;
+    }
+    .chart-interpretation .reference-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 0.6rem;
+        font-size: 0.8rem;
+    }
+    
+    .chart-interpretation .reference-table th,
+    .chart-interpretation .reference-table td {
+        border: 1px solid #cbd5e1;
+        padding: 0.3rem 0.5rem;
+        text-align: left;
+    }
+    
+    .chart-interpretation .reference-table th {
+        background-color: #f1f5f9;
+        font-weight: 600;
+        color: #475569;
+    }
+    
+    .chart-interpretation .reference-table tr:nth-child(even) {
+        background-color: #f8fafc;
+    }
+    
     .chart-interpretation .risk-dimensions {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5rem 1.5rem;
+        gap: 0.3rem 1rem;
         list-style: none;
         padding-left: 0;
-        margin: 0.3rem 0;
+        margin: 0.2rem 0;
     }
     
     .chart-interpretation .risk-dimensions li {
-        white-space: nowrap;        /* 强制不换行 */
+        white-space: nowrap;
         margin: 0;
     }
     
-    .chart-annotation-content {
-        padding: 1.2rem;
-        background: white;
-        border-radius: 8px;
-        line-height: 1.7;
-        border: 1px solid var(--gray-200);
-        font-family: 'Inter', sans-serif;
-        margin-top: 1rem;
-    }
+    .shap-plot-container { max-width: 500px; margin: 0 auto; }
     
-    .chart-annotation-content h4 { color: var(--primary); margin-top: 0; margin-bottom: 1rem; font-size: 1.2rem; font-weight: 600; }
-    .chart-annotation-content p { margin: 0.8rem 0; color: var(--gray-700); }
-    .chart-annotation-content ul { margin: 0.5rem 0 1rem 0; padding-left: 1.5rem; }
-    .chart-annotation-content li { margin: 0.3rem 0; color: var(--gray-700); }
+    .flex-row { display: flex; gap: 1rem; align-items: stretch; }
+    .flex-1 { flex: 1; }
     
-    .term-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.8rem 1.5rem;
-        margin: 1rem 0;
-        background: var(--gray-50);
-        padding: 1rem;
-        border-radius: 8px;
-        border: 1px solid var(--gray-200);
-    }
-    .term-label { color: var(--primary); font-weight: 600; min-width: 100px; }
-    .term-desc { color: var(--gray-600); }
+    @media (max-width: 768px) { .flex-row { flex-direction: column; } }
     
+    /* 按钮 */
     .stButton > button {
         background: white !important;
         color: var(--primary) !important;
         border: 1px solid var(--primary) !important;
         border-radius: 30px !important;
         font-weight: 500 !important;
-        padding: 0.4rem 1.2rem !important;
-        font-size: 0.9rem !important;
+        padding: 0.3rem 1rem !important;
+        font-size: 0.8rem !important;
         transition: all 0.3s !important;
     }
     .stButton > button:hover {
         background: var(--primary) !important;
         color: white !important;
-        transform: translateY(-2px);
+        transform: translateY(-1px);
         box-shadow: var(--shadow-md) !important;
     }
     
-    .shap-plot-container { max-width: 600px; margin: 0 auto; }
+    /* 调整列间距 */
+    .row-widget.stHorizontal {
+        gap: 0.8rem !important;
+    }
     
-    .flex-row { display: flex; gap: 1.5rem; align-items: stretch; }
-    .flex-1 { flex: 1; }
-    
-    @media (max-width: 768px) { .flex-row { flex-direction: column; } }
+    /* Plotly 图表容器 */
+    .js-plotly-plot .plotly {
+        margin: 0 !important;
+    }
+    /* 【修改重点】底部安全/声明徽章 - 同步 me.py 风格 (白灰渐变) */
+    .security-badge {
+        background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%); /* 白灰渐变背景 */
+        padding: 1.2rem;
+        border-radius: 16px;
+        text-align: center;
+        border: 1px solid #e5e7eb; /* 中性灰色边框 */
+        margin-top: 2rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+    .security-badge p {
+        color: #374151;
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    .security-badge strong {
+        font-weight: 700;
+    }
+    .security-badge .warning-icon {
+        font-size: 1.2rem;
+        margin-right: 6px;
+        vertical-align: middle;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 def main():
-    # 顶部导航栏
+    # 顶部导航栏 - 已同步 nutrition.py 结构
     st.markdown("""
     <div class="top-navbar">
         <div class="nav-logo">❤️ CardioGuard AI</div>
@@ -702,13 +789,11 @@ def main():
             <a href="/p05_me">👤 我的中心</a>
         </div>
     </div>
-    """, unsafe_allow_html=True)
     
-    # Hero 区域
-    st.markdown("""
+    <!-- Hero 区域 -->
     <div class="hero-box">
         <h1 class="hero-title">📊 健康总览</h1>
-        <p class="hero-sub">基于您的健康数据，AI为您生成全面的健康分析和个性化建议</p>
+        <p class="hero-sub">基于您的健康数据，AI 为您生成全面的健康分析和个性化建议</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -720,11 +805,11 @@ def main():
     
     if not is_complete or not profile.get('diseases') or not profile.get('diet_pref'):
         st.markdown("""
-        <div style="background:#FEF3C7; padding:2rem; border-radius:20px; text-align:center; max-width:600px; margin:2rem auto;">
-            <div style="font-size:3rem; margin-bottom:1rem;">⚠️</div>
-            <h3 style="margin:0 0 0.5rem 0; color:#92400E;">信息尚未完善</h3>
-            <p style="margin:0.5rem 0; color:#92400E;">请先在个人健康档案中填写完整的疾病信息和饮食偏好</p>
-            <a href="/p01_profile" style="display:inline-block; margin-top:1rem; padding:0.8rem 2rem; background:#2563EB; color:white; text-decoration:none; border-radius:30px; font-weight:500;">前往完善档案</a>
+        <div style="background:#FEF3C7; padding:1.5rem; border-radius:16px; text-align:center; max-width:500px; margin:1rem auto;">
+            <div style="font-size:2.5rem; margin-bottom:0.5rem;">⚠️</div>
+            <h3 style="margin:0 0 0.3rem 0; color:#92400E;">信息尚未完善</h3>
+            <p style="margin:0.3rem 0; color:#92400E;">请先在个人健康档案中填写完整的疾病信息和饮食偏好</p>
+            <a href="/p01_profile" style="display:inline-block; margin-top:0.8rem; padding:0.6rem 1.5rem; background:#2563EB; color:white; text-decoration:none; border-radius:30px; font-weight:500;">前往完善档案</a>
         </div>
         """, unsafe_allow_html=True)
         st.stop()
@@ -747,7 +832,7 @@ def main():
         <div class="metric-card">
             <div class="metric-label">身体质量指数 (BMI)</div>
             <div class="metric-value">{bmi:.1f}</div>
-            <div style="color: {bmi_color}; font-weight:500;">{bmi_status}</div>
+            <div style="color: {bmi_color}; font-weight:500; font-size:0.9rem;">{bmi_status}</div>
         </div>
         """, unsafe_allow_html=True)
     
@@ -757,7 +842,7 @@ def main():
         <div class="metric-card">
             <div class="metric-label">心血管疾病</div>
             <div class="metric-value">{disease_count}</div>
-            <div style="color: var(--primary);">种已记录</div>
+            <div style="color: var(--primary); font-size:0.9rem;">种已记录</div>
         </div>
         """, unsafe_allow_html=True)
     
@@ -769,7 +854,7 @@ def main():
         <div class="metric-card">
             <div class="metric-label">年龄</div>
             <div class="metric-value">{age}岁</div>
-            <div style="color: {age_color};">{age_status}</div>
+            <div style="color: {age_color}; font-size:0.9rem;">{age_status}</div>
         </div>
         """, unsafe_allow_html=True)
     
@@ -787,7 +872,7 @@ def main():
         <div class="metric-card">
             <div class="metric-label">血压</div>
             <div class="metric-value">{derived['ap_hi']:.0f}/{derived['ap_lo']:.0f}</div>
-            <div style="color: {bp_color};">{bp_status}</div>
+            <div style="color: {bp_color}; font-size:0.9rem;">{bp_status}</div>
         </div>
         """, unsafe_allow_html=True)
     
@@ -811,12 +896,12 @@ def main():
                     <div class="analysis-card-header">🤖 预测结果</div>
                     <div class="analysis-card-content">
                         <div style="text-align:center;">
-                            <div style="color:var(--gray-600); margin-bottom:0.5rem;">10年心血管病风险</div>
-                            <div style="font-size:3rem; font-weight:600; color:{risk_color};">{proba:.1%}</div>
-                            <div style="margin:1rem 0;">
-                                <span style="background:{risk_color}15; color:{risk_color}; padding:6px 28px; border-radius:30px; font-weight:500;">{risk_level}</span>
+                            <div style="color:var(--gray-600); margin-bottom:0.3rem; font-size:0.9rem;">10 年心血管病风险</div>
+                            <div style="font-size:2.5rem; font-weight:600; color:{risk_color};">{proba:.1%}</div>
+                            <div style="margin:0.5rem 0;">
+                                <span style="background:{risk_color}15; color:{risk_color}; padding:4px 24px; border-radius:30px; font-weight:500; font-size:0.9rem;">{risk_level}</span>
                             </div>
-                            <div style="margin-top:1.5rem;">
+                            <div style="margin-top:0.8rem;">
                                 <div class="risk-bar-container">
                                     <div class="risk-bar-fill" style="width:{risk_position}%; background:{risk_color};"></div>
                                 </div>
@@ -828,8 +913,8 @@ def main():
                             </div>
                             <div class="model-explanation">
                                 <strong>📊 预测模型说明：</strong><br>
-                                基于XGBoost机器学习算法，综合考虑12项临床指标，通过分析大规模人群数据训练得出。
-                                预测概率表示在相似特征人群中，10年内发生心血管事件的可能性。
+                                基于 XGBoost 机器学习算法，综合考虑 12 项临床指标，通过分析大规模人群数据训练得出。
+                                预测概率表示在相似特征人群中，10 年内发生心血管事件的可能性。
                             </div>
                         </div>
                     </div>
@@ -939,12 +1024,12 @@ def main():
                 
                 st.markdown('</div></div>', unsafe_allow_html=True)
             
-            # ==================== 新增：高级动态可视化图 (Plotly) ====================
-            st.markdown('<div style="margin-top: 2rem;"></div>', unsafe_allow_html=True)
+            # ==================== 高级动态可视化图 (Plotly) ====================
+            st.markdown('<div style="margin-top: 1rem;"></div>', unsafe_allow_html=True)
             
-            # 图表1：个人风险雷达图
+            # 图表 1：个人风险雷达图
             st.markdown("""
-            <div style="margin-top:2rem;">
+            <div style="margin-top:1rem;">
                 <div class="subsection-title-center">🕸️ 个人风险雷达</div>
             </div>
             """, unsafe_allow_html=True)
@@ -973,13 +1058,13 @@ def main():
             
             fig_radar.update_layout(
                 polar=dict(
-                    radialaxis=dict(visible=True, range=[0, 1], tickfont=dict(size=10, color='#4B5563')),
-                    angularaxis=dict(tickfont=dict(size=11, weight='bold', color='#1F2937'), direction="clockwise", period=6)
+                    radialaxis=dict(visible=True, range=[0, 1], tickfont=dict(size=9, color='#4B5563')),
+                    angularaxis=dict(tickfont=dict(size=10, weight='bold', color='#1F2937'), direction="clockwise", period=6)
                 ),
                 showlegend=False,
-                height=400,
-                margin=dict(t=30, b=30, l=30, r=30),
-                title=dict(text='Multidimensional Risk Assessment', x=0.5, font=dict(size=14, weight='bold'))
+                height=350,
+                margin=dict(t=20, b=20, l=20, r=20),
+                title=dict(text='Multidimensional Risk Assessment', x=0.5, font=dict(size=12, weight='bold'))
             )
             
             col_chart1, col_note1 = st.columns([2, 1])
@@ -987,26 +1072,25 @@ def main():
                 st.plotly_chart(fig_radar, use_container_width=True, config={'displayModeBar': False})
             
             with col_note1:
-                # 修改：使用flex列表让维度不换行，且整体框更紧凑
                 st.markdown("""
                 <div class="chart-interpretation" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
                     <strong>📊 图表解读</strong>
-                    <p style="margin-top:0.3rem;">雷达图展示了您在六个关键维度的风险分布。图形覆盖面积越大，表示该维度偏离理想健康状态越远。</p>
-                    <ul class="risk-dimensions" style="display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; list-style: none; padding-left: 0; margin: 0.2rem 0;">
-                        <li style="white-space: nowrap;"><strong>Age:</strong> 年龄因素（不可控）</li>
+                    <p style="margin-top:0.2rem;">雷达图展示了您在六个关键维度的风险分布。图形覆盖面积越大，表示该维度偏离理想健康状态越远。</p>
+                    <ul class="risk-dimensions" style="display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; list-style: none; padding-left: 0; margin: 0.2rem 0;">
+                        <li style="white-space: nowrap;"><strong>Age:</strong> 年龄因素</li>
                         <li style="white-space: nowrap;"><strong>BP:</strong> 血压水平</li>
-                        <li style="white-space: nowrap;"><strong>Cholesterol:</strong> 胆固醇水平</li>
+                        <li style="white-space: nowrap;"><strong>Cholesterol:</strong> 胆固醇</li>
                         <li style="white-space: nowrap;"><strong>Glucose:</strong> 血糖水平</li>
                         <li style="white-space: nowrap;"><strong>BMI:</strong> 体重指数</li>
-                        <li style="white-space: nowrap;"><strong>Lifestyle:</strong> 生活方式风险（吸烟/饮酒/缺乏运动）</li>
+                        <li style="white-space: nowrap;"><strong>Lifestyle:</strong> 生活方式风险</li>
                     </ul>
-                    <p style="margin:0.2rem 0 0;"><strong>建议：</strong> 重点关注图形突出的顶点，这些是您需要优先干预的领域。</p>
+                    <p style="margin:0.1rem 0 0;"><strong>建议：</strong> 重点关注图形突出的顶点。</p>
                 </div>
                 """, unsafe_allow_html=True)
-
-            # 图表2：关键指标趋势模拟
+            
+            # 图表 2：关键指标趋势模拟
             st.markdown("""
-            <div style="margin-top:2rem;">
+            <div style="margin-top:1rem;">
                 <div class="subsection-title-center">📈 关键指标趋势模拟</div>
             </div>
             """, unsafe_allow_html=True)
@@ -1018,12 +1102,12 @@ def main():
             fig_trend = go.Figure()
             fig_trend.add_trace(go.Scatter(
                 x=years, y=risk_no_action, mode='lines+markers', name='Without Intervention',
-                line=dict(color='#DC2626', width=2, dash='dash'), marker=dict(size=8),
+                line=dict(color='#DC2626', width=2, dash='dash'), marker=dict(size=6),
                 hovertemplate='<b>No Action</b><br>Year: %{x}<br>Risk: %{y:.2%}<extra></extra>'
             ))
             fig_trend.add_trace(go.Scatter(
                 x=years, y=risk_with_action, mode='lines+markers', name='With Intervention',
-                line=dict(color='#059669', width=3), marker=dict(size=8),
+                line=dict(color='#059669', width=2.5), marker=dict(size=6),
                 hovertemplate='<b>With Action</b><br>Year: %{x}<br>Risk: %{y:.2%}<extra></extra>'
             ))
             fig_trend.add_trace(go.Scatter(
@@ -1033,11 +1117,12 @@ def main():
             ))
             
             fig_trend.update_layout(
-                xaxis=dict(title='Years', tickmode='linear', tick0=0, dtick=1),
-                yaxis=dict(title='Risk Probability', tickformat='.0%'),
-                legend=dict(x=0.02, y=0.98, bgcolor='rgba(255,255,255,0.8)'),
-                height=400, margin=dict(t=40, b=40, l=40, r=20),
-                title=dict(text='Projected 5-Year Risk Trajectory', x=0.5, font=dict(size=14, weight='bold')),
+                xaxis=dict(title='Years', tickmode='linear', tick0=0, dtick=1, title_font=dict(size=10)),
+                yaxis=dict(title='Risk Probability', tickformat='.0%', title_font=dict(size=10)),
+                legend=dict(x=0.02, y=0.98, bgcolor='rgba(255,255,255,0.8)', font=dict(size=9)),
+                height=350,
+                margin=dict(t=30, b=30, l=40, r=20),
+                title=dict(text='Projected 5-Year Risk Trajectory', x=0.5, font=dict(size=12, weight='bold')),
                 hovermode='x unified', plot_bgcolor='rgba(243, 244, 246, 0.5)'
             )
             
@@ -1049,20 +1134,20 @@ def main():
                 st.markdown("""
                 <div class="chart-interpretation" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
                     <strong>📊 图表解读</strong>
-                    <p style="margin:0.2rem 0;">此图模拟了未来5年内您的心血管风险变化趋势。</p>
-                    <ul style="margin:0.2rem 0; padding-left:1.2rem;">
-                        <li><span style="color:#DC2626;">🔴 红色虚线</span>：若不改变现有生活习惯，风险可能随年龄增长而上升。</li>
-                        <li><span style="color:#059669;">🟢 绿色实线</span>：若采取积极干预措施，风险可显著降低。</li>
+                    <p style="margin:0.1rem 0;">此图模拟了未来 5 年内您的心血管风险变化趋势。</p>
+                    <ul style="margin:0.1rem 0; padding-left:1rem;">
+                        <li><span style="color:#DC2626;">🔴 红色虚线</span>：若不改变现有生活习惯</li>
+                        <li><span style="color:#059669;">🟢 绿色实线</span>：若采取积极干预措施</li>
                     </ul>
-                    <p style="margin:0.2rem 0 0;"><strong>启示：</strong> 早期干预对长期预后至关重要，阴影区域代表通过努力可避免的风险增量。</p>
+                    <p style="margin:0.1rem 0 0;"><strong>启示：</strong> 早期干预至关重要。</p>
                 </div>
                 """, unsafe_allow_html=True)
-
-            # ==================== 第三部分：SHAP模型解释 ====================
+            
+            # ==================== 第三部分：SHAP 模型解释 ====================
             st.markdown('<div class="section-title">🌍 人群大数据洞察</div>', unsafe_allow_html=True)
             
             st.markdown("""
-            <div style="margin-top:1rem;">
+            <div style="margin-top:0.5rem;">
                 <div class="subsection-title-center">🔍 风险因素分析</div>
             </div>
             """, unsafe_allow_html=True)
@@ -1073,25 +1158,50 @@ def main():
                 display_feature_names = ['Age', 'Gender', 'Height', 'Weight', 'Systolic BP', 'Diastolic BP', 
                                         'Cholesterol', 'Glucose', 'Smoking', 'Alcohol', 'Active', 'BMI']
                 
-                # SHAP解读框 - 更紧凑
+                # SHAP 解读框 - 优化版
                 st.markdown("""
-                <div class="chart-interpretation" style="margin-bottom:1rem;">
-                    <strong>📊 图表解读</strong>
-                    <p style="margin:0.2rem 0;">红色箭头表示增加风险的因素，蓝色箭头表示降低风险的因素。箭头越长，影响越大。基准值表示人群平均风险，最终值是您的个人风险。</p>
+                <div class="chart-interpretation">
+                    <strong>📊 图表一：个人风险因素分解 (SHAP 瀑布图)</strong>
+                    <p>此图揭示了<strong>您个人</strong>的健康数据如何影响最终的风险预测结果。它展示了每个指标相对于“平均人”是增加还是降低了您的风险。</p>
+                    <ul>
+                        <li><span style="color:#DC2626;">🔴 红色条形</span>：该指标使您的风险<strong>高于</strong>基准（推高风险）。例如，较高的血压或年龄。</li>
+                        <li><span style="color:#2563EB;">🔵 蓝色条形</span>：该指标使您的风险<strong>低于</strong>基准（降低风险）。例如，良好的生活习惯或正常的血糖。</li>
+                        <li><strong>条形长度</strong>：代表影响的大小。条形越长，该因素对最终风险的贡献（无论正向或负向）就越大。</li>
+                        <li><strong>Base Value</strong>：人群的平均风险基线。所有红蓝条形的效应从此基线开始累加。</li>
+                        <li><strong>f(x)</strong>：您的最终预测风险值。它等于基线值加上所有个人因素的贡献之和。</li>
+                    </ul>
+                    <div class="insight-box">
+                        <strong>💡 核心发现与建议</strong>
+                        <p>请重点关注图中<strong>最长的红色条形</strong>，这些是您个人最主要的风险驱动因素。优先改善这些因素（如通过饮食、运动或遵医嘱服药）能最有效地降低您的整体风险。</p>
+                    </div>
                 </div>
                 """, unsafe_allow_html=True)
                 
-                fig1, ax1 = plt.subplots(figsize=(7, 3.5))
+                # 【修改点】缩小 SHAP 图尺寸
+                fig1, ax1 = plt.subplots(figsize=(3, 0.5))
                 plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial']
                 plt.rcParams['axes.unicode_minus'] = False
                 
+                # 1. 先正常生成 SHAP 瀑布图
                 shap.waterfall_plot(
                     shap.Explanation(values=shap_values[0], base_values=explainer.expected_value, data=features, feature_names=display_feature_names),
                     show=False, max_display=12
                 )
-                plt.title("Factors Affecting Your Cardiovascular Risk", fontsize=10, fontweight='bold', pad=10)
-                plt.tight_layout()
                 
+                # 2. 【关键步骤】获取当前坐标轴
+                ax = plt.gca()
+                
+                # 3. 遍历图中所有的条形容器 (BarContainer)
+                for container in ax.containers:
+                    bars = container.get_children()
+                    for bar in bars:
+                        if hasattr(bar, 'set_height'):
+                            bar.set_height(0.3) 
+                            
+                # 4. 设置标题和字体
+                plt.title("Factors Affecting Your Cardiovascular Risk", fontsize=8, fontweight='bold', pad=5)
+                ax.tick_params(labelsize=7) 
+                plt.tight_layout()
                 st.markdown('<div class="shap-plot-container">', unsafe_allow_html=True)
                 st.pyplot(fig1)
                 st.markdown('</div>', unsafe_allow_html=True)
@@ -1100,19 +1210,43 @@ def main():
                 # 特征重要性图表
                 if metadata and 'feature_importances' in metadata:
                     st.markdown("""
-                    <div style="margin-top:2rem;">
+                    <div style="margin-top:1.5rem;">
                         <div class="subsection-title-center">⭐ 特征重要性排名</div>
                     </div>
                     """, unsafe_allow_html=True)
                     
-                    # 特征重要性解读框 - 紧凑
+                    # 特征重要性解读框 - 优化版
                     st.markdown("""
-                    <div class="chart-interpretation" style="margin-bottom:1rem;">
-                        <strong>📊 图表解读</strong>
-                        <p style="margin:0.2rem 0;">基于大规模人群数据分析，展示各因素对心血管疾病预测的总体重要性。条形越长，该特征在模型中的权重越大。</p>
+                    <div class="chart-interpretation">
+                        <strong>📊 图表二：全局特征重要性排名</strong>
+                        <p>此图反映了在<strong>整体人群</strong>中，哪些健康指标对于预测心血管疾病最为关键。它是模型从大量数据中学习到的普遍规律。</p>
+                        <ul>
+                            <li><strong>横轴数值 (重要性得分)</strong>：范围从 0 到 1，分数越高，表示该指标在模型做出预测时的整体影响力越大。</li>
+                            <li><strong>排名意义</strong>：排名靠前的因素（如年龄、血压）通常是心血管疾病的公认主要风险因子。</li>
+                            <li><strong>与上图的区别</strong>：上图（SHAP）展示的是<strong>您个人</strong>的特殊情况；而本图展示的是<strong>大众群体</strong>的普遍规律。即使某个因素在全局很重要，但在您个人身上可能影响不大（反之亦然）。</li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>💡 核心发现</strong>
+                            <p>通常情况下，<strong>年龄、血压、胆固醇</strong>是人群中最关键的风险预测因子。了解这些有助于我们关注普遍的健康原则。</p>
+                        </div>
+                        <table class="reference-table">
+                            <thead>
+                                <tr>
+                                    <th>指标</th>
+                                    <th>理想参考范围</th>
+                                    <th>风险提示</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>收缩压 (Systolic BP)</td><td>&lt; 120 mmHg</td><td>≥140 mmHg 为高血压</td></tr>
+                                <tr><td>舒张压 (Diastolic BP)</td><td>&lt; 80 mmHg</td><td>≥90 mmHg 为高血压</td></tr>
+                                <tr><td>总胆固醇 (Cholesterol)</td><td>&lt; 5.2 mmol/L</td><td>&gt;6.2 mmol/L 为过高</td></tr>
+                                <tr><td>空腹血糖 (Glucose)</td><td>&lt; 6.1 mmol/L</td><td>≥7.0 mmol/L 提示糖尿病</td></tr>
+                                <tr><td>BMI</td><td>18.5 - 24 kg/m²</td><td>≥28 kg/m² 为肥胖</td></tr>
+                            </tbody>
+                        </table>
                     </div>
-                    """, unsafe_allow_html=True)
-                    
+                    """, unsafe_allow_html=True)      
                     importances = metadata['feature_importances']
                     importance_dict = {}
                     for eng_name, chn_name in zip(model_feature_names, display_feature_names):
@@ -1124,30 +1258,31 @@ def main():
                         'Importance': list(importance_dict.values())
                     }).sort_values('Importance', ascending=True)
                     
-                    fig2, ax2 = plt.subplots(figsize=(7, 3.5))
+                    # 同样缩小特征重要性图的尺寸以匹配
+                    fig2, ax2 = plt.subplots(figsize=(5, 2.2))
                     colors = ['#2563EB' for _ in range(len(imp_df))]
                     bars = ax2.barh(imp_df['Feature'], imp_df['Importance'], color=colors)
-                    ax2.set_xlabel('Importance Score', fontsize=9)
-                    ax2.set_title('Global Feature Importance', fontsize=10, fontweight='bold', pad=10)
-                    ax2.tick_params(axis='both', which='major', labelsize=8)
+                    ax2.set_xlabel('Importance Score', fontsize=8)
+                    ax2.set_title('Global Feature Importance', fontsize=8, fontweight='bold', pad=5)
+                    ax2.tick_params(axis='both', which='major', labelsize=7)
                     
                     for bar in bars:
                         width = bar.get_width()
-                        ax2.text(width + 0.01, bar.get_y() + bar.get_height()/2, f'{width:.3f}', ha='left', va='center', fontsize=7)
+                        ax2.text(width + 0.01, bar.get_y() + bar.get_height()/2, f'{width:.3f}', ha='left', va='center', fontsize=6)
                     
                     plt.tight_layout()
                     st.pyplot(fig2)
                     plt.close()
                 
             except Exception as e:
-                st.warning(f"SHAP分析生成失败：{e}")
+                st.warning(f"SHAP 分析生成失败：{e}")
                 
         except Exception as e:
             st.error(f"模型预测失败：{e}")
     else:
-        st.info("💡 提示：运行 train.py 训练模型后，可查看AI风险预测分析")
+        st.info("💡 提示：运行 train.py 训练模型后，可查看 AI 风险预测分析")
     
-    # ==================== 第四部分：AI疾病亚型分析 ====================
+    # ==================== 第四部分：AI 疾病亚型分析 ====================
     if profile.get('diseases'):
         st.markdown('<div class="section-title">🧬 疾病亚型分析</div>', unsafe_allow_html=True)
         
@@ -1158,13 +1293,13 @@ def main():
             if unknown_subtypes:
                 st.markdown(f"""
                 <div class="info-box">
-                    🔍 检测到 <strong>{len(unknown_subtypes)}</strong> 种疾病亚型未指定，AI正在为您推导最可能的亚型
+                    🔍 检测到 <strong>{len(unknown_subtypes)}</strong> 种疾病亚型未指定，AI 正在为您推导最可能的亚型
                 </div>
                 """, unsafe_allow_html=True)
             else:
                 st.markdown("""
                 <div class="info-box">
-                    ✅ 所有疾病亚型已明确，AI为您解读已指定亚型的临床意义
+                    ✅ 所有疾病亚型已明确，AI 为您解读已指定亚型的临床意义
                 </div>
                 """, unsafe_allow_html=True)
         
@@ -1174,7 +1309,7 @@ def main():
                     del st.session_state.subtype_analysis
                 st.rerun()
         
-        with st.spinner("🧠 AI正在分析您的疾病数据..."):
+        with st.spinner("🧠 AI 正在分析您的疾病数据..."):
             if 'subtype_analysis' not in st.session_state:
                 st.session_state.subtype_analysis = generate_ai_subtype_analysis(profile)
             
@@ -1183,22 +1318,22 @@ def main():
                 st.markdown(f"""
                 <div class="ai-card">
                     <div class="ai-card-header">
-                        <div class="ai-card-title">📋 AI亚型分析报告</div>
+                        <div class="ai-card-title">📋 AI 亚型分析报告</div>
                     </div>
-                    <div style="line-height:1.7;">
+                    <div style="line-height:1.5;">
                         {formatted_text}
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
     
-    # ==================== 第五部分：AI生活方式优化建议 ====================
+    # ==================== 第五部分：AI 生活方式优化建议 ====================
     st.markdown('<div class="section-title">💪 生活方式优化建议</div>', unsafe_allow_html=True)
     
     col_text, col_button = st.columns([5, 1])
     with col_text:
         st.markdown("""
         <div class="info-box">
-            🤖 基于您的健康档案，AI为您生成了专属的生活方式优化建议
+            🤖 基于您的健康档案，AI 为您生成了专属的生活方式优化建议
         </div>
         """, unsafe_allow_html=True)
     
@@ -1209,7 +1344,7 @@ def main():
             st.rerun()
     
     if 'lifestyle_advice' not in st.session_state:
-        with st.spinner("🧠 AI正在为您定制生活方式优化方案..."):
+        with st.spinner("🧠 AI 正在为您定制生活方式优化方案..."):
             st.session_state.lifestyle_advice = generate_ai_lifestyle_advice(profile)
     
     if st.session_state.lifestyle_advice:
@@ -1219,18 +1354,19 @@ def main():
             <div class="ai-card-header">
                 <div class="ai-card-title">📋 健康改善计划</div>
             </div>
-            <div style="line-height:1.7;">
+            <div style="line-height:1.5;">
                 {formatted_advice}
             </div>
         </div>
         """, unsafe_allow_html=True)
     
-    # 免责声明
-    st.markdown("---")
+    # 【修改重点】免责声明 - 同步 me.py 风格 (白灰渐变) 并修改文案颜色
+    st.markdown("<hr style='margin:1rem 0;'>", unsafe_allow_html=True)
     st.markdown("""
-    <div style="background:white; padding:1rem; border-radius:12px; text-align:center; border:1px solid #E5E7EB;">
-        <p style="color:#6B7280; margin:0; font-size:0.9rem;">
-            ⚠️ 重要提示：以上分析基于AI模型推导，仅供健康管理参考，不能替代专业医疗诊断
+    <div class="security-badge">
+        <p>
+            <span class="warning-icon">⚠️</span>
+            <strong style="color: #2563EB;">CardioGuard AI</strong> <strong style="color: #1F2937;">强调</strong>以上分析基于 AI 模型推导，仅供健康管理参考，不能替代专业医疗诊断。
         </p>
     </div>
     """, unsafe_allow_html=True)

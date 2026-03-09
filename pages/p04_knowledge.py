@@ -10,17 +10,25 @@ client = OpenAI(
     api_key="sk-e200005b066942eebc8c5426df92a6d5",
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
 )
-st.set_page_config(page_title="知识库 · CardioGuard AI", layout="wide")
+
+# 【关键修改】同时设置 page_title (带 emoji) 和 page_icon (单独 emoji)
+# 这样浏览器标签页会显示 📚，页面标题也会显示 📚
+st.set_page_config(
+    page_title="知识库 · CardioGuard AI", 
+    page_icon="📚",  # 这里单独设置标签页图标
+    layout="wide", 
+    initial_sidebar_state="collapsed"
+)
 
 # ==========================================
-# CSS 样式 - 导航栏和Hero与overview一致，功能代码恢复原样且字体调小
+# CSS 样式 - 完全同步 p02_nutrition.py 的导航栏和布局风格
 # ==========================================
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     
     :root {
-        --primary: #F97316;
+        --primary: #F97316;       /* 知识库主题色：橙色 */
         --primary-dark: #C2410C;
         --primary-light: #FFEDD5;
         --success: #059669;
@@ -41,29 +49,41 @@ st.markdown("""
         background-color: #f8fafc;
     }
     
-    .main > div { padding-top: 0 !important; }
-    .block-container { padding: 1rem 2rem 2rem !important; max-width: 1400px; margin: 0 auto; }
+    /* 移除默认 padding-top */
+    .main > div { 
+        padding-top: 0 !important; 
+    }
+    
+    /* 调整主内容区域 */
+    .block-container { 
+        padding: 0 2rem 1rem !important; 
+        max-width: 1400px; 
+        margin: 0 auto; 
+    }
     
     #MainMenu, footer, section[data-testid="stSidebar"] { display: none !important; }
     
-    /* ===== 导航栏：与 overview 完全一致 ===== */
+    /* 【关键修改】导航栏 - 完全同步 nutrition.py 参数 */
     .top-navbar {
         background: white;
-        padding: 0 2.5rem;
-        height: 70px;
+        padding: 0 1.5rem;           /* 同步：1.5rem */
+        height: 75px;                /* 同步：75px */
         box-shadow: var(--shadow-sm);
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        position: sticky;
-        top: 0;
+        align-items: center;         /* 同步：居中 */
+        position: relative; 
         z-index: 9999;
         border-bottom: 1px solid var(--gray-200);
+        
+        margin-top: 50px;            /* 同步：50px，紧贴默认头部 */
+        margin-bottom: 0rem;
+        border-radius: 0 0 8px 8px;
     }
     
     .nav-logo { 
         font-weight: 700; 
-        font-size: 1.4rem; 
+        font-size: 1.8rem;           /* 同步：1.8rem */
         color: var(--primary);
         cursor: default; 
         display: flex;
@@ -73,16 +93,16 @@ st.markdown("""
     
     .nav-links { 
         display: flex; 
-        gap: 8px;
+        gap: 10px;                   /* 同步：10px */
     }
     .nav-links a { 
         text-decoration: none; 
         color: var(--gray-600); 
         font-weight: 500; 
-        padding: 8px 16px; 
+        padding: 8px 18px;           /* 同步：8px 18px */
         border-radius: 20px; 
         transition: all 0.3s; 
-        font-size: 0.95rem;
+        font-size: 1.1rem;           /* 同步：调整为 1.1rem */
     }
     .nav-links a:hover { 
         background-color: var(--primary-light);
@@ -93,14 +113,14 @@ st.markdown("""
         color: white; 
     }
     
-    /* ===== Hero 区域：与 overview 完全一致，只改颜色 ===== */
+    /* Hero 区域 - 同步 nutrition 的紧凑风格，但使用知识库主题色 */
     .hero-box { 
         background: linear-gradient(135deg, #F97316 0%, #C2410C 100%); 
-        padding: 2.5rem 2rem; 
-        border-radius: 30px; 
+        padding: 1.8rem 1.5rem;      /* 同步：更紧凑的内边距 */
+        border-radius: 24px; 
         text-align: center; 
         color: white; 
-        margin: 1rem 0 2rem 0; 
+        margin: 0.5rem 0 1rem 0;     /* 同步：更紧凑的外边距 */
         box-shadow: var(--shadow-lg);
         position: relative;
         overflow: hidden;
@@ -137,15 +157,15 @@ st.markdown("""
     @keyframes move { 0% { background-position: 0 0; } 100% { background-position: 30px 30px; } }
     
     .hero-title, .hero-sub { position: relative; z-index: 2; }
-    .hero-title { font-size: 2.5rem; font-weight: 700; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-    .hero-sub { font-size: 1.1rem; opacity: 0.95; margin-top: 0.5rem; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+    .hero-title { font-size: 2.2rem; font-weight: 700; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    .hero-sub { font-size: 1rem; opacity: 0.95; margin-top: 0.3rem; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
     
-    /* ===== 以下是功能代码区域样式，恢复原来的样式，并调小字体 ===== */
+    /* ===== 以下是功能代码区域样式，保持原有逻辑，微调字体 ===== */
     
-    /* Tabs 样式 - 进一步减少底部边距 */
+    /* Tabs 样式 */
     .stTabs {
         margin-top: 0.2rem;
-        margin-bottom: -0.5rem !important;  /* 负边距拉近下方内容 */
+        margin-bottom: -0.5rem !important;
         position: relative;
         z-index: 5;
     }
@@ -156,13 +176,13 @@ st.markdown("""
         padding: 4px;
         border-radius: 40px;
         border: 1px solid #eef2f6;
-        margin-bottom: 0rem !important;  /* 移除底部边距 */
+        margin-bottom: 0rem !important;
     }
     
     .stTabs [data-baseweb="tab"] {
         font-size: 0.9rem !important;
         font-weight: 500 !important;
-        padding: 0.3rem 1rem !important;  /* 减小内边距 */
+        padding: 0.3rem 1rem !important;
         border-radius: 40px !important;
         background: transparent !important;
         color: #64748b !important;
@@ -171,29 +191,28 @@ st.markdown("""
         margin: 0 !important;
     }
     
-    /* Tab 内容区域 - 移除上边距 */
     .stTabs [data-baseweb="tab-panel"] {
         padding-top: 0.2rem !important;
         margin-top: 0 !important;
     }
     
-    /* 页面主标题 - 进一步减少上边距，甚至使用负边距 */
+    /* 页面主标题 */
     .section-title {
-        font-size: 1.5rem !important;
+        font-size: 1.6rem !important;
         font-weight: 700 !important;
         color: var(--gray-800) !important;
-        margin: -0.2rem 0 0.8rem 0 !important;  /* 负上边距拉近 */
+        margin: 1.2rem 0 0.8rem 0 !important;
+        display: flex;
+        align-items: center;
+        gap: 8px;
         position: relative;
-        display: inline-block;
-        padding-bottom: 6px;
     }
     .section-title::after {
         content: '';
-        position: absolute;
-        bottom: 0; left: 0;
-        width: 50px; height: 3px;
-        background: linear-gradient(90deg, var(--primary), var(--primary-dark));
-        border-radius: 3px;
+        flex: 1;
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary), transparent);
+        margin-left: 15px;
     }
     
     /* 子标题 */
@@ -317,12 +336,10 @@ st.markdown("""
         border-radius: 0 0 16px 16px;
     }
     
-    /* 折叠框内文字大小 */
     .stExpander p, .stExpander li, .stExpander div {
         font-size: 0.9rem !important;
     }
     
-    /* 折叠框内标题 */
     .stExpander h4 {
         font-size: 1.2rem !important;
         margin: 0.5rem 0 0.8rem 0 !important;
@@ -335,7 +352,6 @@ st.markdown("""
         color: var(--gray-800);
     }
     
-    /* 图片样式 */
     .stImage {
         margin-bottom: 0.5rem;
     }
@@ -345,7 +361,6 @@ st.markdown("""
         border: 1px solid #f1f5f9;
     }
     
-    /* 洞察卡片 */
     .insight-card {
         background: #FFF7ED;
         padding: 0.7rem 1rem;
@@ -363,7 +378,6 @@ st.markdown("""
         box-shadow: 0 4px 12px rgba(249,115,22,0.08);
     }
     
-    /* 右侧列标题 */
     .insight-card + h3, .stMarkdown h3 {
         font-size: 1.1rem !important;
         font-weight: 600 !important;
@@ -371,7 +385,6 @@ st.markdown("""
         color: var(--gray-800);
     }
     
-    /* 示例问题按钮 */
     .stButton button {
         background: white !important;
         border: 1px solid var(--primary) !important;
@@ -393,7 +406,6 @@ st.markdown("""
         box-shadow: 0 2px 8px rgba(249,115,22,0.15) !important;
     }
     
-    /* 信息框 */
     .info-box {
         background: var(--primary-light);
         padding: 0.6rem 1rem;
@@ -404,7 +416,6 @@ st.markdown("""
         margin: 0.5rem 0;
     }
     
-    /* 聊天输入框 */
     [data-testid="stChatInput"] {
         position: fixed !important;
         bottom: 1.5rem !important;
@@ -419,33 +430,27 @@ st.markdown("""
         padding: 0.2rem 0.8rem !important;
     }
     
-    /* 聊天消息字体调小 */
     .stChatMessage {
         font-size: 0.9rem !important;
     }
     
-    /* 图表标题调小 */
     .js-plotly-plot .gtitle {
         font-size: 14px !important;
     }
     
-    /* 图例字体调小 */
     .legendtext {
         font-size: 11px !important;
     }
     
-    /* 轴标签调小 */
     .xtitle, .ytitle {
         font-size: 11px !important;
     }
     
-    /* 确保所有文本大小合适 */
     p, li, .stMarkdown, .stText {
         font-size: 0.9rem !important;
         line-height: 1.5;
     }
     
-    /* 标签页内小标题 */
     .stTabs h4 {
         font-size: 1.1rem !important;
         margin: 0.5rem 0 !important;
@@ -456,16 +461,15 @@ st.markdown("""
         margin: 0.5rem 0 0.2rem 0 !important;
     }
     
-    /* Plotly 容器边距调小 */
     .stPlotlyChart {
         margin-bottom: 0.5rem !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# ─── 后面的 main 函数保持不变 ──────────────────────────────────────────
+# ─── 后面的 main 函数 ──────────────────────────────────────────
 def main():
-    # 渲染顶部导航栏 - 与 overview 一致
+    # 渲染顶部导航栏 - 完全同步 nutrition.py 的结构
     st.markdown("""
     <div class="top-navbar">
         <div class="nav-logo">❤️ CardioGuard AI</div>
@@ -479,21 +483,20 @@ def main():
             <a href="/p05_me">👤 我的中心</a>
         </div>
     </div>
-    """, unsafe_allow_html=True)
     
-    # Hero 区域 - 与 overview 一致，只改颜色
-    st.markdown("""
+    <!-- Hero 区域 -->
     <div class="hero-box">
         <h1 class="hero-title">📚 知识库</h1>
         <p class="hero-sub">心血管疾病科学解读 · 数据驱动洞察</p>
     </div>
     """, unsafe_allow_html=True)
     
+    # 为 Tab 添加 Icon
     tab_data, tab_disease, tab_chat = st.tabs(["📊 数据洞察", "🫀 疾病图谱", "💬 智能问答"])
     
     # ── Tab 1：数据洞察 ───────────────────────────────────────────────
     with tab_data:
-        st.markdown('<h2 class="section-title">核心风险指标交互分析</h2>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title">核心风险指标交互分析</div>', unsafe_allow_html=True)
         try:
             df = pd.read_csv("data/cardio_train.csv", sep=";")
             df["age_year"] = (df["age"] / 365.25).round().astype(int)
@@ -575,7 +578,7 @@ def main():
     
     # ── Tab 2：疾病图谱 ───────────────────────────────────────────────
     with tab_disease:
-        st.markdown('<h2 class="section-title">七大类心血管疾病图谱</h2>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title">七大类心血管疾病图谱</div>', unsafe_allow_html=True)
         
         st.markdown('<p class="sub-desc">点击下方疾病分类，深入了解各类心血管疾病的病因、症状、亚型及治疗方案</p>', unsafe_allow_html=True)
         
@@ -676,6 +679,7 @@ def main():
                             st.caption("📷 (肥厚型心肌病图片未找到)")
                 
                 with col_text:
+                    # 为子 Tab 也加上 Icon
                     sub_tabs = st.tabs(["📋 概述与因素", "🔍 症状与亚型", "💊 治疗与预防"])
                     
                     with sub_tabs[0]:
@@ -698,7 +702,7 @@ def main():
     
     # ── Tab 3：智能问答 ───────────────────────────────────────────────
     with tab_chat:
-        st.markdown('<h2 class="section-title">向我提问</h2>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title">向我提问</div>', unsafe_allow_html=True)
         st.markdown('<p class="sub-desc">咨询心血管相关疑问，获取专业解答</p>', unsafe_allow_html=True)
         
         st.markdown("**💡 示例问题**：")

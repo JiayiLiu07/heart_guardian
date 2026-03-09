@@ -1,3 +1,4 @@
+# pages/p05_me.py
 import streamlit as st
 import json
 import os
@@ -11,36 +12,38 @@ except ImportError:
     def render_navbar(key): pass
     def render_hero(title, sub, c1, c2): st.title(title)
 
-st.set_page_config(page_title="我的中心 · CardioGuard AI", layout="wide")
+# 【修改点】设置页面配置，使用 Emoji 作为图标
+st.set_page_config(
+    page_title="我的中心 · CardioGuard AI", 
+    layout="wide",
+    page_icon="👤"  # 用户 Emoji
+)
 
 # ==========================================
 # 【修复部分】路径配置 - 确保顺序正确
 # ==========================================
-
 # 1. 先定义 users 文件夹的路径
 current_dir = os.path.dirname(os.path.abspath(__file__))
 USERS_FOLDER = os.path.abspath(os.path.join(current_dir, "..", "users"))
-
 # 2. 确保 users 文件夹存在，不存在则创建
 if not os.path.exists(USERS_FOLDER):
     os.makedirs(USERS_FOLDER)
-
 # 3. 再定义数据文件路径 (现在 USERS_FOLDER 已经定义了，不会报错)
 DATA_FILE = os.path.join(USERS_FOLDER, "heart_profile_data.json")
 LOG_FILE = os.path.join(USERS_FOLDER, "user_logs.json")
 USER_DATA_FILE = os.path.join(USERS_FOLDER, "user_data.json")
 
 # ==========================================
-# CSS 样式 - 完全对齐 overview
+# CSS 样式 - 已同步 nutrition.py 的导航栏参数 (紧贴顶部)
 # ==========================================
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     
     :root {
-        --primary: #EC4899;
-        --primary-dark: #BE185D;
-        --primary-light: #FCE7F3;
+        --primary: #EC4899;       /* 粉色主色调 */
+        --primary-dark: #BE185D;  /* 深粉色 */
+        --primary-light: #FCE7F3; /* 浅粉色背景 */
         --success: #059669;
         --warning: #D97706;
         --danger: #DC2626;
@@ -59,31 +62,41 @@ st.markdown("""
         background-color: #f8fafc;
     }
     
-    .main > div { padding-top: 0 !important; }
-    .block-container { padding: 1rem 2rem 2rem !important; max-width: 1400px; margin: 0 auto; }
+    /* 移除默认 padding-top */
+    .main > div { 
+        padding-top: 0 !important; 
+    }
+    
+    /* 调整主内容区域 */
+    .block-container { 
+        padding: 0 2rem 1rem !important; 
+        max-width: 1400px; 
+        margin: 0 auto; 
+    }
     
     #MainMenu, footer, section[data-testid="stSidebar"] { display: none !important; }
     
-    /* 导航栏 - 与 overview 完全一致 */
+    /* 【关键修改】导航栏 - 完全同步 nutrition.py 参数 */
     .top-navbar {
         background: white;
-        padding: 0 2.5rem;
-        height: 70px;
+        padding: 0 1.5rem;           /* 同步：1.5rem */
+        height: 75px;                /* 同步：75px */
         box-shadow: var(--shadow-sm);
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        position: sticky;
-        top: 0;
+        align-items: center;         /* 同步：居中 */
+        position: relative; 
         z-index: 9999;
         border-bottom: 1px solid var(--gray-200);
-        border-radius: 0 0 12px 12px;
-        margin-bottom: 1rem;
+        
+        margin-top: 50px;            /* 同步：50px，紧贴默认头部 */
+        margin-bottom: 0rem;         /* 同步：1rem */
+        border-radius: 0 0 8px 8px;
     }
     
     .nav-logo { 
         font-weight: 700; 
-        font-size: 1.4rem; 
+        font-size: 1.8rem;           /* 同步：1.8rem */
         color: var(--primary);
         cursor: default; 
         display: flex;
@@ -93,16 +106,16 @@ st.markdown("""
     
     .nav-links { 
         display: flex; 
-        gap: 8px;
+        gap: 10px;                   /* 同步：10px */
     }
     .nav-links a { 
         text-decoration: none; 
         color: var(--gray-600); 
         font-weight: 500; 
-        padding: 8px 16px; 
+        padding: 8px 18px;           /* 同步：8px 18px */
         border-radius: 20px; 
         transition: all 0.3s; 
-        font-size: 0.95rem;
+        font-size: 1.1rem;           /* 同步：调整为 1.1rem */
     }
     .nav-links a:hover { 
         background-color: var(--primary-light);
@@ -113,14 +126,14 @@ st.markdown("""
         color: white; 
     }
     
-    /* Hero 区域 - 与 overview 完全一致 */
+    /* Hero 区域 - 更紧凑 */
     .hero-box { 
         background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); 
-        padding: 2.5rem 2rem; 
-        border-radius: 30px; 
+        padding: 1.8rem 1.5rem; 
+        border-radius: 24px; 
         text-align: center; 
         color: white; 
-        margin: 1rem 0 2rem 0; 
+        margin: 0.5rem 0 1rem 0; 
         box-shadow: var(--shadow-lg);
         position: relative;
         overflow: hidden;
@@ -157,63 +170,80 @@ st.markdown("""
     @keyframes move { 0% { background-position: 0 0; } 100% { background-position: 30px 30px; } }
     
     .hero-title, .hero-sub { position: relative; z-index: 2; }
-    .hero-title { font-size: 2.5rem; font-weight: 700; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-    .hero-sub { font-size: 1.1rem; opacity: 0.95; margin-top: 0.5rem; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+    .hero-title { 
+        font-size: 2.2rem; 
+        font-weight: 700; 
+        margin: 0; 
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+    }
+    .hero-sub { 
+        font-size: 1rem; 
+        opacity: 0.95; 
+        margin-top: 0.3rem; 
+        text-shadow: 0 1px 2px rgba(0,0,0,0.1); 
+    }
     
+    /* 大标题样式 */
     .section-title {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         font-weight: 700;
         color: var(--gray-800);
-        margin: 1.5rem 0 1rem 0;
+        margin: 1.2rem 0 0.8rem 0;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
+        position: relative;
     }
+    
     .section-title::after {
         content: '';
         flex: 1;
         height: 2px;
         background: linear-gradient(90deg, var(--primary), transparent);
-        margin-left: 20px;
+        margin-left: 15px;
     }
     
+    /* 通用按钮样式 */
     .stButton > button {
         border-radius: 30px !important;
         font-weight: 600 !important;
-        padding: 0.5rem 1.5rem !important;
-        font-size: 0.95rem !important;
+        padding: 0.3rem 1rem !important;
+        font-size: 0.8rem !important;
         transition: all 0.3s !important;
         min-height: 48px !important;
         box-shadow: var(--shadow-sm) !important;
     }
     
+    /* 默认按钮 (白色底，粉色字) */
     .stButton > button:first-child {
         background: white !important;
         color: var(--primary) !important;
-        border: 2px solid var(--primary) !important;
+        border: 1px solid var(--primary) !important;
     }
     
     .stButton > button:first-child:hover {
         background: var(--primary-light) !important;
         color: var(--primary-dark) !important;
-        transform: translateY(-2px);
+        transform: translateY(-1px);
         box-shadow: var(--shadow-md) !important;
     }
     
+    /* 【修改重点】主要按钮 (原绿色，现改为粉色) */
     .stButton > button[kind="primary"],
     .stButton > button[type="primary"] {
-        background: #059669 !important;
+        background: var(--primary) !important;      /* 改为粉色 */
         color: white !important;
-        border: 2px solid #059669 !important;
+        border: 2px solid var(--primary) !important; /* 改为粉色边框 */
     }
     
     .stButton > button[kind="primary"]:hover,
     .stButton > button[type="primary"]:hover {
-        background: #047857 !important;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3) !important;
+        background: var(--primary-dark) !important; /* 改为深粉色 */
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4) !important; /* 改为粉色阴影 */
     }
     
+    /* 清空日志按钮 (保持红色) */
     button[data-testid="stButton"][key="clear_all_logs"] {
         background-color: #d32f2f !important;
         color: white !important;
@@ -259,6 +289,11 @@ st.markdown("""
     .security-badge strong {
         color: var(--primary);
         font-weight: 600;
+    }
+    
+    /* 调整列间距 */
+    .row-widget.stHorizontal {
+        gap: 0.8rem !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -329,18 +364,18 @@ def delete_user_account():
         return False, str(e)
 
 def main():
-    # 顶部导航栏 - 使用 pages/ 前缀
+    # 顶部导航栏
     st.markdown("""
     <div class="top-navbar">
         <div class="nav-logo">❤️ CardioGuard AI</div>
         <div class="nav-links">
             <a href="/p00_home">🏠 首页</a>
-            <a href="p01_profile">📋 健康档案</a>
-            <a href="p01_overview">📊 健康总览</a>
-            <a href="p02_nutrition">🥗 营养建议</a>
-            <a href="p03_ai_doctor">🩺 AI 医生</a>
-            <a href="p04_knowledge">📚 知识库</a>
-            <a href="p05_me" class="active">👤 我的中心</a>
+            <a href="/p01_profile">📋 健康档案</a>
+            <a href="/p01_overview">📊 健康总览</a>
+            <a href="/p02_nutrition">🥗 营养建议</a>
+            <a href="/p03_ai_doctor">🩺 AI 医生</a>
+            <a href="/p04_knowledge">📚 知识库</a>
+            <a href="/p05_me" class="active">👤 我的中心</a>
         </div>
     </div>
     """, unsafe_allow_html=True)

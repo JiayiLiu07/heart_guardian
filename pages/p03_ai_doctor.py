@@ -4,29 +4,30 @@ from openai import OpenAI
 from datetime import datetime
 import uuid
 
+# 【修改点】设置页面配置，使用 Emoji 作为图标
+st.set_page_config(
+    page_title="AI 医生 · CardioGuard AI", 
+    layout="wide",
+    page_icon="🩺"  # 听诊器 Emoji
+)
+
 # 配置 DashScope API
 client = OpenAI(
     api_key="sk-e200005b066942eebc8c5426df92a6d5",
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
 )
 
-st.set_page_config(page_title="AI 医生 · CardioGuard AI", layout="wide")
-
 # ==========================================
-# CSS 样式 - 严格对齐 p01_overview.py
-# 主题色：智慧神经紫 (#8B5CF6 / #6D28D9)
+# CSS 样式 - 已同步 overview 的导航栏参数
 # ==========================================
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     
     :root {
-        /* AI 医生专属配色 */
         --primary: #8B5CF6;
         --primary-dark: #6D28D9;
         --primary-light: #EDE9FE;
-        
-        /* 通用变量 */
         --gray-50: #F9FAFB;
         --gray-100: #F3F4F6;
         --gray-200: #E5E7EB;
@@ -42,30 +43,42 @@ st.markdown("""
         background-color: #f8fafc;
     }
     
-    .main > div { padding-top: 0 !important; }
-    .block-container { padding: 1rem 2rem 2rem !important; max-width: 1400px; margin: 0 auto; }
+    /* 移除默认 padding-top */
+    .main > div { 
+        padding-top: 0 !important; 
+    }
+    
+    /* 调整主内容区域 */
+    .block-container { 
+        padding: 1rem 2rem 2rem !important; 
+        max-width: 1400px; 
+        margin: 0 auto; 
+    }
     
     #MainMenu, footer, section[data-testid="stSidebar"] { display: none !important; }
     
-    /* --- 导航栏 (严格对齐 Overview) --- */
+    /* 【关键修改】导航栏 - 完全同步 overview 参数 */
     .top-navbar {
         background: white;
-        padding: 0 2.5rem; /* 内边距一致 */
-        height: 70px;      /* 高度一致 */
+        padding: 0 1.5rem;
+        height: 75px;              /* 同步：75px */
         box-shadow: var(--shadow-sm);
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        position: sticky;
-        top: 0;
+        align-items: center;       /* 同步：居中 */
+        position: relative; 
         z-index: 9999;
         border-bottom: 1px solid var(--gray-200);
+        
+        margin-top: 50px;          /* 同步：50px，紧贴默认头部 */
+        margin-bottom: 0rem;
+        border-radius: 0 0 8px 8px;
     }
     
     .nav-logo { 
         font-weight: 700; 
-        font-size: 1.4rem; 
-        color: var(--primary); /* 动态主色 */
+        font-size: 1.8rem;         /* 同步：1.8rem */
+        color: var(--primary);
         cursor: default; 
         display: flex;
         align-items: center;
@@ -74,34 +87,35 @@ st.markdown("""
     
     .nav-links { 
         display: flex; 
-        gap: 8px; /* 间距一致 */
+        gap: 10px;                 /* 同步：10px */
     }
     .nav-links a { 
+        font-size: 1.5rem; 
         text-decoration: none; 
         color: var(--gray-600); 
         font-weight: 500; 
-        padding: 8px 16px; 
+        padding: 8px 18px;         /* 同步：8px 18px */
         border-radius: 20px; 
         transition: all 0.3s; 
-        font-size: 0.95rem;
+        font-size: 1.1rem;         /* 同步：调整为 1.1rem 以匹配视觉比例 */
     }
     .nav-links a:hover { 
         background-color: var(--primary-light);
         color: var(--primary); 
     }
     .nav-links a.active { 
-        background: var(--primary); /* 动态主色 */
+        background: var(--primary);
         color: white; 
     }
     
-    /* --- Hero 区域 (严格对齐 Overview) --- */
+    /* Hero 区域 */
     .hero-box { 
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); /* 动态渐变 */
-        padding: 2.5rem 2rem;   /* 内边距一致 */
-        border-radius: 30px;    /* 圆角一致 */
+        background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+        padding: 1.8rem 1.5rem;
+        border-radius: 24px;
         text-align: center; 
         color: white; 
-        margin: 1rem 0 2rem 0; 
+        margin: 0.5rem 0 1rem 0; 
         box-shadow: var(--shadow-lg);
         position: relative;
         overflow: hidden;
@@ -139,40 +153,35 @@ st.markdown("""
     
     .hero-title, .hero-sub { position: relative; z-index: 2; }
     .hero-title { 
-        font-size: 2.5rem; /* 字体大小一致 */
-        font-weight: 700;  /* 字重一致 */
+        font-size: 2.2rem;
+        font-weight: 700; 
         margin: 0; 
         text-shadow: 0 2px 4px rgba(0,0,0,0.2); 
     }
     .hero-sub { 
-        font-size: 1.1rem; 
+        font-size: 1rem; 
         opacity: 0.95; 
-        margin-top: 0.5rem; 
+        margin-top: 0.3rem; 
         text-shadow: 0 1px 2px rgba(0,0,0,0.1); 
-    }
-    
-    /* 聊天区域 */
-    .chat-section {
-        margin-top: 1rem;
     }
     
     /* 示例问题区域 */
     .example-section {
-        margin: 2rem 0 1rem 0;
+        margin: 1rem 0 0.5rem 0;
     }
     .example-title {
-        font-size: 1rem;
+        font-size: 0.9rem;
         color: var(--gray-600);
-        margin-bottom: 0.8rem;
+        margin-bottom: 0.5rem;
     }
     
     /* 聊天消息容器 */
     .stChatMessageContainer { 
-        max-height: calc(100vh - 300px);
+        max-height: calc(100vh - 280px);
         overflow-y: auto;
-        padding: 1rem;
+        padding: 0.5rem;
         background: white;
-        border-radius: 20px;
+        border-radius: 16px;
         box-shadow: var(--shadow-sm);
         border: 1px solid var(--gray-200);
     }
@@ -180,37 +189,36 @@ st.markdown("""
     /* 聊天输入框 */
     [data-testid="stChatInput"] {
         position: fixed !important;
-        bottom: 1.5rem !important;
+        bottom: 1rem !important;
         left: 50% !important;
         transform: translateX(-50%) !important;
-        width: calc(100% - 25rem) !important;
+        width: calc(100% - 22rem) !important;
         max-width: 900px !important;
         z-index: 9999 !important;
         background: white !important;
         border: 2px solid var(--primary-light) !important;
         border-radius: 9999px !important;
         box-shadow: var(--shadow-lg) !important;
-        padding: 0.3rem 1rem !important;
+        padding: 0.2rem 0.8rem !important;
     }
     
-    /* --- 历史记录三列布局 (操作-时间-内容) --- */
+    /* --- 历史记录三列布局 --- */
     .history-row {
         display: flex;
         align-items: center;
-        gap: 8px;
-        padding: 8px 4px;
-        border-radius: 8px;
-        margin-bottom: 4px;
+        gap: 6px;
+        padding: 6px 4px;
+        border-radius: 6px;
+        margin-bottom: 2px;
         transition: background-color 0.2s;
     }
     .history-row:hover { background-color: var(--gray-50); }
     .history-row.active { background-color: var(--primary-light); }
-
-    .col-action { flex: 0 0 30px; display: flex; justify-content: flex-start; align-items: center; }
+    .col-action { flex: 0 0 25px; display: flex; justify-content: flex-start; align-items: center; }
     .col-time {
-        flex: 0 0 55px;
+        flex: 0 0 50px;
         text-align: right;
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         font-weight: 600;
         color: var(--gray-600);
         font-family: 'Monaco', 'Consolas', monospace;
@@ -218,15 +226,14 @@ st.markdown("""
         padding-top: 2px;
     }
     .history-row.active .col-time { color: var(--primary); }
-
     .col-content { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
     
     .mini-delete-btn {
         background: transparent !important;
         border: none !important;
         color: var(--gray-600) !important;
-        font-size: 1rem !important;
-        padding: 4px !important;
+        font-size: 0.9rem !important;
+        padding: 2px !important;
         margin: 0 !important;
         cursor: pointer;
         transition: all 0.2s;
@@ -236,9 +243,8 @@ st.markdown("""
         width: 100%;
     }
     .mini-delete-btn:hover { color: #EF4444 !important; transform: scale(1.1); }
-
     .history-preview-text {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         color: var(--gray-800);
         font-weight: 500;
         white-space: nowrap;
@@ -248,7 +254,7 @@ st.markdown("""
         padding: 2px 0;
     }
     .history-row.active .history-preview-text { color: var(--primary); font-weight: 600; }
-
+    
     /* 按钮样式 */
     .stButton > button {
         background: white !important;
@@ -256,15 +262,15 @@ st.markdown("""
         border: 1px solid var(--primary) !important;
         border-radius: 30px !important;
         font-weight: 500 !important;
-        padding: 0.4rem 1.2rem !important;
-        font-size: 0.9rem !important;
+        padding: 0.3rem 1rem !important;
+        font-size: 0.8rem !important;
         transition: all 0.3s !important;
         width: 100%;
     }
     .stButton > button:hover {
         background: var(--primary) !important;
         color: white !important;
-        transform: translateY(-2px);
+        transform: translateY(-1px);
         box-shadow: var(--shadow-md) !important;
     }
     
@@ -272,25 +278,29 @@ st.markdown("""
     .disclaimer-box {
         background-color: #FFFBEB;
         border-left: 4px solid #FCD34D;
-        padding: 1rem;
+        padding: 0.8rem;
         border-radius: 8px;
-        margin-bottom: 1.5rem;
-        font-size: 0.8rem;
+        margin-bottom: 1rem;
+        font-size: 0.75rem;
         color: #92400E;
-        line-height: 1.4;
+        line-height: 1.3;
     }
-    .disclaimer-title { font-weight: 700; margin-bottom: 0.4rem; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
-
+    .disclaimer-title { font-weight: 700; margin-bottom: 0.3rem; font-size: 0.8rem; display: flex; align-items: center; gap: 4px; }
+    
     /* 布局 */
-    .flex-row { display: flex; gap: 2rem; }
+    .flex-row { display: flex; gap: 1.5rem; }
     .flex-1 { flex: 1; }
+    
+    /* 调整列间距 */
+    .row-widget.stHorizontal {
+        gap: 0.8rem !important;
+    }
     
     @media (max-width: 768px) { .flex-row { flex-direction: column; } }
 </style>
 """, unsafe_allow_html=True)
 
 # ================= 逻辑部分 =================
-
 def init_session_state():
     if 'chat_sessions' not in st.session_state:
         st.session_state.chat_sessions = {}
@@ -340,7 +350,7 @@ def update_session_title(session_id, first_message):
 def main():
     init_session_state()
     
-    # 顶部导航 (样式已统一)
+    # 顶部导航
     st.markdown("""
     <div class="top-navbar">
         <div class="nav-logo">❤️ CardioGuard AI</div>
@@ -356,11 +366,11 @@ def main():
     </div>
     """, unsafe_allow_html=True)
     
-    # Hero 区域 (样式已统一)
+    # Hero 区域
     st.markdown("""
     <div class="hero-box">
         <h1 class="hero-title">🩺 AI 医生</h1>
-        <p class="hero-sub">24小时心血管健康咨询，专业解答您的健康疑问</p>
+        <p class="hero-sub">24 小时心血管健康咨询，专业解答您的健康疑问</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -413,7 +423,7 @@ def main():
                     st.session_state.chat_sessions[st.session_state.current_session_id]['timestamp'] = now
                 except Exception as e:
                     st.error(f"Error: {e}")
-
+    
     with col2:
         # 免责声明
         st.markdown("""
@@ -433,25 +443,24 @@ def main():
             clear_all_history()
             st.rerun()
         
-        st.markdown("<div style='height:1px; background:#E5E7EB; margin: 1.5rem 0;'></div>", unsafe_allow_html=True)
-        st.markdown("<div style='font-size:0.8rem; color:#9CA3AF; margin-bottom:0.5rem;'>历史记录</div>", unsafe_allow_html=True)
-
-        # 历史记录列表 (三列布局)
+        st.markdown("<div style='height:1px; background:#E5E7EB; margin: 1rem 0;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='font-size:0.75rem; color:#9CA3AF; margin-bottom:0.3rem;'>历史记录</div>", unsafe_allow_html=True)
+        
+        # 历史记录列表
         if st.session_state.chat_sessions:
             sorted_sessions = sorted(st.session_state.chat_sessions.values(), key=lambda x: x['timestamp'], reverse=True)
             
             for session in sorted_sessions:
                 is_active = session['id'] == st.session_state.current_session_id
-                active_class = "active" if is_active else ""
                 
                 user_msgs = [m for m in session['messages'] if m['role'] == 'user']
                 preview_text = user_msgs[0]['content'] if user_msgs else "新对话"
-                if len(preview_text) > 18: preview_text = preview_text[:18] + "..."
+                if len(preview_text) > 15: preview_text = preview_text[:15] + "..."
                 
                 time_str = session['timestamp'].strftime("%H:%M")
                 date_str = session['timestamp'].strftime("%m-%d")
-
-                c_action, c_time, c_content = st.columns([0.15, 0.25, 0.6], gap="small")
+                
+                c_action, c_time, c_content = st.columns([0.15, 0.2, 0.65])
                 
                 with c_action:
                     if st.button("🗑️", key=f"del_{session['id']}", help="删除此对话"):
@@ -460,30 +469,27 @@ def main():
                 
                 with c_time:
                     st.markdown(f"""
-                    <div style="text-align:right; font-size:0.75rem; color:{'#8B5CF6' if is_active else '#9CA3AF'}; font-weight:600; font-family:monospace; padding-top:4px;">
-                        {time_str}<br><span style="font-size:0.65rem; opacity:0.7">{date_str}</span>
+                    <div style="text-align:right; font-size:0.7rem; color:{'#8B5CF6' if is_active else '#9CA3AF'}; font-weight:600; font-family:monospace; padding-top:2px;">
+                        {time_str}<br><span style="font-size:0.6rem; opacity:0.7">{date_str}</span>
                     </div>
                     """, unsafe_allow_html=True)
                 
                 with c_content:
-                    btn_type = "primary" if is_active else "secondary"
                     if st.button(
                         preview_text, 
                         key=f"load_{session['id']}", 
                         use_container_width=True,
-                        type=btn_type if not is_active else "primary",
-                        help="点击加载此对话"
+                        type="primary" if is_active else "secondary"
                     ):
                         st.session_state.current_session_id = session['id']
                         st.rerun()
                 
-                st.markdown("<div style='height:2px;'></div>", unsafe_allow_html=True)
-
+                st.markdown("<div style='height:1px;'></div>", unsafe_allow_html=True)
         else:
             st.markdown("""
-            <div style="text-align:center; padding:2rem; color:#9CA3AF;">
-                <div style="font-size:2rem;">📭</div>
-                <p style="font-size:0.9rem;">暂无历史记录</p>
+            <div style="text-align:center; padding:1.5rem; color:#9CA3AF;">
+                <div style="font-size:1.8rem;">📭</div>
+                <p style="font-size:0.8rem;">暂无历史记录</p>
             </div>
             """, unsafe_allow_html=True)
 
